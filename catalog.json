@@ -1,0 +1,76 @@
+{
+  "merchant": { "name": "561 Group", "legalBody": "emsenn" },
+  "offerings": [
+    {
+      "id": "understanding-infection-associated-chronic-illness",
+      "title": "Understanding Infection-Associated Chronic Illness",
+      "line": "@emsenn/health-education-curriculum-enterprise",
+      "status": "external",
+      "externalUrl": "https://bindinggenerations.net/publications/understanding-infection-associated-chronic-illness",
+      "blurb": "Published by Binding Generations."
+    },
+    {
+      "id": "the-agent-operators-handbook",
+      "title": "The Agent Operator's Handbook",
+      "line": "@emsenn/artificial-intelligence-curriculum-enterprise",
+      "status": "external",
+      "externalUrl": "https://bindinggenerations.net/publications/the-agent-operators-handbook",
+      "blurb": "Published by Binding Generations."
+    },
+    {
+      "id": "the-whirling-crystal",
+      "title": "The Whirling Crystal",
+      "line": "@emsenn/mathematics-curriculum-enterprise",
+      "status": "external",
+      "externalUrl": "https://bindinggenerations.net/publications/the-whirling-crystal",
+      "blurb": "Published by Binding Generations."
+    },
+    {
+      "id": "health-education-newsletter",
+      "title": "Health Education Newsletter",
+      "line": "@emsenn/health-education-newsletter-enterprise",
+      "status": "external",
+      "externalUrl": "https://bindinggenerations.net/publications/health-education-newsletter",
+      "blurb": "Published by Binding Generations."
+    },
+    {
+      "id": "koios-intelligence-briefing",
+      "title": "Koios Intelligence Briefing",
+      "line": "@causeway-services/koios-news-service-section",
+      "status": "external",
+      "externalUrl": "https://bindinggenerations.net/publications/koios-intelligence-briefing",
+      "blurb": "Published by Binding Generations."
+    },
+    {
+      "id": "pacing-intelligence-api",
+      "title": "Pacing Intelligence API",
+      "line": "@red-cup-engineering/paid-pacing-intelligence-gateway",
+      "status": "external",
+      "externalUrl": "https://market.561.group",
+      "blurb": "Per-request pacing analysis and heart-rate-threshold heuristics for infection-associated chronic illness, priced and settled through market.561.group."
+    },
+    {
+      "id": "ephemeris-api",
+      "title": "Ephemeris API",
+      "line": "astrology-emphemeris-services-section",
+      "status": "external",
+      "externalUrl": "https://market.561.group",
+      "blurb": "Per-request astronomical ephemeris computation, priced and settled through market.561.group."
+    },
+    {
+      "id": "games",
+      "title": "Games",
+      "line": "@red-cup-engineering/games-catalog-storefront",
+      "status": "external",
+      "externalUrl": "https://play.561.group",
+      "blurb": "The 561 Group's game catalog."
+    },
+    {
+      "id": "merch",
+      "title": "Merch",
+      "line": "@red-cup-engineering/print-on-demand-design-factory",
+      "status": "coming-soon",
+      "blurb": "Print-on-demand goods. No storefront is open yet."
+    }
+  ]
+}
