@@ -58,6 +58,22 @@
       "blurb": "A $9 study companion, EPUB and PDF, to Google’s UX Design Certificate: the design process from its sources, accessibility throughout, a portfolio guide. Independent of Google and Coursera."
     },
     {
+      "id": "business-management-course-by-course",
+      "title": "Business Management, Course by Course",
+      "line": "561-group-services-section",
+      "status": "external",
+      "externalUrl": "https://market.561.group/#publications-business-management-course-by-course",
+      "blurb": "A $12 study companion, EPUB and PDF, to Cornell’s Business Management Essentials certificate: finance, marketing, strategy, organizing and leading. Independent of Cornell."
+    },
+    {
+      "id": "business-strategy-course-by-course",
+      "title": "Business Strategy, Course by Course",
+      "line": "561-group-services-section",
+      "status": "external",
+      "externalUrl": "https://market.561.group/#publications-business-strategy-course-by-course",
+      "blurb": "A $12 study companion, EPUB and PDF, to Cornell’s Business Strategy certificate: value, disruption, alliances, game theory and platforms. Independent of Cornell."
+    },
+    {
       "id": "the-whirling-crystal",
       "title": "The Whirling Crystal",
       "line": "@emsenn/mathematics-curriculum-enterprise",
