@@ -24,15 +24,12 @@ function paidEvent({ eventId = "evt_test", sessionId = "cs_test", offeringId = "
   return { id: eventId, type: "checkout.session.completed", livemode: false, data: { object: { id: sessionId, amount_total: amount, currency, payment_status: paymentStatus, status: "complete", metadata: { offering_id: offeringId, request_digest: "digest" } } } };
 }
 
-test("shop catalog is valid and links publishing offers to Binding Generations", () => {
+test("shop catalog is valid, and a book sold over x402 links to its offer on the market page", () => {
   assert.equal(CATALOG_VALIDATION.valid, true);
-  assert.deepEqual(CATALOG.offerings.slice(0, 5).map((item) => item.externalUrl), [
-    "https://bindinggenerations.net/publications/understanding-infection-associated-chronic-illness",
-    "https://bindinggenerations.net/publications/the-agent-operators-handbook",
-    "https://bindinggenerations.net/publications/the-whirling-crystal",
-    "https://bindinggenerations.net/publications/health-education-newsletter",
-    "https://bindinggenerations.net/publications/koios-intelligence-briefing",
-  ]);
+  for (const item of CATALOG.offerings.filter((offering) => offering.status === "external")) assert.match(item.externalUrl, /^https:\/\//u, item.id);
+  const byId = new Map(CATALOG.offerings.map((offering) => [offering.id, offering]));
+  assert.equal(byId.get("the-agent-operators-handbook").externalUrl, "https://market.561.group/#publications-agent-operators-handbook");
+  assert.equal(byId.get("the-x402-economy").externalUrl, "https://market.561.group/#publications-the-x402-economy");
 });
 
 test("checkout remains unavailable without all fulfillment capabilities", async () => {
