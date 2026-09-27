@@ -26,6 +26,38 @@
       "blurb": "A $9 sourced ebook, EPUB and PDF, on how the web’s unused payment code became a way for software to pay, and what it has earned so far. Settled through market.561.group."
     },
     {
+      "id": "project-management-course-by-course",
+      "title": "Project Management, Course by Course",
+      "line": "561-group-services-section",
+      "status": "external",
+      "externalUrl": "https://market.561.group/#publications-project-management-course-by-course",
+      "blurb": "A $9 study companion, EPUB and PDF, to Google’s Project Management Certificate: one chapter per course, self-checks with answers, a capstone guide. Independent of Google and Coursera."
+    },
+    {
+      "id": "the-capm-domain-by-domain",
+      "title": "The CAPM, Domain by Domain",
+      "line": "561-group-services-section",
+      "status": "external",
+      "externalUrl": "https://market.561.group/#publications-the-capm-domain-by-domain",
+      "blurb": "A $12 study companion, EPUB and PDF, to PMI’s CAPM exam, following the 2023 outline task by task, with a 40-question practice exam. Independent of PMI."
+    },
+    {
+      "id": "data-analytics-course-by-course",
+      "title": "Data Analytics, Course by Course",
+      "line": "561-group-services-section",
+      "status": "external",
+      "externalUrl": "https://market.561.group/#publications-data-analytics-course-by-course",
+      "blurb": "A $9 study companion, EPUB and PDF, to Google’s Data Analytics Certificate: spreadsheets, SQL, Tableau and Python, with tested code and answered self-checks. Independent of Google and Coursera."
+    },
+    {
+      "id": "ux-design-course-by-course",
+      "title": "UX Design, Course by Course",
+      "line": "561-group-services-section",
+      "status": "external",
+      "externalUrl": "https://market.561.group/#publications-ux-design-course-by-course",
+      "blurb": "A $9 study companion, EPUB and PDF, to Google’s UX Design Certificate: the design process from its sources, accessibility throughout, a portfolio guide. Independent of Google and Coursera."
+    },
+    {
       "id": "the-whirling-crystal",
       "title": "The Whirling Crystal",
       "line": "@emsenn/mathematics-curriculum-enterprise",
