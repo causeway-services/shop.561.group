@@ -1,97 +1,96 @@
 # shop.561.group
 
-The one page that lists the 561 Group's offers outside of Binding Generations:
-merch and links out to the metered APIs
-(`market.561.group`) and the games catalog (`play.561.group`) that are
-sold elsewhere.
+The 561 Group's storefront for people: the books a person buys and reads,
+and merch when it opens. Agents buy the same books at `market.561.group`
+over x402, from the same accepted files. APIs, briefings and games are
+sold on their own sites and are not listed here. The design is in
+`engineering-services-section/content/text/documents/articles/notes/2026/09/27/2026-09-27-note-on-the-human-storefront.md`.
 
 ## What this is
 
-A Cloudflare Worker (`src/worker.mjs`) composing two published packages
-rather than re-implementing either:
+A Cloudflare Worker (`src/worker.mjs`) that composes
+`@red-cup-engineering/digital-goods-storefront-services-section`, which
+owns everything below. This site owns its catalog, its branding, its
+bindings and the `ShopFulfillment` Durable Object registration.
 
-- `@red-cup-engineering/digital-goods-storefront-services-section` --
-  catalog validation, buyer-facing view-model shaping, static HTML
-  rendering, and signed/expiring download tokens (Web Crypto only).
-- `@red-cup-engineering/stripe-services-section` -- the card rail:
-  Checkout Session creation and verified-webhook ingestion over an
-  ActivityStreams `Offer`/`Accept` envelope.
+- The storefront, rendered by TUFTE: search, facets, book pages with
+  covers, contents, formats and sizes, and each edition's verification
+  record. Search engines and link previews get Open Graph and schema.org
+  data.
+- Card checkout through Stripe, and delivery of each book's paid release:
+  the pointer at `goods/<release>/release.json` in `shop-561-group-goods`,
+  the same one the market reads.
+- Reader accounts through Google sign-in (any verified Google account; an
+  account is its email).
+- A library per reader. It always serves the newest accepted edition.
+- Gifts. A gifter named in `SHOP_GIFTERS` gives a book to an email address
+  from `/gifts` and gets a link to send. The link delivers the book at once,
+  and the recipient keeps it by signing in with that address. A gift can be
+  withdrawn.
 
-`catalog.json` in this site owns its non-publishing offers. Publishing offers
-link to Binding Generations, which owns their price, status, and artifact
-metadata.
+## The catalog
 
-This site owns its catalog, routing, `SHOP_GOODS` R2 binding, and the
-receiver-specific `ShopFulfillment` Durable Object registration. The
-published storefront runtime owns checkout and entitlement transitions.
-`SHOP_ENTITLEMENTS` remains bound for historical custody, but it is not
-an automatic download grant: a historical purchase needs verified
-migration into the Durable Object before it can be delivered.
+`catalog.json` lists the offerings. A book row names:
+
+- its manuscript;
+- its acceptance record, or the directory of its files for an edition
+  older than acceptance records;
+- the cover the ebook pipeline made.
+
+`scripts/compile-catalog.mjs` reads those records into
+`src/compiled-catalog.mjs`: title, series, contents, page count, file
+sizes, SHA-256s, edition digest and the proof's counts. It also copies the
+covers into `public/covers/` (untracked), which the Worker serves as
+static assets. Edition state is untracked and is read from the main
+worktree, so a deploy from a clean worktree compiles the same catalog.
 
 ## Routes
 
 | Route | Behavior |
 |---|---|
-| `GET /` | Renders the catalog from the engine. |
-| `GET /goods/:id` | Renders one offering's product page from the engine. |
-| `GET /catalog.json` | Serves `catalog.json` verbatim. |
-| `POST /checkout/:id` | Starts a Stripe Checkout Session for a `live`/`test-only` offering, stores its immutable checkout record, then 303s to Stripe. |
-| `POST /webhooks/stripe` | Verifies a Stripe signature and atomically admits a matching paid, complete Checkout Session into one Durable Object entitlement. |
-| `GET /thanks?session_id=...` | Issues one signed, one-hour download token per good in the immutable purchased-goods snapshot. |
-| `GET /download/:token` | Verifies the token and streams the good from R2. |
+| `GET /` | The catalog, with search and facets. |
+| `GET /goods/:id` | One book's page. |
+| `POST /checkout/:id` | Starts a Stripe Checkout Session (same-origin only) and records the signed-in reader's account on it. |
+| `POST /webhooks/stripe` | Verifies a Stripe signature and admits a paid, complete session as an entitlement. |
+| `GET /thanks?session_id=` | Downloads for a purchase, and "keep it in your library". |
+| `GET /library` | The signed-in reader's books. |
+| `GET /gifts`, `POST /gifts` | The gifter's form and the gifts they have given. |
+| `GET /gifts/:id` | A gift's link: the book, the note and the download. |
+| `POST /gifts/:id/revoke` | Withdraws a gift. |
+| `GET /oauth/login`, `/oauth/callback`, `/oauth/logout` | Google sign-in. |
+| `GET /download/:token` | A signed, one-hour link to the entitlement's current release bytes. |
+| `GET /catalog.json` | The compiled catalog. |
 
-## Bindings and hands items
+## Bindings and secrets
 
-Provisioned this deploy:
-
-- KV namespace `SHOP_ENTITLEMENTS` (`9372634aa5ca4c87937c6d3dd457bef6`).
-- SQLite-backed Durable Object `SHOP_FULFILLMENT` / `ShopFulfillment`.
-- R2 bucket `shop-561-group-goods`, binding `SHOP_GOODS`, for historical
-  fulfillment snapshots that remain under this receiver's custody.
-- Secret `SHOP_TOKEN_SECRET` (`wrangler secret put`, random, not in
-  source).
-
-**Hands items -- the founder's own account actions, not set here:**
-`STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, and
-`STRIPE_CUSTOMER_CONTRACT_TOKEN` (`wrangler secret put` from the
-authorized payment relationship). Until they are set, purchase is
-unavailable and no charge can be started.
-
-The fulfillment object has an internal durable revocation operation for
-a verified withdrawal or refund. Automatic Stripe refund-webhook
-handling is pending and is not represented as active behavior.
+- Durable Object `SHOP_FULFILLMENT` / `ShopFulfillment`: checkouts,
+  entitlements, accounts and gifts.
+- R2 bucket `shop-561-group-goods` (`SHOP_GOODS`): release pointers and
+  bundles.
+- KV `SHOP_ENTITLEMENTS`: historical custody only. It grants nothing.
+- Secrets:
+  - `SHOP_TOKEN_SECRET`
+  - `SHOP_SESSION_SECRET`
+  - `SHOP_GIFTERS` (comma-separated emails)
+  - `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`: the Group's Google OAuth
+    client, with `https://shop.561.group/oauth/callback` registered as a
+    redirect URI.
+- The founder's own items, not set here: `STRIPE_SECRET_KEY`,
+  `STRIPE_WEBHOOK_SECRET` and `STRIPE_CUSTOMER_CONTRACT_TOKEN`. Until they
+  are set, each book says card checkout opens soon and offers x402.
 
 ## Deploying
 
+From a clean worktree of the commit:
+
 ```sh
-npm install
-npm test
-npx wrangler deploy
+pnpm --filter "@causeway-services/shop..." install --offline --frozen-lockfile
+node scripts/compile-catalog.mjs
+wrangler deploy
 ```
-
-## A stripe-services-section fix this site's deploy required
-
-`@red-cup-engineering/stripe-services-section@0.1.7`'s `src/service.mjs`
-computed `createRequire(import.meta.url)` and
-`fileURLToPath(import.meta.url)` at module top level. That crashed this
-Worker's deploy (`workerd` validation: "must be a file URL object... Received
-'undefined'") even though the only code path that needs either --
-`loadCatalog`'s on-disk fallback -- is never reached when a caller (this
-Worker, always) supplies `options.catalog` and `options.store`, exactly
-as the module's own doc comment already promised. Fixed upstream, in
-place, as `@red-cup-engineering/stripe-services-section@0.1.8` (deferred
-both into a lazy `packageRoot()` helper and a call-time `createRequire()`
-inside `loadCatalog`; no exported symbol changed) -- this site pins that
-version. Publish receipt:
-`web2-platform-services-section/data/logs/` via
-`semantic-record-journal-service` (`red-cup-engineering.package-publish-service-record`,
-`ni:///sha-256;VmX7fFU1Jqn1JsZo1J3i2-SQWt1qYxUgCpOdgDaDjr8`).
 
 ## Testing
 
 ```sh
-npm test
+node --test test/*.test.mjs
 ```
-
-Plain `node --test`, fake KV/R2/`fetch` doubles -- no live Stripe or
-Cloudflare calls.

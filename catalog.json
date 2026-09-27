@@ -1,132 +1,182 @@
 {
-  "merchant": { "name": "561 Group", "legalBody": "emsenn" },
+  "$comment": "The human storefront's catalog: goods a person buys and reads. Agents buy the same books at market.561.group over x402; APIs, briefings and games are sold on their own sites. Book facts (title, contents, edition, verification) are compiled from each book's records by scripts/compile-catalog.mjs; paths are relative to lib/emsenn/services/561-group/services/.",
+  "merchant": {
+    "name": "561 Group",
+    "legalBody": "emsenn"
+  },
   "offerings": [
     {
-      "id": "understanding-infection-associated-chronic-illness",
-      "title": "Understanding Infection-Associated Chronic Illness",
-      "line": "@emsenn/health-education-curriculum-enterprise",
-      "status": "external",
-      "externalUrl": "https://bindinggenerations.net/publications/understanding-infection-associated-chronic-illness",
-      "blurb": "Published by Binding Generations."
-    },
-    {
       "id": "the-agent-operators-handbook",
-      "title": "The Agent Operator's Handbook",
       "line": "@emsenn/artificial-intelligence-curriculum-enterprise",
-      "status": "external",
-      "externalUrl": "https://market.561.group/#publications-agent-operators-handbook",
-      "blurb": "A $29 source-verified EPUB-and-PDF field guide for operating multiple AI coding agents, settled through market.561.group."
+      "status": "live",
+      "priceCents": 2900,
+      "currency": "usd",
+      "release": "agent-operators-handbook",
+      "agentOfferUrl": "https://market.561.group/#publications-agent-operators-handbook",
+      "blurb": "A field guide to operating several AI coding agents at once: writing the complete brief, when to split work and when not to, steering a running agent, recovering an interrupted one, and reading its report.",
+      "keywords": [
+        "AI agents",
+        "coding agents",
+        "field guide"
+      ],
+      "book": {
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/content/books/the-agent-operators-handbook",
+        "files": "561-group-services-section/data/state/editions/the-agent-operators-handbook"
+      }
     },
     {
       "id": "the-x402-economy",
-      "title": "The x402 Economy",
       "line": "561-group-services-section",
-      "status": "external",
-      "externalUrl": "https://market.561.group/#publications-the-x402-economy",
-      "blurb": "A $9 sourced ebook, EPUB and PDF, on how the web’s unused payment code became a way for software to pay, and what it has earned so far. Settled through market.561.group."
+      "status": "live",
+      "priceCents": 900,
+      "currency": "usd",
+      "release": "the-x402-economy",
+      "agentOfferUrl": "https://market.561.group/#publications-the-x402-economy",
+      "blurb": "How the web’s unused payment code became a way for software to pay, and what it has earned so far: HTTP 402’s history, one paid request step by step, who governs x402, its rivals, the market measurements, security and US law.",
+      "keywords": [
+        "x402",
+        "stablecoins",
+        "agent payments",
+        "HTTP 402"
+      ],
+      "book": {
+        "manuscript": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/economics-science-services-section/content/books/the-x402-economy",
+        "acceptance": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/economics-science-services-section/data/records/editions/2026-09-27-the-x402-economy-first-edition-acceptance.json",
+        "cover": "561-group-services-section/data/state/editions/the-x402-economy/the-x402-economy-cover.png"
+      }
     },
     {
       "id": "project-management-course-by-course",
-      "title": "Project Management, Course by Course",
       "line": "561-group-services-section",
-      "status": "external",
-      "externalUrl": "https://market.561.group/#publications-project-management-course-by-course",
-      "blurb": "A $9 study companion, EPUB and PDF, to Google’s Project Management Certificate: one chapter per course, self-checks with answers, a capstone guide. Independent of Google and Coursera."
+      "status": "live",
+      "priceCents": 900,
+      "currency": "usd",
+      "release": "project-management-course-by-course",
+      "agentOfferUrl": "https://market.561.group/#publications-project-management-course-by-course",
+      "blurb": "A study companion to Google’s Project Management Certificate: one chapter per course, self-checks with answers, and a guide to the capstone. Independent of Google and Coursera.",
+      "keywords": [
+        "project management",
+        "Google certificate",
+        "Coursera",
+        "study guide"
+      ],
+      "book": {
+        "manuscript": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/content/books/project-management-course-by-course",
+        "acceptance": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/data/records/editions/2026-09-27-project-management-course-by-course-first-edition-acceptance.json",
+        "cover": "561-group-services-section/data/state/editions/project-management-course-by-course/project-management-course-by-course-cover.png"
+      }
     },
     {
       "id": "the-capm-domain-by-domain",
-      "title": "The CAPM, Domain by Domain",
       "line": "561-group-services-section",
-      "status": "external",
-      "externalUrl": "https://market.561.group/#publications-the-capm-domain-by-domain",
-      "blurb": "A $12 study companion, EPUB and PDF, to PMI’s CAPM exam, following the 2023 outline task by task, with a 40-question practice exam. Independent of PMI."
+      "status": "live",
+      "priceCents": 1200,
+      "currency": "usd",
+      "release": "the-capm-domain-by-domain",
+      "agentOfferUrl": "https://market.561.group/#publications-the-capm-domain-by-domain",
+      "blurb": "A study companion to PMI’s CAPM exam that follows the 2023 outline task by task and ends with a 40-question practice exam. Independent of PMI.",
+      "keywords": [
+        "CAPM",
+        "PMI",
+        "project management",
+        "exam prep"
+      ],
+      "book": {
+        "manuscript": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/content/books/the-capm-domain-by-domain",
+        "acceptance": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/data/records/editions/2026-09-27-the-capm-domain-by-domain-first-edition-acceptance.json",
+        "cover": "561-group-services-section/data/state/editions/the-capm-domain-by-domain/the-capm-domain-by-domain-cover.png"
+      }
     },
     {
       "id": "data-analytics-course-by-course",
-      "title": "Data Analytics, Course by Course",
       "line": "561-group-services-section",
-      "status": "external",
-      "externalUrl": "https://market.561.group/#publications-data-analytics-course-by-course",
-      "blurb": "A $9 study companion, EPUB and PDF, to Google’s Data Analytics Certificate: spreadsheets, SQL, Tableau and Python, with tested code and answered self-checks. Independent of Google and Coursera."
+      "status": "live",
+      "priceCents": 900,
+      "currency": "usd",
+      "release": "data-analytics-course-by-course",
+      "agentOfferUrl": "https://market.561.group/#publications-data-analytics-course-by-course",
+      "blurb": "A study companion to Google’s Data Analytics Certificate: spreadsheets, SQL, Tableau and Python, with tested code and answered self-checks. Independent of Google and Coursera.",
+      "keywords": [
+        "data analytics",
+        "SQL",
+        "Python",
+        "Google certificate",
+        "study guide"
+      ],
+      "book": {
+        "manuscript": "science-services-section/services/information-science-services-section/services/math-services-section/content/books/data-analytics-course-by-course",
+        "acceptance": "science-services-section/services/information-science-services-section/services/math-services-section/data/records/editions/2026-09-27-data-analytics-course-by-course-first-edition-acceptance.json",
+        "cover": "561-group-services-section/data/state/editions/data-analytics-course-by-course/data-analytics-course-by-course-cover.png"
+      }
     },
     {
       "id": "ux-design-course-by-course",
-      "title": "UX Design, Course by Course",
       "line": "561-group-services-section",
-      "status": "external",
-      "externalUrl": "https://market.561.group/#publications-ux-design-course-by-course",
-      "blurb": "A $9 study companion, EPUB and PDF, to Google’s UX Design Certificate: the design process from its sources, accessibility throughout, a portfolio guide. Independent of Google and Coursera."
+      "status": "live",
+      "priceCents": 900,
+      "currency": "usd",
+      "release": "ux-design-course-by-course",
+      "agentOfferUrl": "https://market.561.group/#publications-ux-design-course-by-course",
+      "blurb": "A study companion to Google’s UX Design Certificate: the design process from its sources, accessibility throughout, and a portfolio guide. Independent of Google and Coursera.",
+      "keywords": [
+        "UX design",
+        "accessibility",
+        "Google certificate",
+        "study guide"
+      ],
+      "book": {
+        "manuscript": "science-services-section/services/engineering-science-services-section/services/design-engineering-science-services-section/content/books/ux-design-course-by-course",
+        "acceptance": "science-services-section/services/engineering-science-services-section/services/design-engineering-science-services-section/data/records/editions/2026-09-27-ux-design-course-by-course-first-edition-acceptance.json",
+        "cover": "561-group-services-section/data/state/editions/ux-design-course-by-course/ux-design-course-by-course-cover.png"
+      }
     },
     {
       "id": "business-management-course-by-course",
-      "title": "Business Management, Course by Course",
       "line": "561-group-services-section",
-      "status": "external",
-      "externalUrl": "https://market.561.group/#publications-business-management-course-by-course",
-      "blurb": "A $12 study companion, EPUB and PDF, to Cornell’s Business Management Essentials certificate: finance, marketing, strategy, organizing and leading. Independent of Cornell."
+      "status": "live",
+      "priceCents": 1200,
+      "currency": "usd",
+      "release": "business-management-course-by-course",
+      "agentOfferUrl": "https://market.561.group/#publications-business-management-course-by-course",
+      "blurb": "A study companion to Cornell’s Business Management Essentials certificate: finance, marketing, strategy, organizing and leading. Independent of Cornell.",
+      "keywords": [
+        "business management",
+        "eCornell",
+        "study guide"
+      ],
+      "book": {
+        "manuscript": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/content/books/business-management-course-by-course",
+        "acceptance": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/data/records/editions/2026-09-27-business-management-course-by-course-first-edition-acceptance.json",
+        "cover": "561-group-services-section/data/state/editions/business-management-course-by-course/business-management-course-by-course-cover.png"
+      }
     },
     {
       "id": "business-strategy-course-by-course",
-      "title": "Business Strategy, Course by Course",
       "line": "561-group-services-section",
-      "status": "external",
-      "externalUrl": "https://market.561.group/#publications-business-strategy-course-by-course",
-      "blurb": "A $12 study companion, EPUB and PDF, to Cornell’s Business Strategy certificate: value, disruption, alliances, game theory and platforms. Independent of Cornell."
-    },
-    {
-      "id": "the-whirling-crystal",
-      "title": "The Whirling Crystal",
-      "line": "@emsenn/mathematics-curriculum-enterprise",
-      "status": "external",
-      "externalUrl": "https://bindinggenerations.net/publications/the-whirling-crystal",
-      "blurb": "Published by Binding Generations."
-    },
-    {
-      "id": "health-education-newsletter",
-      "title": "Health Education Newsletter",
-      "line": "@emsenn/health-education-newsletter-enterprise",
-      "status": "external",
-      "externalUrl": "https://bindinggenerations.net/publications/health-education-newsletter",
-      "blurb": "Published by Binding Generations."
-    },
-    {
-      "id": "koios-intelligence-briefing",
-      "title": "Koios Intelligence Briefing",
-      "line": "@causeway-services/koios-news-service-section",
-      "status": "external",
-      "externalUrl": "https://market.561.group/v1/koios/briefing/current",
-      "blurb": "Current source-linked analysis, purchased per issue through market.561.group."
-    },
-    {
-      "id": "pacing-intelligence-api",
-      "title": "Pacing Intelligence API",
-      "line": "@red-cup-engineering/paid-pacing-intelligence-gateway",
-      "status": "external",
-      "externalUrl": "https://market.561.group",
-      "blurb": "Per-request pacing analysis and heart-rate-threshold heuristics for infection-associated chronic illness, priced and settled through market.561.group."
-    },
-    {
-      "id": "ephemeris-api",
-      "title": "Ephemeris API",
-      "line": "astrology-emphemeris-services-section",
-      "status": "external",
-      "externalUrl": "https://market.561.group",
-      "blurb": "Per-request astronomical ephemeris computation, priced and settled through market.561.group."
-    },
-    {
-      "id": "games",
-      "title": "Games",
-      "line": "@red-cup-engineering/games-catalog-storefront",
-      "status": "external",
-      "externalUrl": "https://play.561.group",
-      "blurb": "The 561 Group's game catalog."
+      "status": "live",
+      "priceCents": 1200,
+      "currency": "usd",
+      "release": "business-strategy-course-by-course",
+      "agentOfferUrl": "https://market.561.group/#publications-business-strategy-course-by-course",
+      "blurb": "A study companion to Cornell’s Business Strategy certificate: value, disruption, alliances, game theory and platforms. Independent of Cornell.",
+      "keywords": [
+        "business strategy",
+        "eCornell",
+        "game theory",
+        "study guide"
+      ],
+      "book": {
+        "manuscript": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/services/strategy-services-section/content/books/business-strategy-course-by-course",
+        "acceptance": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/services/strategy-services-section/data/records/editions/2026-09-27-business-strategy-course-by-course-first-edition-acceptance.json",
+        "cover": "561-group-services-section/data/state/editions/business-strategy-course-by-course/business-strategy-course-by-course-cover.png"
+      }
     },
     {
       "id": "merch",
-      "title": "Merch",
-      "line": "@red-cup-engineering/print-on-demand-design-factory",
+      "title": "561 Group merch",
+      "line": "merch",
       "status": "coming-soon",
-      "blurb": "Print-on-demand goods. No storefront is open yet."
+      "blurb": "Print-on-demand goods. Not open yet."
     }
   ]
 }

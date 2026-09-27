@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import { createHmac } from "node:crypto";
 import test from "node:test";
 import worker, { CATALOG, CATALOG_VALIDATION, ShopFulfillment } from "../src/worker.mjs";
-import { issueDownloadToken } from "@red-cup-engineering/digital-goods-storefront-services-section";
 
 function fulfillment() {
   const rows = new Map();
@@ -17,29 +16,44 @@ function fulfillment() {
     async entitlement(id) { return (await object.fetch(new Request(`https://fulfillment/entitlement/${id}`))).json(); },
   };
 }
-function r2(objects) { return { async get(key) { const value = objects[key]; return value === undefined ? null : { async arrayBuffer() { return new TextEncoder().encode(value).buffer; } }; } }; }
-function env(overrides = {}) { return { SHOP_FULFILLMENT: fulfillment().namespace, SHOP_GOODS: r2({}), SHOP_TOKEN_SECRET: "token-secret", ...overrides }; }
+function env(overrides = {}) { return { SHOP_FULFILLMENT: fulfillment().namespace, SHOP_GOODS: { async get() { return null; }, async head() { return null; } }, SHOP_TOKEN_SECRET: "token-secret", ...overrides }; }
 function signature(body, secret) { const now = Math.floor(Date.now() / 1000); return "t=" + now + ",v1=" + createHmac("sha256", secret).update(String(now) + "." + body).digest("hex"); }
-function paidEvent({ eventId = "evt_test", sessionId = "cs_test", offeringId = "understanding-infection-associated-chronic-illness", amount = 1900, currency = "usd", paymentStatus = "paid" } = {}) {
+function paidEvent({ eventId = "evt_test", sessionId = "cs_test", offeringId = "the-x402-economy", amount = 900, currency = "usd", paymentStatus = "paid" } = {}) {
   return { id: eventId, type: "checkout.session.completed", livemode: false, data: { object: { id: sessionId, amount_total: amount, currency, payment_status: paymentStatus, status: "complete", metadata: { offering_id: offeringId, request_digest: "digest" } } } };
 }
 
-test("shop catalog is valid, and a book sold over x402 links to its offer on the market page", () => {
+test("the shop lists only what a person buys and reads: books delivered by release, and merch", () => {
   assert.equal(CATALOG_VALIDATION.valid, true);
-  for (const item of CATALOG.offerings.filter((offering) => offering.status === "external")) assert.match(item.externalUrl, /^https:\/\//u, item.id);
-  const byId = new Map(CATALOG.offerings.map((offering) => [offering.id, offering]));
-  assert.equal(byId.get("the-agent-operators-handbook").externalUrl, "https://market.561.group/#publications-agent-operators-handbook");
-  assert.equal(byId.get("the-x402-economy").externalUrl, "https://market.561.group/#publications-the-x402-economy");
+  for (const offering of CATALOG.offerings) assert.ok(offering.book || offering.line === "merch", offering.id);
+  for (const offering of CATALOG.offerings.filter((item) => item.book)) {
+    assert.equal(offering.status, "live", offering.id);
+    assert.match(offering.release, /^[a-z0-9-]+$/u, offering.id);
+    assert.match(offering.agentOfferUrl, /^https:\/\/market\.561\.group\/#publications-/u, offering.id);
+    assert.ok(offering.book.contents.length > 0, offering.id);
+    for (const file of offering.book.edition.files) assert.match(file.sha256, /^[0-9a-f]{64}$/u, `${offering.id} ${file.format}`);
+  }
+  assert.ok(!CATALOG.offerings.some((offering) => /bindinggenerations|play\.561|\/v1\//u.test(offering.externalUrl ?? "")));
 });
 
-test("checkout remains unavailable without all fulfillment capabilities", async () => {
-  const response = await worker.fetch(new Request("https://shop.561.group/checkout/understanding-infection-associated-chronic-illness", { method: "POST" }), env());
-  assert.equal(response.status, 404);
+test("the catalog and a book page render through TUFTE with the verification record", async () => {
+  const listing = await (await worker.fetch(new Request("https://shop.561.group/"), env())).text();
+  assert.match(listing, /561 Group Books/);
+  assert.match(listing, /href="\/goods\/the-x402-economy"/);
+  const page = await (await worker.fetch(new Request("https://shop.561.group/goods/the-x402-economy"), env())).text();
+  assert.match(page, /Verification record/);
+  assert.match(page, /property="og:image" content="https:\/\/shop.561.group\/covers\/the-x402-economy.png"/);
+  assert.match(page, /Card checkout opens soon/);
+  assert.match(page, /Buy with USDC over x402/);
+});
+
+test("checkout remains unavailable without all payment capabilities", async () => {
+  const response = await worker.fetch(new Request("https://shop.561.group/checkout/the-x402-economy", { method: "POST", headers: { origin: "https://shop.561.group" } }), env());
+  assert.equal(response.status, 409);
 });
 
 test("webhook requires a paid event joined to the issued checkout", async () => {
   const secret = "whsec_test"; const store = fulfillment(); const runtime = env({ SHOP_FULFILLMENT: store.namespace, STRIPE_WEBHOOK_SECRET: secret });
-  await store.post("/checkout", { sessionId: "cs_test", offeringId: "understanding-infection-associated-chronic-illness", requestDigest: "digest", amountTotal: 1900, currency: "usd", stripeMode: "test", goods: CATALOG.offerings[0].goods });
+  await store.post("/checkout", { sessionId: "cs_test", offeringId: "the-x402-economy", requestDigest: "digest", amountTotal: 900, currency: "usd", stripeMode: "test", release: "the-x402-economy" });
   const unpaid = JSON.stringify(paidEvent({ paymentStatus: "unpaid" }));
   assert.equal((await worker.fetch(new Request("https://shop.561.group/webhooks/stripe", { method: "POST", body: unpaid, headers: { "stripe-signature": signature(unpaid, secret) } }), runtime)).status, 409);
   const mismatch = JSON.stringify(paidEvent({ eventId: "evt_mismatch", amount: 1 }));
@@ -50,15 +64,12 @@ test("webhook requires a paid event joined to the issued checkout", async () => 
   assert.equal((await store.entitlement("cs_test")).status, "active");
 });
 
-test("download rechecks entitlement and exact artifact bytes", async () => {
-  const item = { id: "historical-publication", priceCents: 1900, currency: "usd", goods: [{ name: "EPUB", key: "historical-publication.epub", contentType: "application/epub+zip", byteLength: 1, sha256: "092921f0be89f4abbc530eef1d6fa5ce9a56b1487c3c93ab0d93d558d69b49fb" }] };
-  const good = item.goods[0]; const store = fulfillment();
-  await store.post("/checkout", { sessionId: "cs_download", offeringId: item.id, requestDigest: "download-digest", amountTotal: item.priceCents, currency: item.currency, stripeMode: "test", goods: item.goods });
-  await store.post("/claim", { eventId: "evt_download", sessionId: "cs_download", offeringId: item.id, requestDigest: "download-digest", amountTotal: item.priceCents, currency: item.currency, stripeMode: "test", paymentStatus: "paid", status: "complete" });
-  const token = await issueDownloadToken({ secret: "token-secret", offeringId: item.id + "/" + good.key, sessionId: "cs_download", expiresAt: Date.now() + 60_000 });
-  const bad = await worker.fetch(new Request("https://shop.561.group/download/" + token), env({ SHOP_FULFILLMENT: store.namespace, SHOP_GOODS: r2({ ["goods/" + item.id + "/" + good.key]: "tampered" }) }));
-  assert.equal(bad.status, 503);
-  await store.post("/revoke", { sessionId: "cs_download", reason: "test" });
-  const revoked = await worker.fetch(new Request("https://shop.561.group/download/" + token), env({ SHOP_FULFILLMENT: store.namespace }));
-  assert.equal(revoked.status, 403);
+test("sign-in and gifts stay closed until the shop's Google client and session secret are set", async () => {
+  const listing = await (await worker.fetch(new Request("https://shop.561.group/"), env())).text();
+  assert.doesNotMatch(listing, /Sign in/);
+  assert.equal((await worker.fetch(new Request("https://shop.561.group/library"), env())).status, 503);
+  const open = env({ GOOGLE_CLIENT_ID: "client", GOOGLE_CLIENT_SECRET: "secret", SHOP_SESSION_SECRET: "session", SHOP_GIFTERS: "giver@example.test" });
+  const login = await worker.fetch(new Request("https://shop.561.group/oauth/login?return_to=/library"), open);
+  assert.equal(login.status, 302);
+  assert.match(login.headers.get("location"), /redirect_uri=https%3A%2F%2Fshop.561.group%2Foauth%2Fcallback/);
 });
