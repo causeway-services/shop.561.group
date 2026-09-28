@@ -38,7 +38,7 @@
       "agentOfferUrl": "https://market.561.group/#publications-the-x402-economy",
       "book": {
         "manuscript": "public-services-section/services/public-economic-services-section/content/books/the-x402-economy",
-        "acceptance": "public-services-section/services/public-economic-services-section/data/records/editions/2026-09-27-the-x402-economy-fourth-edition-acceptance.json"
+        "acceptance": "public-services-section/services/public-economic-services-section/data/records/editions/2026-09-28-the-x402-economy-fifth-edition-acceptance.json"
       }
     },
     {
@@ -51,7 +51,7 @@
       "agentOfferUrl": "https://market.561.group/#publications-project-management-course-by-course",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/project-management-course-by-course",
-        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-project-management-course-by-course-fourth-edition-acceptance.json"
+        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-28-project-management-course-by-course-fifth-edition-acceptance.json"
       }
     },
     {
@@ -64,7 +64,7 @@
       "agentOfferUrl": "https://market.561.group/#publications-the-capm-domain-by-domain",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/the-capm-domain-by-domain",
-        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-the-capm-domain-by-domain-fourth-edition-acceptance.json"
+        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-28-the-capm-domain-by-domain-fifth-edition-acceptance.json"
       }
     },
     {
@@ -77,7 +77,7 @@
       "agentOfferUrl": "https://market.561.group/#publications-data-analytics-course-by-course",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/data-analytics-course-by-course",
-        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-27-data-analytics-course-by-course-fourth-edition-acceptance.json"
+        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-28-data-analytics-course-by-course-fifth-edition-acceptance.json"
       }
     },
     {
@@ -90,7 +90,7 @@
       "agentOfferUrl": "https://market.561.group/#publications-ux-design-course-by-course",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/ux-design-course-by-course",
-        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-27-ux-design-course-by-course-fourth-edition-acceptance.json"
+        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-28-ux-design-course-by-course-fifth-edition-acceptance.json"
       }
     },
     {
@@ -103,7 +103,7 @@
       "agentOfferUrl": "https://market.561.group/#publications-business-management-course-by-course",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-management-course-by-course",
-        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-business-management-course-by-course-fourth-edition-acceptance.json"
+        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-28-business-management-course-by-course-fifth-edition-acceptance.json"
       }
     },
     {
@@ -116,7 +116,7 @@
       "agentOfferUrl": "https://market.561.group/#publications-business-strategy-course-by-course",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-strategy-course-by-course",
-        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-business-strategy-course-by-course-fourth-edition-acceptance.json"
+        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-28-business-strategy-course-by-course-fifth-edition-acceptance.json"
       }
     },
     {
@@ -146,7 +146,7 @@
       "release": "ice-out",
       "book": {
         "manuscript": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/content/books/ice-out",
-        "acceptance": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-27-ice-out-first-edition-acceptance.json"
+        "acceptance": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-28-ice-out-second-edition-acceptance.json"
       }
     },
     {
