@@ -164,30 +164,30 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;W37oK4mO3npDx9ARftmLgDbyXBIX2Gty4Nfku4nppCI",
-          "acceptedAt": "2026-09-28T03:26:50.379Z",
+          "digest": "ni:///sha-256;SWgjhbomPEAoEJFx8nX_Z2uyYB8qP4OrGfaA4l-OcQA",
+          "acceptedAt": "2026-09-28T04:32:14.798Z",
           "pages": 63,
           "proof": {
             "errors": 3,
             "corrections": 4,
-            "notes": 1,
-            "carried": true
+            "notes": 2,
+            "carried": false
           },
           "files": [
             {
               "format": "EPUB",
-              "bytes": 126733,
-              "sha256": "24edd97fc662e9d25af79e4b66ef59cfcb4b21b3c2ebf5478e2391044e3b2e77",
+              "bytes": 126737,
+              "sha256": "8e054968cc0660780ed64caa6749abe2fc46603ead3d3328b95d28848383ddca",
               "path": "public-services-section/services/public-economic-services-section/data/state/editions/the-x402-economy/the-x402-economy.epub"
             },
             {
               "format": "PDF",
-              "bytes": 193832,
-              "sha256": "f75f9240a4a0a466caa4e69c9af1384e539893ffc41fadb3e41c9792948a9838",
+              "bytes": 193568,
+              "sha256": "603e822c0e57ce72779e9938a6add2b07f7cd9e7c70e3e0fc90317f7c74ef1da",
               "path": "public-services-section/services/public-economic-services-section/data/state/editions/the-x402-economy/the-x402-economy.pdf"
             }
           ],
-          "record": "public-services-section/services/public-economic-services-section/data/records/editions/2026-09-27-the-x402-economy-third-edition-acceptance.json"
+          "record": "public-services-section/services/public-economic-services-section/data/records/editions/2026-09-27-the-x402-economy-fourth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-economic-services-section/content/books/the-x402-economy"
       }
