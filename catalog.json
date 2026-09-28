@@ -13,12 +13,6 @@
       "currency": "usd",
       "release": "agent-operators-handbook",
       "agentOfferUrl": "https://market.561.group/#publications-agent-operators-handbook",
-      "blurb": "A field guide to operating several AI coding agents at once: writing the complete brief, when to split work and when not to, steering a running agent, recovering an interrupted one, and reading its report.",
-      "keywords": [
-        "AI agents",
-        "coding agents",
-        "field guide"
-      ],
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/content/books/the-agent-operators-handbook",
         "files": "561-group-services-section/data/state/editions/the-agent-operators-handbook"
@@ -32,13 +26,6 @@
       "currency": "usd",
       "release": "the-x402-economy",
       "agentOfferUrl": "https://market.561.group/#publications-the-x402-economy",
-      "blurb": "How the web’s unused payment code became a way for software to pay, and what it has earned so far: HTTP 402’s history, one paid request step by step, who governs x402, its rivals, the market measurements, security and US law.",
-      "keywords": [
-        "x402",
-        "stablecoins",
-        "agent payments",
-        "HTTP 402"
-      ],
       "book": {
         "manuscript": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/economics-science-services-section/content/books/the-x402-economy",
         "acceptance": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/economics-science-services-section/data/records/editions/2026-09-27-the-x402-economy-first-edition-acceptance.json",
@@ -53,13 +40,6 @@
       "currency": "usd",
       "release": "project-management-course-by-course",
       "agentOfferUrl": "https://market.561.group/#publications-project-management-course-by-course",
-      "blurb": "A study companion to Google’s Project Management Certificate: one chapter per course, self-checks with answers, and a guide to the capstone. Independent of Google and Coursera.",
-      "keywords": [
-        "project management",
-        "Google certificate",
-        "Coursera",
-        "study guide"
-      ],
       "book": {
         "manuscript": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/content/books/project-management-course-by-course",
         "acceptance": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/data/records/editions/2026-09-27-project-management-course-by-course-first-edition-acceptance.json",
@@ -74,13 +54,6 @@
       "currency": "usd",
       "release": "the-capm-domain-by-domain",
       "agentOfferUrl": "https://market.561.group/#publications-the-capm-domain-by-domain",
-      "blurb": "A study companion to PMI’s CAPM exam that follows the 2023 outline task by task and ends with a 40-question practice exam. Independent of PMI.",
-      "keywords": [
-        "CAPM",
-        "PMI",
-        "project management",
-        "exam prep"
-      ],
       "book": {
         "manuscript": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/content/books/the-capm-domain-by-domain",
         "acceptance": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/data/records/editions/2026-09-27-the-capm-domain-by-domain-first-edition-acceptance.json",
@@ -95,14 +68,6 @@
       "currency": "usd",
       "release": "data-analytics-course-by-course",
       "agentOfferUrl": "https://market.561.group/#publications-data-analytics-course-by-course",
-      "blurb": "A study companion to Google’s Data Analytics Certificate: spreadsheets, SQL, Tableau and Python, with tested code and answered self-checks. Independent of Google and Coursera.",
-      "keywords": [
-        "data analytics",
-        "SQL",
-        "Python",
-        "Google certificate",
-        "study guide"
-      ],
       "book": {
         "manuscript": "science-services-section/services/information-science-services-section/services/math-services-section/content/books/data-analytics-course-by-course",
         "acceptance": "science-services-section/services/information-science-services-section/services/math-services-section/data/records/editions/2026-09-27-data-analytics-course-by-course-first-edition-acceptance.json",
@@ -117,13 +82,6 @@
       "currency": "usd",
       "release": "ux-design-course-by-course",
       "agentOfferUrl": "https://market.561.group/#publications-ux-design-course-by-course",
-      "blurb": "A study companion to Google’s UX Design Certificate: the design process from its sources, accessibility throughout, and a portfolio guide. Independent of Google and Coursera.",
-      "keywords": [
-        "UX design",
-        "accessibility",
-        "Google certificate",
-        "study guide"
-      ],
       "book": {
         "manuscript": "science-services-section/services/engineering-science-services-section/services/design-engineering-science-services-section/content/books/ux-design-course-by-course",
         "acceptance": "science-services-section/services/engineering-science-services-section/services/design-engineering-science-services-section/data/records/editions/2026-09-27-ux-design-course-by-course-first-edition-acceptance.json",
@@ -138,12 +96,6 @@
       "currency": "usd",
       "release": "business-management-course-by-course",
       "agentOfferUrl": "https://market.561.group/#publications-business-management-course-by-course",
-      "blurb": "A study companion to Cornell’s Business Management Essentials certificate: finance, marketing, strategy, organizing and leading. Independent of Cornell.",
-      "keywords": [
-        "business management",
-        "eCornell",
-        "study guide"
-      ],
       "book": {
         "manuscript": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/content/books/business-management-course-by-course",
         "acceptance": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/data/records/editions/2026-09-27-business-management-course-by-course-first-edition-acceptance.json",
@@ -158,13 +110,6 @@
       "currency": "usd",
       "release": "business-strategy-course-by-course",
       "agentOfferUrl": "https://market.561.group/#publications-business-strategy-course-by-course",
-      "blurb": "A study companion to Cornell’s Business Strategy certificate: value, disruption, alliances, game theory and platforms. Independent of Cornell.",
-      "keywords": [
-        "business strategy",
-        "eCornell",
-        "game theory",
-        "study guide"
-      ],
       "book": {
         "manuscript": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/services/strategy-services-section/content/books/business-strategy-course-by-course",
         "acceptance": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/services/strategy-services-section/data/records/editions/2026-09-27-business-strategy-course-by-course-first-edition-acceptance.json",

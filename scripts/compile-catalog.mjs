@@ -3,7 +3,8 @@
 // its manuscript, its acceptance record (or, for an edition that predates
 // acceptance records, the directory holding its files) and the pipeline's
 // cover; everything a reader is told about the book -- title, series,
-// contents, formats, sizes, digests, the proof's counts -- is read from
+// description, keywords, subjects, contents, formats, sizes, digests, the
+// proof's counts -- is read from
 // those records here rather than typed into the catalog. The cover is copied
 // into public/covers/, which the Worker serves as static assets.
 //
@@ -25,6 +26,8 @@ const checkout = join(git("rev-parse", "--show-toplevel"), SERVICES);
 const mainTree = join(dirname(resolve(site, git("rev-parse", "--git-common-dir"))), SERVICES);
 
 const hexOf = (ni) => Buffer.from(ni.replace(/^ni:\/\/\/sha-256;/u, ""), "base64url").toString("hex");
+// A path as the catalog records it: relative to the services root, the same on every checkout.
+const servicesRelative = (path) => path.replace(/^.*?\/lib\/emsenn\/services\/561-group\/services\//u, "");
 const stateFile = (path) => (path.startsWith("/") ? path.replace(/^.*?\/lib\/emsenn\/services\/561-group\/services\//u, `${mainTree}/`) : join(mainTree, path));
 
 function pages(pdf) {
@@ -49,7 +52,7 @@ function edition(row) {
       acceptedAt: record.acceptedAt,
       pages: pages(stateFile(screenPdf.path)),
       proof: record.proof?.findings ?? null,
-      files: [{ format: "EPUB", bytes: epub.bytes, sha256: hexOf(epub.sha256) }, { format: "PDF", bytes: screenPdf.bytes, sha256: hexOf(screenPdf.sha256) }],
+      files: [{ format: "EPUB", bytes: epub.bytes, sha256: hexOf(epub.sha256), path: servicesRelative(epub.path) }, { format: "PDF", bytes: screenPdf.bytes, sha256: hexOf(screenPdf.sha256), path: servicesRelative(screenPdf.path) }],
       record: row.book.acceptance,
     };
   }
@@ -60,7 +63,7 @@ function edition(row) {
     digest: `release ${row.release}`,
     pages: pages(pdf),
     proof: null,
-    files: [{ format: "EPUB", bytes: readFileSync(epub).byteLength, sha256: hexOf(sha256File(epub)) }, { format: "PDF", bytes: readFileSync(pdf).byteLength, sha256: hexOf(sha256File(pdf)) }],
+    files: [{ format: "EPUB", bytes: readFileSync(epub).byteLength, sha256: hexOf(sha256File(epub)), path: servicesRelative(epub) }, { format: "PDF", bytes: readFileSync(pdf).byteLength, sha256: hexOf(sha256File(pdf)), path: servicesRelative(pdf) }],
   };
 }
 
@@ -82,8 +85,20 @@ export function compileCatalog(source) {
       ...offering,
       title: row.title ?? manifest.title,
       subtitle: manifest.subtitle,
+      blurb: manifest.description,
+      keywords: manifest.keywords ?? [],
       ...(cover ? { cover } : {}),
-      book: { author: manifest.author, ...(manifest.series ? { series: manifest.series } : {}), contents: contents(manuscript), edition: edition(row), manuscript: book.manuscript },
+      book: {
+        author: manifest.author,
+        ...(manifest.series ? { series: manifest.series } : {}),
+        ...(manifest.profile ? { profile: manifest.profile } : {}),
+        subjects: manifest.subjects ?? [],
+        ...(cover ? { coverFile: row.book.cover } : {}),
+        marks: manifest.marks ?? [],
+        contents: contents(manuscript),
+        edition: edition(row),
+        manuscript: book.manuscript,
+      },
     };
   });
   const { $comment, ...rest } = source;
