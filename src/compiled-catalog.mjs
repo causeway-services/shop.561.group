@@ -242,8 +242,8 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;5qgk6U-ECqEJZpnnYQmZ-z92WvI7crTnVkPOjQYfcq0",
-          "acceptedAt": "2026-09-28T03:27:35.145Z",
+          "digest": "ni:///sha-256;sAbkEbmMVgIQkPokE1tMVSxr3phaaJ4pI6118HY3grE",
+          "acceptedAt": "2026-09-28T04:16:35.269Z",
           "pages": 82,
           "proof": {
             "errors": 2,
@@ -254,18 +254,18 @@ export default {
           "files": [
             {
               "format": "EPUB",
-              "bytes": 162847,
-              "sha256": "76c31673afdaec09441d83efcf96734681304c59954c07928afc9839ba9865bc",
+              "bytes": 162840,
+              "sha256": "37965acdbb981b3a9c1e344c50e160d873e2eb5dc6de035a9016d825ef740baa",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/project-management-course-by-course/project-management-course-by-course.epub"
             },
             {
               "format": "PDF",
-              "bytes": 256755,
-              "sha256": "37ad2c7934e01ea51efd3ca94cac49007ae528feb5630a74fda06f738e2da925",
+              "bytes": 256623,
+              "sha256": "0c481e7958751e911d66a4c608fdec04f0fa4bffe2a95006c294960cc1896cd0",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/project-management-course-by-course/project-management-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-project-management-course-by-course-third-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-project-management-course-by-course-fourth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/project-management-course-by-course"
       }
@@ -321,8 +321,8 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;VPg-979uf-bPQaAQJZPZz7PTzvO7SLDF0aPBUWV2FE0",
-          "acceptedAt": "2026-09-28T03:28:30.674Z",
+          "digest": "ni:///sha-256;2Yw25vpwGzUq57xJ9JaH6PNAS68HjzsDd5JzEoLAs7A",
+          "acceptedAt": "2026-09-28T04:23:25.817Z",
           "pages": 82,
           "proof": {
             "errors": 5,
@@ -333,18 +333,18 @@ export default {
           "files": [
             {
               "format": "EPUB",
-              "bytes": 155943,
-              "sha256": "35cca4e5bd8439ce4ee90ba90d1ba59deead97227930520bb8d1b334cb9c78b7",
+              "bytes": 155938,
+              "sha256": "8a8d5335822232fc0d36ec67feb5c38da8dd7d6e7b4f37ec2f88d837cdaad30f",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/the-capm-domain-by-domain/the-capm-domain-by-domain.epub"
             },
             {
               "format": "PDF",
-              "bytes": 240539,
-              "sha256": "312656a6fb390c62e0c2479579e95576c45497d991ada5c3ffe9eabad6bcda34",
+              "bytes": 240871,
+              "sha256": "a5e440616b94d5c9a56d3873207f66b35f1b89bc208f2c6d9df9a1bfd3545838",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/the-capm-domain-by-domain/the-capm-domain-by-domain.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-the-capm-domain-by-domain-third-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-the-capm-domain-by-domain-fourth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/the-capm-domain-by-domain"
       }
@@ -399,8 +399,8 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;vszxZ2C39Ly615VoFRCeemQ8nY4lETX6p2UcyPEOloc",
-          "acceptedAt": "2026-09-28T03:31:03.514Z",
+          "digest": "ni:///sha-256;jdOLzkzdZrWmL2gB3eUn7t4qhCaZ6eCPPCehcy6AhZw",
+          "acceptedAt": "2026-09-28T04:17:28.850Z",
           "pages": 62,
           "proof": {
             "errors": 3,
@@ -411,18 +411,18 @@ export default {
           "files": [
             {
               "format": "EPUB",
-              "bytes": 146749,
-              "sha256": "534127828ef0ba8a3b27b1bf2fe10d693ca3ed771052bf5ee2f6a41f3ba51911",
+              "bytes": 146741,
+              "sha256": "095ed95d65ad80f09000344e06bbea7295097a84b67b3b38b91b8811ae81d44f",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/data-analytics-course-by-course/data-analytics-course-by-course.epub"
             },
             {
               "format": "PDF",
-              "bytes": 243601,
-              "sha256": "6d49b3f5e9c2c63fcecc852afc92760ecef5e7f18660313274365c0987256243",
+              "bytes": 243727,
+              "sha256": "99cfa245de657479bf4f4785c5b91f6ab38e7ae1d15bc45df4ce0f9e7e23472c",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/data-analytics-course-by-course/data-analytics-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-27-data-analytics-course-by-course-third-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-27-data-analytics-course-by-course-fourth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/data-analytics-course-by-course"
       }
@@ -476,8 +476,8 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;w-x3fH1b2kGzDJc0LrgYoxQnVEGSQzM5hQcQz7f0-rQ",
-          "acceptedAt": "2026-09-28T03:29:28.161Z",
+          "digest": "ni:///sha-256;sAA5iQbC6cr3S43KiJyTdi--8z8cvSB22Fncj2448xU",
+          "acceptedAt": "2026-09-28T04:17:50.329Z",
           "pages": 66,
           "proof": {
             "errors": 2,
@@ -489,17 +489,17 @@ export default {
             {
               "format": "EPUB",
               "bytes": 137992,
-              "sha256": "f3c732e6850290bf064676ab272fdd8988b7517a834aeb87ef6e1bd9f45b1eea",
+              "sha256": "b43dc1bfeca9ca94d6577d40da189a0bf58fcacbcacc61b5defa1726959c182a",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/ux-design-course-by-course/ux-design-course-by-course.epub"
             },
             {
               "format": "PDF",
-              "bytes": 201970,
-              "sha256": "9022b7c74207e1592bd9f50c697c5aaed75853258ce0ee6929765b11a06316fd",
+              "bytes": 202220,
+              "sha256": "10602351493d45f51924e658a482a2d6f2ca4305f6e8c129ad6bb3fe330b79b7",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/ux-design-course-by-course/ux-design-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-27-ux-design-course-by-course-third-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-27-ux-design-course-by-course-fourth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/ux-design-course-by-course"
       }
@@ -551,8 +551,8 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;rr9dcMfD2IRq3f9M_Q4Emfbxf8h_bd1lsmoJhKSaMIE",
-          "acceptedAt": "2026-09-28T03:29:54.845Z",
+          "digest": "ni:///sha-256;YEk-gL7ZcuPUif8s-G_uXZh41tC2KCsstHa44fIznOs",
+          "acceptedAt": "2026-09-28T04:18:18.082Z",
           "pages": 61,
           "proof": {
             "errors": 2,
@@ -563,18 +563,18 @@ export default {
           "files": [
             {
               "format": "EPUB",
-              "bytes": 140160,
-              "sha256": "954ef8cac59095d6d81ae5002e132e4b04e19d9b50697ebfd23339c421be38cf",
+              "bytes": 140164,
+              "sha256": "fb855790495ee7d5c38cb3179bac7a08b4dc79b8465628443770fa1d52a164ef",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-management-course-by-course/business-management-course-by-course.epub"
             },
             {
               "format": "PDF",
-              "bytes": 187141,
-              "sha256": "f0192f5f8a8ab445d35c15f3dba387a85a4fc3aff1ddbf59b343398117808f86",
+              "bytes": 186532,
+              "sha256": "a1a5db4eed8c3cbaac7c2b416b7e4becba6fe7e7c9b492a05567bd950e127737",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-management-course-by-course/business-management-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-business-management-course-by-course-third-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-business-management-course-by-course-fourth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-management-course-by-course"
       }
@@ -627,8 +627,8 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;-UIG5LD-R675pbqb4b-jfEndf0Gws-Bc_f57t6QefDU",
-          "acceptedAt": "2026-09-28T03:30:28.426Z",
+          "digest": "ni:///sha-256;bj-aAbE_Gy5p2f5PgPuCb9aeGfUW0KA3HM3I_sTaXkA",
+          "acceptedAt": "2026-09-28T04:18:40.292Z",
           "pages": 58,
           "proof": {
             "errors": 0,
@@ -639,18 +639,18 @@ export default {
           "files": [
             {
               "format": "EPUB",
-              "bytes": 144243,
-              "sha256": "7a5594a64295350ef7e1f082858eceb3bd8f7057361160e0d9c604ed50788014",
+              "bytes": 144237,
+              "sha256": "3fa2c5b7695a49884fa03d981e39a7680149c6317dceb28d9d1c33d7eef8dd43",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-strategy-course-by-course/business-strategy-course-by-course.epub"
             },
             {
               "format": "PDF",
-              "bytes": 177212,
-              "sha256": "005d2376560ecb12a61054d8ff4508cb8216ce496e499c519b460fa4d09f9da5",
+              "bytes": 176709,
+              "sha256": "3d885aac8ae9e3bcd3eae8bf670137db628586e0f29bd09a23e990b33015630a",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-strategy-course-by-course/business-strategy-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-business-strategy-course-by-course-third-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-business-strategy-course-by-course-fourth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-strategy-course-by-course"
       }
