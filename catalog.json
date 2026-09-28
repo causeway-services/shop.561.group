@@ -138,6 +138,18 @@
       "blurb": "A health-synthesis newsletter about infection-associated chronic illness. No subscription is open yet."
     },
     {
+      "id": "ice-out",
+      "line": "public-fiction-media-services-section",
+      "status": "live",
+      "priceCents": 399,
+      "currency": "usd",
+      "release": "ice-out",
+      "book": {
+        "manuscript": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/content/books/ice-out",
+        "acceptance": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-27-ice-out-first-edition-acceptance.json"
+      }
+    },
+    {
       "id": "merch",
       "title": "561 Group merch",
       "line": "merch",

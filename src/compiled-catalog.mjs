@@ -724,6 +724,81 @@ export default {
       "blurb": "A health-synthesis newsletter about infection-associated chronic illness. No subscription is open yet."
     },
     {
+      "id": "ice-out",
+      "line": "public-fiction-media-services-section",
+      "status": "live",
+      "priceCents": 399,
+      "currency": "usd",
+      "release": "ice-out",
+      "title": "Ice Out",
+      "subtitle": "A Slow-Burn Duluth Romance",
+      "blurb": "June Tam comes home to Duluth for one winter to help run her family's Cantonese restaurant after her father's stroke. Anders Holm, who washed dishes there at sixteen and now raises the Aerial Lift Bridge, has loved her for eleven years without a word. When the aunties start matchmaking, she proposes they pretend to date until the Lantern Festival. A slow, warm, closed-door love story in the register of a Chinese drama, with the ending an American romance promises.",
+      "keywords": [
+        "slow burn romance",
+        "closed door romance",
+        "books like C-dramas",
+        "Chinese American romance",
+        "fake dating",
+        "second chance romance",
+        "Duluth",
+        "Lake Superior"
+      ],
+      "cover": "/covers/ice-out.png",
+      "book": {
+        "author": "561 Group",
+        "profile": "fiction",
+        "coverArt": true,
+        "subjects": [
+          "FIC027020",
+          "FIC054000"
+        ],
+        "coverFile": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out-cover.png",
+        "marks": [],
+        "contents": [
+          "The Walk-In",
+          "Operator's House",
+          "Sea Smoke",
+          "Terms",
+          "Last Ship",
+          "Fire Horse",
+          "Eleven Years",
+          "Winter Work",
+          "Lantern Festival",
+          "Icebreaker",
+          "Out Loud",
+          "Ice Out",
+          "About This Book"
+        ],
+        "edition": {
+          "digest": "ni:///sha-256;4yrePOy4raVuLy0oh13mxSRAlbC0MCOFRfJAhRQF7x8",
+          "acceptedAt": "2026-09-28T03:47:57.071Z",
+          "pages": 79,
+          "proof": {
+            "errors": 4,
+            "corrections": 1,
+            "notes": 4,
+            "carried": false
+          },
+          "files": [
+            {
+              "format": "EPUB",
+              "bytes": 171304,
+              "sha256": "455d451d7e4836180236fe718e37be9da499b4424226398b8c1fba58e06ccf6f",
+              "path": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out.epub"
+            },
+            {
+              "format": "PDF",
+              "bytes": 248145,
+              "sha256": "8e273d60c267d68f32417f4a10feff1bb64043d3c18684b884aa85a31186706c",
+              "path": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out.pdf"
+            }
+          ],
+          "record": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-27-ice-out-first-edition-acceptance.json"
+        },
+        "manuscript": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/content/books/ice-out"
+      }
+    },
+    {
       "id": "merch",
       "title": "561 Group merch",
       "line": "merch",

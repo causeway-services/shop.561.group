@@ -110,6 +110,8 @@ export function compileCatalog(source) {
         author: manifest.author,
         ...(manifest.series ? { series: manifest.series } : {}),
         ...(manifest.profile ? { profile: manifest.profile } : {}),
+        // Cover art drawn in code (a TikZ file an agent wrote) is disclosed as such.
+        ...(manifest.coverArt ? { coverArt: true } : {}),
         subjects: manifest.subjects ?? [],
         ...(cover ? { coverFile: servicesRelative(built.cover) } : {}),
         marks: manifest.marks ?? [],
