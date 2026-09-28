@@ -164,30 +164,30 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;SWgjhbomPEAoEJFx8nX_Z2uyYB8qP4OrGfaA4l-OcQA",
-          "acceptedAt": "2026-09-28T04:32:14.798Z",
+          "digest": "ni:///sha-256;JHNhRRUgZedFD7krPOz_mpxwluWbxzIOk4jbCYOEHl0",
+          "acceptedAt": "2026-09-28T05:49:47.888Z",
           "pages": 63,
           "proof": {
             "errors": 3,
             "corrections": 4,
             "notes": 2,
-            "carried": false
+            "carried": true
           },
           "files": [
             {
               "format": "EPUB",
-              "bytes": 126737,
-              "sha256": "8e054968cc0660780ed64caa6749abe2fc46603ead3d3328b95d28848383ddca",
+              "bytes": 126738,
+              "sha256": "fd0c312fe20ec5ee500a1de3bf1f0c84c2964946d946b7bacdb93a9e336b94fc",
               "path": "public-services-section/services/public-economic-services-section/data/state/editions/the-x402-economy/the-x402-economy.epub"
             },
             {
               "format": "PDF",
-              "bytes": 193568,
-              "sha256": "603e822c0e57ce72779e9938a6add2b07f7cd9e7c70e3e0fc90317f7c74ef1da",
+              "bytes": 193573,
+              "sha256": "9644899b367e43f1538969bdf7243ca1d531937300a5a03e60bb955f756e1106",
               "path": "public-services-section/services/public-economic-services-section/data/state/editions/the-x402-economy/the-x402-economy.pdf"
             }
           ],
-          "record": "public-services-section/services/public-economic-services-section/data/records/editions/2026-09-27-the-x402-economy-fourth-edition-acceptance.json"
+          "record": "public-services-section/services/public-economic-services-section/data/records/editions/2026-09-28-the-x402-economy-fifth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-economic-services-section/content/books/the-x402-economy"
       }
@@ -242,8 +242,8 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;sAbkEbmMVgIQkPokE1tMVSxr3phaaJ4pI6118HY3grE",
-          "acceptedAt": "2026-09-28T04:16:35.269Z",
+          "digest": "ni:///sha-256;Ri5Z9rxN40KV46bLP2evLd_yhSM1HFUkwQOmoxrvHgw",
+          "acceptedAt": "2026-09-28T05:50:32.293Z",
           "pages": 82,
           "proof": {
             "errors": 2,
@@ -254,18 +254,18 @@ export default {
           "files": [
             {
               "format": "EPUB",
-              "bytes": 162840,
-              "sha256": "37965acdbb981b3a9c1e344c50e160d873e2eb5dc6de035a9016d825ef740baa",
+              "bytes": 162844,
+              "sha256": "cc3e1d2a88fcba7df345f02b291ec22ce9ec8980934aa395b076fe401739751d",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/project-management-course-by-course/project-management-course-by-course.epub"
             },
             {
               "format": "PDF",
-              "bytes": 256623,
-              "sha256": "0c481e7958751e911d66a4c608fdec04f0fa4bffe2a95006c294960cc1896cd0",
+              "bytes": 256209,
+              "sha256": "1ced2d0d546c3608d07650756b8232a83e3f9c535f96ddb2dc138d4e7cba785d",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/project-management-course-by-course/project-management-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-project-management-course-by-course-fourth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-28-project-management-course-by-course-fifth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/project-management-course-by-course"
       }
@@ -321,8 +321,8 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;2Yw25vpwGzUq57xJ9JaH6PNAS68HjzsDd5JzEoLAs7A",
-          "acceptedAt": "2026-09-28T04:23:25.817Z",
+          "digest": "ni:///sha-256;hEC7gqsw3d7qnwvgDPOpLP9lXGv47eg3sh1R9AmZw8I",
+          "acceptedAt": "2026-09-28T05:50:49.275Z",
           "pages": 82,
           "proof": {
             "errors": 5,
@@ -333,18 +333,18 @@ export default {
           "files": [
             {
               "format": "EPUB",
-              "bytes": 155938,
-              "sha256": "8a8d5335822232fc0d36ec67feb5c38da8dd7d6e7b4f37ec2f88d837cdaad30f",
+              "bytes": 155944,
+              "sha256": "15739cfd658ffb055a7dfe68393007fa19b037b54e3d274e101c542bf2c502e6",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/the-capm-domain-by-domain/the-capm-domain-by-domain.epub"
             },
             {
               "format": "PDF",
-              "bytes": 240871,
-              "sha256": "a5e440616b94d5c9a56d3873207f66b35f1b89bc208f2c6d9df9a1bfd3545838",
+              "bytes": 240975,
+              "sha256": "beace4557542a3aff0f9aa81c42b0efe3b3cb1ea70290aece00eccba837a9ae1",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/the-capm-domain-by-domain/the-capm-domain-by-domain.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-the-capm-domain-by-domain-fourth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-28-the-capm-domain-by-domain-fifth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/the-capm-domain-by-domain"
       }
@@ -399,8 +399,8 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;jdOLzkzdZrWmL2gB3eUn7t4qhCaZ6eCPPCehcy6AhZw",
-          "acceptedAt": "2026-09-28T04:17:28.850Z",
+          "digest": "ni:///sha-256;qrvK4fX9UGSEpgfbtJU6_nYBdoJh_tQjCd4rR3ywtgc",
+          "acceptedAt": "2026-09-28T05:51:02.957Z",
           "pages": 62,
           "proof": {
             "errors": 3,
@@ -412,17 +412,17 @@ export default {
             {
               "format": "EPUB",
               "bytes": 146741,
-              "sha256": "095ed95d65ad80f09000344e06bbea7295097a84b67b3b38b91b8811ae81d44f",
+              "sha256": "359fe4b3fa9806513d86c821b850e0822007da7463720b39e791e54fd1aec782",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/data-analytics-course-by-course/data-analytics-course-by-course.epub"
             },
             {
               "format": "PDF",
-              "bytes": 243727,
-              "sha256": "99cfa245de657479bf4f4785c5b91f6ab38e7ae1d15bc45df4ce0f9e7e23472c",
+              "bytes": 243789,
+              "sha256": "28679c0353ee3a213dc5d78dcf6d45aa9a860d37df4ca8dad059658180566e28",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/data-analytics-course-by-course/data-analytics-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-27-data-analytics-course-by-course-fourth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-28-data-analytics-course-by-course-fifth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/data-analytics-course-by-course"
       }
@@ -476,8 +476,8 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;sAA5iQbC6cr3S43KiJyTdi--8z8cvSB22Fncj2448xU",
-          "acceptedAt": "2026-09-28T04:17:50.329Z",
+          "digest": "ni:///sha-256;N3A4OMWkXmS5XRaIObjpoVYPXDeuxZUxAyyJ4OAaZTI",
+          "acceptedAt": "2026-09-28T05:51:18.260Z",
           "pages": 66,
           "proof": {
             "errors": 2,
@@ -489,17 +489,17 @@ export default {
             {
               "format": "EPUB",
               "bytes": 137992,
-              "sha256": "b43dc1bfeca9ca94d6577d40da189a0bf58fcacbcacc61b5defa1726959c182a",
+              "sha256": "002e1e16c66cb0e22ce3a18eb73c1a49a18022aeb3011a3f67710a05ceb5f954",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/ux-design-course-by-course/ux-design-course-by-course.epub"
             },
             {
               "format": "PDF",
-              "bytes": 202220,
-              "sha256": "10602351493d45f51924e658a482a2d6f2ca4305f6e8c129ad6bb3fe330b79b7",
+              "bytes": 201934,
+              "sha256": "fbd7f0d34f184c1e0dd39a992899cff57791e944cfa3a57a8145366c6401d7a8",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/ux-design-course-by-course/ux-design-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-27-ux-design-course-by-course-fourth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-28-ux-design-course-by-course-fifth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/ux-design-course-by-course"
       }
@@ -551,8 +551,8 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;YEk-gL7ZcuPUif8s-G_uXZh41tC2KCsstHa44fIznOs",
-          "acceptedAt": "2026-09-28T04:18:18.082Z",
+          "digest": "ni:///sha-256;215AesJG1AxbqsdqtnzVAh65mmG83Ui6Qm5-arLgYKc",
+          "acceptedAt": "2026-09-28T05:50:01.527Z",
           "pages": 61,
           "proof": {
             "errors": 2,
@@ -563,18 +563,18 @@ export default {
           "files": [
             {
               "format": "EPUB",
-              "bytes": 140164,
-              "sha256": "fb855790495ee7d5c38cb3179bac7a08b4dc79b8465628443770fa1d52a164ef",
+              "bytes": 140157,
+              "sha256": "fc99a570cfd002162f70f9e17c4cf47925320a44461cee32c11646d4de45f5ee",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-management-course-by-course/business-management-course-by-course.epub"
             },
             {
               "format": "PDF",
-              "bytes": 186532,
-              "sha256": "a1a5db4eed8c3cbaac7c2b416b7e4becba6fe7e7c9b492a05567bd950e127737",
+              "bytes": 186698,
+              "sha256": "b9e64b7bcb60090aab3384ce8c8957989bbdcbc77eaef5984b4ff12e7a04c475",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-management-course-by-course/business-management-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-business-management-course-by-course-fourth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-28-business-management-course-by-course-fifth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-management-course-by-course"
       }
@@ -627,8 +627,8 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;bj-aAbE_Gy5p2f5PgPuCb9aeGfUW0KA3HM3I_sTaXkA",
-          "acceptedAt": "2026-09-28T04:18:40.292Z",
+          "digest": "ni:///sha-256;D2DLF2giwWzto8-klSvhjTUSg-cy0EFtI_grpElvANo",
+          "acceptedAt": "2026-09-28T05:50:17.382Z",
           "pages": 58,
           "proof": {
             "errors": 0,
@@ -640,17 +640,17 @@ export default {
             {
               "format": "EPUB",
               "bytes": 144237,
-              "sha256": "3fa2c5b7695a49884fa03d981e39a7680149c6317dceb28d9d1c33d7eef8dd43",
+              "sha256": "c3fb1329eca5c4e88a99098bd22acd37dec7c3c0278da0bffe87385bb261f19b",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-strategy-course-by-course/business-strategy-course-by-course.epub"
             },
             {
               "format": "PDF",
-              "bytes": 176709,
-              "sha256": "3d885aac8ae9e3bcd3eae8bf670137db628586e0f29bd09a23e990b33015630a",
+              "bytes": 176724,
+              "sha256": "7ac1783966a30e875add09bb5adfd83fff09a289406401450f604263c6d691f6",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-strategy-course-by-course/business-strategy-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-business-strategy-course-by-course-fourth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-28-business-strategy-course-by-course-fifth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-strategy-course-by-course"
       }
@@ -770,20 +770,20 @@ export default {
           "About This Book"
         ],
         "edition": {
-          "digest": "ni:///sha-256;4yrePOy4raVuLy0oh13mxSRAlbC0MCOFRfJAhRQF7x8",
-          "acceptedAt": "2026-09-28T03:47:57.071Z",
+          "digest": "ni:///sha-256;5cn6AYaJ-Xum9qg4TOQJ84GDlHQULazBSjWvlLUlPWI",
+          "acceptedAt": "2026-09-28T05:49:26.140Z",
           "pages": 79,
           "proof": {
             "errors": 4,
             "corrections": 1,
             "notes": 4,
-            "carried": false
+            "carried": true
           },
           "files": [
             {
               "format": "EPUB",
-              "bytes": 171304,
-              "sha256": "455d451d7e4836180236fe718e37be9da499b4424226398b8c1fba58e06ccf6f",
+              "bytes": 171308,
+              "sha256": "eb0177d48829e4d8dd819eec8734f176976081ab30f9e30df34bbb9bff9ef90c",
               "path": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out.epub"
             },
             {
@@ -793,7 +793,7 @@ export default {
               "path": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out.pdf"
             }
           ],
-          "record": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-27-ice-out-first-edition-acceptance.json"
+          "record": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-28-ice-out-second-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/content/books/ice-out"
       }
