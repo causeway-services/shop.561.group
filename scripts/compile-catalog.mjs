@@ -60,6 +60,12 @@ function contents(manuscript) {
   });
 }
 
+export function generatedIllustrationsFrom(manifest) {
+  return (manifest.assets ?? [])
+    .filter((asset) => typeof asset.provenance?.model === "string")
+    .map((asset) => ({ path: asset.path, role: asset.role, model: asset.provenance.model, ...(asset.provenance.provider ? { provider: asset.provenance.provider } : {}) }));
+}
+
 // A book's built files, where its manifest builds them: <book>/<distDir>/<slug>.{epub,pdf}
 // and <slug>-cover.png, read from the main worktree (they are untracked state).
 function builtFiles(row, manifest) {
@@ -92,6 +98,7 @@ export function compileCatalog(source) {
     if (!row.book) return row;
     const manuscript = join(checkout, row.book.manuscript);
     const manifest = JSON.parse(readFileSync(join(manuscript, "ebook.json"), "utf8"));
+    const generatedIllustrations = generatedIllustrationsFrom(manifest);
     const built = builtFiles(row, manifest);
     let cover;
     if (existsSync(built.cover)) {
@@ -112,6 +119,7 @@ export function compileCatalog(source) {
         ...(manifest.profile ? { profile: manifest.profile } : {}),
         // Cover art drawn in code (a TikZ file an agent wrote) is disclosed as such.
         ...(manifest.coverArt ? { coverArt: true } : {}),
+        ...(generatedIllustrations.length ? { generatedIllustrations } : {}),
         subjects: manifest.subjects ?? [],
         ...(cover ? { coverFile: servicesRelative(built.cover) } : {}),
         marks: manifest.marks ?? [],
