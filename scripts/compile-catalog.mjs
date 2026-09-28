@@ -63,7 +63,7 @@ function edition(row, manifest) {
   if (record.type !== "EbookEditionAcceptance" || record.status !== "accepted") throw new Error(`${row.id}: ${row.book.acceptance} is not an accepted edition`);
   const accepted = { EPUB: hexOf(record.artifacts.epub.sha256), PDF: hexOf(record.artifacts.screenPdf.sha256) };
   for (const { format, sha256, path } of files) if (sha256 !== accepted[format]) throw new Error(`${row.id}: ${path} is not the accepted ${format} (${sha256} is not ${accepted[format]})`);
-  return { digest: record.editionInputDigest, acceptedAt: record.acceptedAt, pages: pages(built.pdf), proof: record.proof?.findings ?? null, files, record: row.book.acceptance };
+  return { digest: record.editionInputDigest, acceptedAt: record.acceptedAt, pages: pages(built.pdf), proof: record.proof ? { ...record.proof.findings, carried: /^Carried from /u.test(record.proof.method ?? "") } : null, files, record: row.book.acceptance };
 }
 
 export function compileCatalog(source) {
