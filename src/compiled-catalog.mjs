@@ -53,13 +53,13 @@ export default {
               "format": "EPUB",
               "bytes": 62974,
               "sha256": "1591a87c150a10bf87c30d037f66c1c2af8032a5a694ecb5e20a758007681a54",
-              "path": "561-group-services-section/data/state/editions/the-agent-operators-handbook/the-agent-operators-handbook.epub"
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/data/state/editions/the-agent-operators-handbook/the-agent-operators-handbook.epub"
             },
             {
               "format": "PDF",
               "bytes": 182525,
               "sha256": "b86cc5dd88408f4c417c2a1264520e4200c3dffc6e866980ee3e5fabee9fa2b5",
-              "path": "561-group-services-section/data/state/editions/the-agent-operators-handbook/the-agent-operators-handbook.pdf"
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/data/state/editions/the-agent-operators-handbook/the-agent-operators-handbook.pdf"
             }
           ]
         },
@@ -91,7 +91,7 @@ export default {
           "BUS114000",
           "COM060180"
         ],
-        "coverFile": "561-group-services-section/data/state/editions/the-x402-economy/the-x402-economy-cover.png",
+        "coverFile": "public-services-section/services/public-economic-services-section/data/state/editions/the-x402-economy/the-x402-economy-cover.png",
         "marks": [],
         "contents": [
           "About this book",
@@ -122,18 +122,18 @@ export default {
               "format": "EPUB",
               "bytes": 126737,
               "sha256": "44ee92c830c7817735e363a0cb1479a74249bcfc5278d0246cd657b0448b0d7b",
-              "path": "561-group-services-section/data/state/editions/the-x402-economy/the-x402-economy.epub"
+              "path": "public-services-section/services/public-economic-services-section/data/state/editions/the-x402-economy/the-x402-economy.epub"
             },
             {
               "format": "PDF",
               "bytes": 193614,
               "sha256": "d74d0677fcc7f7bb11c2292369d1e905b43cf9f7d0ade56015d80a0e023206ac",
-              "path": "561-group-services-section/data/state/editions/the-x402-economy/the-x402-economy.pdf"
+              "path": "public-services-section/services/public-economic-services-section/data/state/editions/the-x402-economy/the-x402-economy.pdf"
             }
           ],
-          "record": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/economics-science-services-section/data/records/editions/2026-09-27-the-x402-economy-first-edition-acceptance.json"
+          "record": "public-services-section/services/public-economic-services-section/data/records/editions/2026-09-27-the-x402-economy-first-edition-acceptance.json"
         },
-        "manuscript": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/economics-science-services-section/content/books/the-x402-economy"
+        "manuscript": "public-services-section/services/public-economic-services-section/content/books/the-x402-economy"
       }
     },
     {
@@ -166,7 +166,7 @@ export default {
           "STU021000",
           "BUS012030"
         ],
-        "coverFile": "561-group-services-section/data/state/editions/project-management-course-by-course/project-management-course-by-course-cover.png",
+        "coverFile": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/project-management-course-by-course/project-management-course-by-course-cover.png",
         "marks": [
           "Google",
           "Coursera"
@@ -199,18 +199,18 @@ export default {
               "format": "EPUB",
               "bytes": 162843,
               "sha256": "7ecb2dee3605e14e01970fa6828921adc8d1b30df4e6c5a3f50b75ac246c2f7d",
-              "path": "561-group-services-section/data/state/editions/project-management-course-by-course/project-management-course-by-course.epub"
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/project-management-course-by-course/project-management-course-by-course.epub"
             },
             {
               "format": "PDF",
               "bytes": 256098,
               "sha256": "d090179bbd333578214b62749fa3190e0890d40f7959d1f7d1ea64616b191ca6",
-              "path": "561-group-services-section/data/state/editions/project-management-course-by-course/project-management-course-by-course.pdf"
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/project-management-course-by-course/project-management-course-by-course.pdf"
             }
           ],
-          "record": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/data/records/editions/2026-09-27-project-management-course-by-course-first-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-project-management-course-by-course-first-edition-acceptance.json"
         },
-        "manuscript": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/content/books/project-management-course-by-course"
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/project-management-course-by-course"
       }
     },
     {
@@ -243,7 +243,7 @@ export default {
           "STU021000",
           "BUS012030"
         ],
-        "coverFile": "561-group-services-section/data/state/editions/the-capm-domain-by-domain/the-capm-domain-by-domain-cover.png",
+        "coverFile": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/the-capm-domain-by-domain/the-capm-domain-by-domain-cover.png",
         "marks": [
           "PMI",
           "CAPM",
@@ -277,18 +277,18 @@ export default {
               "format": "EPUB",
               "bytes": 155946,
               "sha256": "dded986c166e69170f3ffa6f2309abca629e12f105e8f142b3532ecb96b38532",
-              "path": "561-group-services-section/data/state/editions/the-capm-domain-by-domain/the-capm-domain-by-domain.epub"
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/the-capm-domain-by-domain/the-capm-domain-by-domain.epub"
             },
             {
               "format": "PDF",
               "bytes": 240991,
               "sha256": "6ab0996ea020ab39a00cfc3e4c7fef9cd15eac0ca030e92962de9d9121a5fda9",
-              "path": "561-group-services-section/data/state/editions/the-capm-domain-by-domain/the-capm-domain-by-domain.pdf"
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/the-capm-domain-by-domain/the-capm-domain-by-domain.pdf"
             }
           ],
-          "record": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/data/records/editions/2026-09-27-the-capm-domain-by-domain-first-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-the-capm-domain-by-domain-first-edition-acceptance.json"
         },
-        "manuscript": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/content/books/the-capm-domain-by-domain"
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/the-capm-domain-by-domain"
       }
     },
     {
@@ -322,7 +322,7 @@ export default {
           "STU021000",
           "BUS012030"
         ],
-        "coverFile": "561-group-services-section/data/state/editions/data-analytics-course-by-course/data-analytics-course-by-course-cover.png",
+        "coverFile": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/data-analytics-course-by-course/data-analytics-course-by-course-cover.png",
         "marks": [
           "Google",
           "Coursera"
@@ -354,18 +354,18 @@ export default {
               "format": "EPUB",
               "bytes": 146742,
               "sha256": "72054e564bb9690678504be9cd36a714f64cd87a3beb03f32a2df8e997fd3145",
-              "path": "561-group-services-section/data/state/editions/data-analytics-course-by-course/data-analytics-course-by-course.epub"
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/data-analytics-course-by-course/data-analytics-course-by-course.epub"
             },
             {
               "format": "PDF",
               "bytes": 243599,
               "sha256": "b9ec7f79df97a4ffe10ff60c568a5e9518d19b4004946cdadd00d033eac3cb5b",
-              "path": "561-group-services-section/data/state/editions/data-analytics-course-by-course/data-analytics-course-by-course.pdf"
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/data-analytics-course-by-course/data-analytics-course-by-course.pdf"
             }
           ],
-          "record": "science-services-section/services/information-science-services-section/services/math-services-section/data/records/editions/2026-09-27-data-analytics-course-by-course-first-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-27-data-analytics-course-by-course-first-edition-acceptance.json"
         },
-        "manuscript": "science-services-section/services/information-science-services-section/services/math-services-section/content/books/data-analytics-course-by-course"
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/data-analytics-course-by-course"
       }
     },
     {
@@ -398,7 +398,7 @@ export default {
           "COM070000",
           "STU021000"
         ],
-        "coverFile": "561-group-services-section/data/state/editions/ux-design-course-by-course/ux-design-course-by-course-cover.png",
+        "coverFile": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/ux-design-course-by-course/ux-design-course-by-course-cover.png",
         "marks": [
           "Google",
           "Coursera"
@@ -430,18 +430,18 @@ export default {
               "format": "EPUB",
               "bytes": 137992,
               "sha256": "6269e3e2a8dbac0303aaaed2f3ac33d630def79345ca0107d92d3833fd13641f",
-              "path": "561-group-services-section/data/state/editions/ux-design-course-by-course/ux-design-course-by-course.epub"
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/ux-design-course-by-course/ux-design-course-by-course.epub"
             },
             {
               "format": "PDF",
               "bytes": 201925,
               "sha256": "1d66c906aebc03ff7daeea1dd0196ad06377ceda6eb49c60468b7c56ff71ac51",
-              "path": "561-group-services-section/data/state/editions/ux-design-course-by-course/ux-design-course-by-course.pdf"
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/ux-design-course-by-course/ux-design-course-by-course.pdf"
             }
           ],
-          "record": "science-services-section/services/engineering-science-services-section/services/design-engineering-science-services-section/data/records/editions/2026-09-27-ux-design-course-by-course-first-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-27-ux-design-course-by-course-first-edition-acceptance.json"
         },
-        "manuscript": "science-services-section/services/engineering-science-services-section/services/design-engineering-science-services-section/content/books/ux-design-course-by-course"
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/ux-design-course-by-course"
       }
     },
     {
@@ -473,7 +473,7 @@ export default {
           "STU021000",
           "BUS071000"
         ],
-        "coverFile": "561-group-services-section/data/state/editions/business-management-course-by-course/business-management-course-by-course-cover.png",
+        "coverFile": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-management-course-by-course/business-management-course-by-course-cover.png",
         "marks": [
           "Cornell",
           "eCornell"
@@ -504,18 +504,18 @@ export default {
               "format": "EPUB",
               "bytes": 140157,
               "sha256": "8ac62a9cadcd6acb267855f2ceeba06f2a4f9498712985b3124c57d1e8ed81c2",
-              "path": "561-group-services-section/data/state/editions/business-management-course-by-course/business-management-course-by-course.epub"
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-management-course-by-course/business-management-course-by-course.epub"
             },
             {
               "format": "PDF",
               "bytes": 186522,
               "sha256": "612fd8a9f15845c8d2e8ee5cf615b91ac2269a05c21a0f295a54da678a6a4fb8",
-              "path": "561-group-services-section/data/state/editions/business-management-course-by-course/business-management-course-by-course.pdf"
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-management-course-by-course/business-management-course-by-course.pdf"
             }
           ],
-          "record": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/data/records/editions/2026-09-27-business-management-course-by-course-first-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-business-management-course-by-course-first-edition-acceptance.json"
         },
-        "manuscript": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/content/books/business-management-course-by-course"
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-management-course-by-course"
       }
     },
     {
@@ -548,7 +548,7 @@ export default {
           "STU021000",
           "BUS041000"
         ],
-        "coverFile": "561-group-services-section/data/state/editions/business-strategy-course-by-course/business-strategy-course-by-course-cover.png",
+        "coverFile": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-strategy-course-by-course/business-strategy-course-by-course-cover.png",
         "marks": [
           "Cornell",
           "eCornell"
@@ -579,18 +579,18 @@ export default {
               "format": "EPUB",
               "bytes": 144244,
               "sha256": "31e924fdca3d455a79cb8a0b058baa6d1b04ce303d68f6c00f110cc1b7ca2cd2",
-              "path": "561-group-services-section/data/state/editions/business-strategy-course-by-course/business-strategy-course-by-course.epub"
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-strategy-course-by-course/business-strategy-course-by-course.epub"
             },
             {
               "format": "PDF",
               "bytes": 176382,
               "sha256": "97a47f0709862081fbc958cba40e592f25cea9f9f527eb87648e00c04554bbdd",
-              "path": "561-group-services-section/data/state/editions/business-strategy-course-by-course/business-strategy-course-by-course.pdf"
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-strategy-course-by-course/business-strategy-course-by-course.pdf"
             }
           ],
-          "record": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/services/strategy-services-section/data/records/editions/2026-09-27-business-strategy-course-by-course-first-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-business-strategy-course-by-course-first-edition-acceptance.json"
         },
-        "manuscript": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/services/strategy-services-section/content/books/business-strategy-course-by-course"
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-strategy-course-by-course"
       }
     },
     {

@@ -13,7 +13,7 @@
 // the main worktree, so a deploy from a clean worktree compiles the same.
 import { execFileSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { basename, dirname, join, resolve } from "node:path";
+import { basename, dirname, join, normalize, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { listChapters, sha256File } from "@red-cup-engineering/ebook-production-services-section";
@@ -42,29 +42,28 @@ function contents(manuscript) {
   });
 }
 
-function edition(row) {
-  if (row.book.acceptance) {
-    const record = JSON.parse(readFileSync(join(checkout, row.book.acceptance), "utf8"));
-    if (record.type !== "EbookEditionAcceptance" || record.status !== "accepted") throw new Error(`${row.id}: ${row.book.acceptance} is not an accepted edition`);
-    const { epub, screenPdf } = record.artifacts;
-    return {
-      digest: record.editionInputDigest,
-      acceptedAt: record.acceptedAt,
-      pages: pages(stateFile(screenPdf.path)),
-      proof: record.proof?.findings ?? null,
-      files: [{ format: "EPUB", bytes: epub.bytes, sha256: hexOf(epub.sha256), path: servicesRelative(epub.path) }, { format: "PDF", bytes: screenPdf.bytes, sha256: hexOf(screenPdf.sha256), path: servicesRelative(screenPdf.path) }],
-      record: row.book.acceptance,
-    };
-  }
-  const directory = stateFile(row.book.files);
-  const file = (extension) => readdirSync(directory).find((name) => name.endsWith(extension));
-  const epub = join(directory, file(".epub")); const pdf = join(directory, file(".pdf"));
-  return {
-    digest: `release ${row.release}`,
-    pages: pages(pdf),
-    proof: null,
-    files: [{ format: "EPUB", bytes: readFileSync(epub).byteLength, sha256: hexOf(sha256File(epub)), path: servicesRelative(epub) }, { format: "PDF", bytes: readFileSync(pdf).byteLength, sha256: hexOf(sha256File(pdf)), path: servicesRelative(pdf) }],
-  };
+// A book's built files, where its manifest builds them: <book>/<distDir>/<slug>.{epub,pdf}
+// and <slug>-cover.png, read from the main worktree (they are untracked state).
+function builtFiles(row, manifest) {
+  const directory = stateFile(normalize(join(row.book.manuscript, manifest.distDir)));
+  const at = (name) => join(directory, name);
+  return { epub: at(`${manifest.slug}.epub`), pdf: at(`${manifest.slug}.pdf`), cover: at(`${manifest.slug}-cover.png`) };
+}
+
+// The edition a book is sold as. Its files are found through its manifest and,
+// when it has an acceptance record, must be byte for byte the accepted ones:
+// the shop never describes files it does not hold.
+function edition(row, manifest) {
+  const built = builtFiles(row, manifest);
+  for (const file of [built.epub, built.pdf]) if (!existsSync(file)) throw new Error(`${row.id}: no built file at ${servicesRelative(file)}; build the edition first`);
+  const file = (format, path) => ({ format, bytes: readFileSync(path).byteLength, sha256: hexOf(sha256File(path)), path: servicesRelative(path) });
+  const files = [file("EPUB", built.epub), file("PDF", built.pdf)];
+  if (!row.book.acceptance) return { digest: `release ${row.release}`, pages: pages(built.pdf), proof: null, files };
+  const record = JSON.parse(readFileSync(join(checkout, row.book.acceptance), "utf8"));
+  if (record.type !== "EbookEditionAcceptance" || record.status !== "accepted") throw new Error(`${row.id}: ${row.book.acceptance} is not an accepted edition`);
+  const accepted = { EPUB: hexOf(record.artifacts.epub.sha256), PDF: hexOf(record.artifacts.screenPdf.sha256) };
+  for (const { format, sha256, path } of files) if (sha256 !== accepted[format]) throw new Error(`${row.id}: ${path} is not the accepted ${format} (${sha256} is not ${accepted[format]})`);
+  return { digest: record.editionInputDigest, acceptedAt: record.acceptedAt, pages: pages(built.pdf), proof: record.proof?.findings ?? null, files, record: row.book.acceptance };
 }
 
 export function compileCatalog(source) {
@@ -75,9 +74,10 @@ export function compileCatalog(source) {
     if (!row.book) return row;
     const manuscript = join(checkout, row.book.manuscript);
     const manifest = JSON.parse(readFileSync(join(manuscript, "ebook.json"), "utf8"));
+    const built = builtFiles(row, manifest);
     let cover;
-    if (row.book.cover && existsSync(stateFile(row.book.cover))) {
-      copyFileSync(stateFile(row.book.cover), join(covers, `${row.id}.png`));
+    if (existsSync(built.cover)) {
+      copyFileSync(built.cover, join(covers, `${row.id}.png`));
       cover = `/covers/${row.id}.png`;
     }
     const { book, ...offering } = row;
@@ -93,10 +93,10 @@ export function compileCatalog(source) {
         ...(manifest.series ? { series: manifest.series } : {}),
         ...(manifest.profile ? { profile: manifest.profile } : {}),
         subjects: manifest.subjects ?? [],
-        ...(cover ? { coverFile: row.book.cover } : {}),
+        ...(cover ? { coverFile: servicesRelative(built.cover) } : {}),
         marks: manifest.marks ?? [],
         contents: contents(manuscript),
-        edition: edition(row),
+        edition: edition(row, manifest),
         manuscript: book.manuscript,
       },
     };

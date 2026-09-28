@@ -1,5 +1,5 @@
 {
-  "$comment": "The human storefront's catalog: goods a person buys and reads. Agents buy the same books at market.561.group over x402; APIs, briefings and games are sold on their own sites. Book facts (title, contents, edition, verification) are compiled from each book's records by scripts/compile-catalog.mjs; paths are relative to lib/emsenn/services/561-group/services/.",
+  "$comment": "The human storefront's catalog: goods a person buys and reads. Agents buy the same books at market.561.group over x402; APIs, briefings and games are sold on their own sites. Book facts (title, description, contents, edition, verification) are compiled from each book's manifest, built files and acceptance record by scripts/compile-catalog.mjs; paths are relative to lib/emsenn/services/561-group/services/.",
   "merchant": {
     "name": "561 Group",
     "legalBody": "emsenn"
@@ -14,8 +14,7 @@
       "release": "agent-operators-handbook",
       "agentOfferUrl": "https://market.561.group/#publications-agent-operators-handbook",
       "book": {
-        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/content/books/the-agent-operators-handbook",
-        "files": "561-group-services-section/data/state/editions/the-agent-operators-handbook"
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/content/books/the-agent-operators-handbook"
       }
     },
     {
@@ -27,9 +26,8 @@
       "release": "the-x402-economy",
       "agentOfferUrl": "https://market.561.group/#publications-the-x402-economy",
       "book": {
-        "manuscript": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/economics-science-services-section/content/books/the-x402-economy",
-        "acceptance": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/economics-science-services-section/data/records/editions/2026-09-27-the-x402-economy-first-edition-acceptance.json",
-        "cover": "561-group-services-section/data/state/editions/the-x402-economy/the-x402-economy-cover.png"
+        "manuscript": "public-services-section/services/public-economic-services-section/content/books/the-x402-economy",
+        "acceptance": "public-services-section/services/public-economic-services-section/data/records/editions/2026-09-27-the-x402-economy-first-edition-acceptance.json"
       }
     },
     {
@@ -41,9 +39,8 @@
       "release": "project-management-course-by-course",
       "agentOfferUrl": "https://market.561.group/#publications-project-management-course-by-course",
       "book": {
-        "manuscript": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/content/books/project-management-course-by-course",
-        "acceptance": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/data/records/editions/2026-09-27-project-management-course-by-course-first-edition-acceptance.json",
-        "cover": "561-group-services-section/data/state/editions/project-management-course-by-course/project-management-course-by-course-cover.png"
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/project-management-course-by-course",
+        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-project-management-course-by-course-first-edition-acceptance.json"
       }
     },
     {
@@ -55,9 +52,8 @@
       "release": "the-capm-domain-by-domain",
       "agentOfferUrl": "https://market.561.group/#publications-the-capm-domain-by-domain",
       "book": {
-        "manuscript": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/content/books/the-capm-domain-by-domain",
-        "acceptance": "science-services-section/services/social-science-services-section/services/sociology-science-services-section/services/work-science-services-section/data/records/editions/2026-09-27-the-capm-domain-by-domain-first-edition-acceptance.json",
-        "cover": "561-group-services-section/data/state/editions/the-capm-domain-by-domain/the-capm-domain-by-domain-cover.png"
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/the-capm-domain-by-domain",
+        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-the-capm-domain-by-domain-first-edition-acceptance.json"
       }
     },
     {
@@ -69,9 +65,8 @@
       "release": "data-analytics-course-by-course",
       "agentOfferUrl": "https://market.561.group/#publications-data-analytics-course-by-course",
       "book": {
-        "manuscript": "science-services-section/services/information-science-services-section/services/math-services-section/content/books/data-analytics-course-by-course",
-        "acceptance": "science-services-section/services/information-science-services-section/services/math-services-section/data/records/editions/2026-09-27-data-analytics-course-by-course-first-edition-acceptance.json",
-        "cover": "561-group-services-section/data/state/editions/data-analytics-course-by-course/data-analytics-course-by-course-cover.png"
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/data-analytics-course-by-course",
+        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-27-data-analytics-course-by-course-first-edition-acceptance.json"
       }
     },
     {
@@ -83,9 +78,8 @@
       "release": "ux-design-course-by-course",
       "agentOfferUrl": "https://market.561.group/#publications-ux-design-course-by-course",
       "book": {
-        "manuscript": "science-services-section/services/engineering-science-services-section/services/design-engineering-science-services-section/content/books/ux-design-course-by-course",
-        "acceptance": "science-services-section/services/engineering-science-services-section/services/design-engineering-science-services-section/data/records/editions/2026-09-27-ux-design-course-by-course-first-edition-acceptance.json",
-        "cover": "561-group-services-section/data/state/editions/ux-design-course-by-course/ux-design-course-by-course-cover.png"
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/ux-design-course-by-course",
+        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-27-ux-design-course-by-course-first-edition-acceptance.json"
       }
     },
     {
@@ -97,9 +91,8 @@
       "release": "business-management-course-by-course",
       "agentOfferUrl": "https://market.561.group/#publications-business-management-course-by-course",
       "book": {
-        "manuscript": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/content/books/business-management-course-by-course",
-        "acceptance": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/data/records/editions/2026-09-27-business-management-course-by-course-first-edition-acceptance.json",
-        "cover": "561-group-services-section/data/state/editions/business-management-course-by-course/business-management-course-by-course-cover.png"
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-management-course-by-course",
+        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-business-management-course-by-course-first-edition-acceptance.json"
       }
     },
     {
@@ -111,9 +104,8 @@
       "release": "business-strategy-course-by-course",
       "agentOfferUrl": "https://market.561.group/#publications-business-strategy-course-by-course",
       "book": {
-        "manuscript": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/services/strategy-services-section/content/books/business-strategy-course-by-course",
-        "acceptance": "science-services-section/services/social-science-services-section/services/economics-and-business-science-services-section/services/business-science-services-section/services/strategy-services-section/data/records/editions/2026-09-27-business-strategy-course-by-course-first-edition-acceptance.json",
-        "cover": "561-group-services-section/data/state/editions/business-strategy-course-by-course/business-strategy-course-by-course-cover.png"
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-strategy-course-by-course",
+        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-business-strategy-course-by-course-first-edition-acceptance.json"
       }
     },
     {
