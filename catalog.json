@@ -1,14 +1,25 @@
 {
-  "$comment": "The human storefront's catalog: goods a person buys and reads. Agents buy the same books at market.561.group over x402; APIs, briefings and games are sold on their own sites. Book facts (title, description, contents, edition, verification) are compiled from each book's manifest, built files and acceptance record by scripts/compile-catalog.mjs; paths are relative to lib/emsenn/services/561-group/services/.",
+  "$comment": "The human storefront's catalog: books and publications a person buys, reads or subscribes to. Agents buy market-listed books at market.561.group over x402; APIs, agent briefings and games remain on their own sites. Book facts (title, description, contents, edition, verification) are compiled from each book's manifest, built files and acceptance record by scripts/compile-catalog.mjs; paths are relative to lib/emsenn/services/561-group/services/. A book without an EbookEditionAcceptance remains coming-soon even when historical rendition files survive.",
   "merchant": {
     "name": "561 Group",
     "legalBody": "emsenn"
   },
   "offerings": [
     {
+      "id": "understanding-infection-associated-chronic-illness",
+      "line": "@emsenn/health-education-curriculum-enterprise",
+      "status": "coming-soon",
+      "priceCents": 1900,
+      "currency": "usd",
+      "release": "understanding-infection-associated-chronic-illness",
+      "book": {
+        "manuscript": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/content/books/understanding-infection-associated-chronic-illness"
+      }
+    },
+    {
       "id": "the-agent-operators-handbook",
       "line": "@emsenn/artificial-intelligence-curriculum-enterprise",
-      "status": "live",
+      "status": "coming-soon",
       "priceCents": 2900,
       "currency": "usd",
       "release": "agent-operators-handbook",
@@ -107,6 +118,24 @@
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-strategy-course-by-course",
         "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-27-business-strategy-course-by-course-second-edition-acceptance.json"
       }
+    },
+    {
+      "id": "the-whirling-crystal",
+      "line": "@emsenn/mathematics-curriculum-enterprise",
+      "status": "coming-soon",
+      "priceCents": 2900,
+      "currency": "usd",
+      "release": "the-whirling-crystal",
+      "book": {
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-mathematics-education-services-section/content/books/the-whirling-crystal"
+      }
+    },
+    {
+      "id": "health-education-newsletter",
+      "title": "The Second Day",
+      "line": "@emsenn/health-education-newsletter-enterprise",
+      "status": "coming-soon",
+      "blurb": "A health-synthesis newsletter about infection-associated chronic illness. No subscription is open yet."
     },
     {
       "id": "merch",

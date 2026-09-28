@@ -22,16 +22,19 @@ function paidEvent({ eventId = "evt_test", sessionId = "cs_test", offeringId = "
   return { id: eventId, type: "checkout.session.completed", livemode: false, data: { object: { id: sessionId, amount_total: amount, currency, payment_status: paymentStatus, status: "complete", metadata: { offering_id: offeringId, request_digest: "digest" } } } };
 }
 
-test("the shop lists only what a person buys and reads: books delivered by release, and merch", () => {
+test("the shop lists human publications and merch without presenting unaccepted books as live", () => {
   assert.equal(CATALOG_VALIDATION.valid, true);
-  for (const offering of CATALOG.offerings) assert.ok(offering.book || offering.line === "merch", offering.id);
+  for (const offering of CATALOG.offerings) assert.ok(offering.book || offering.line === "merch" || offering.line === "@emsenn/health-education-newsletter-enterprise", offering.id);
   for (const offering of CATALOG.offerings.filter((item) => item.book)) {
-    assert.equal(offering.status, "live", offering.id);
+    assert.equal(offering.status, offering.book.edition.acceptedAt ? "live" : "coming-soon", offering.id);
     assert.match(offering.release, /^[a-z0-9-]+$/u, offering.id);
-    assert.match(offering.agentOfferUrl, /^https:\/\/market\.561\.group\/#publications-/u, offering.id);
+    if (offering.agentOfferUrl) assert.match(offering.agentOfferUrl, /^https:\/\/market\.561\.group\/#publications-/u, offering.id);
     assert.ok(offering.book.contents.length > 0, offering.id);
     for (const file of offering.book.edition.files) assert.match(file.sha256, /^[0-9a-f]{64}$/u, `${offering.id} ${file.format}`);
   }
+  const newsletter = CATALOG.offerings.find((offering) => offering.id === "health-education-newsletter");
+  assert.equal(newsletter.status, "coming-soon");
+  assert.equal(newsletter.externalUrl, undefined);
   assert.ok(!CATALOG.offerings.some((offering) => /bindinggenerations|play\.561|\/v1\//u.test(offering.externalUrl ?? "")));
 });
 

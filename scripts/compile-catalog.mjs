@@ -12,7 +12,7 @@
 // built; edition state (EPUBs, PDFs, covers) is untracked and is read from
 // the main worktree, so a deploy from a clean worktree compiles the same.
 import { execFileSync } from "node:child_process";
-import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, normalize, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -20,10 +20,28 @@ import { listChapters, sha256File } from "@red-cup-engineering/ebook-production-
 import { validateCatalog } from "@red-cup-engineering/digital-goods-storefront-services-section";
 
 const site = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const git = (...args) => execFileSync("git", args, { cwd: site, encoding: "utf8" }).trim();
 const SERVICES = "lib/emsenn/services/561-group/services";
-const checkout = join(git("rev-parse", "--show-toplevel"), SERVICES);
-const mainTree = join(dirname(resolve(site, git("rev-parse", "--git-common-dir"))), SERVICES);
+
+// Resolve the checkout and its primary worktree without spawning git. Besides
+// making compilation independent of PATH/process policy, this preserves the
+// clean-linked-worktree behavior: tracked records come from this checkout and
+// untracked edition state comes from the primary worktree named by commondir.
+function repositoryRoots(from) {
+  let checkoutRoot = from;
+  while (!existsSync(join(checkoutRoot, ".git")) && dirname(checkoutRoot) !== checkoutRoot) checkoutRoot = dirname(checkoutRoot);
+  const dotGit = join(checkoutRoot, ".git");
+  if (!existsSync(dotGit)) throw new Error(`cannot locate repository above ${from}`);
+  if (!statSync(dotGit).isFile()) return { checkoutRoot, mainRoot: checkoutRoot };
+  const pointer = /^gitdir:\s*(.+)$/u.exec(readFileSync(dotGit, "utf8").trim())?.[1];
+  if (!pointer) throw new Error(`${dotGit} is not a gitdir pointer`);
+  const linkedGitDirectory = resolve(checkoutRoot, pointer);
+  const commonDirectory = resolve(linkedGitDirectory, readFileSync(join(linkedGitDirectory, "commondir"), "utf8").trim());
+  return { checkoutRoot, mainRoot: dirname(commonDirectory) };
+}
+
+const { checkoutRoot, mainRoot } = repositoryRoots(site);
+const checkout = join(checkoutRoot, SERVICES);
+const mainTree = join(mainRoot, SERVICES);
 
 const hexOf = (ni) => Buffer.from(ni.replace(/^ni:\/\/\/sha-256;/u, ""), "base64url").toString("hex");
 // A path as the catalog records it: relative to the services root, the same on every checkout.

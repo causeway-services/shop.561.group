@@ -6,9 +6,64 @@ export default {
   },
   "offerings": [
     {
+      "id": "understanding-infection-associated-chronic-illness",
+      "line": "@emsenn/health-education-curriculum-enterprise",
+      "status": "coming-soon",
+      "priceCents": 1900,
+      "currency": "usd",
+      "release": "understanding-infection-associated-chronic-illness",
+      "title": "Understanding Infection-Associated Chronic Illness",
+      "subtitle": "A Public Guide to Long COVID, Post-Exertional Malaise, and the Science Behind the Diagnosis",
+      "blurb": "A public guide to Long COVID, post-exertional malaise, and infection-associated chronic illness: what is established, what is a well-supported hypothesis, and what remains contested. This is educational material, not medical advice.",
+      "keywords": [
+        "infection-associated chronic illness",
+        "Long COVID",
+        "post-exertional malaise",
+        "pacing",
+        "health education"
+      ],
+      "book": {
+        "author": "561 Group",
+        "subjects": [
+          "HEA000000",
+          "MED000000",
+          "SCI000000"
+        ],
+        "marks": [],
+        "contents": [
+          "Understanding Infection-Associated Chronic Illness",
+          "Chapter 1: What Infection-Associated Chronic Illness Is",
+          "Chapter 2: Long COVID — Definitions and Why They Disagree",
+          "Chapter 3: What Researchers Think Is Happening",
+          "Chapter 4: Post-Exertional Malaise and Pacing",
+          "Chapter 5: How to Read Research About Your Own Illness"
+        ],
+        "edition": {
+          "digest": "release understanding-infection-associated-chronic-illness",
+          "pages": 52,
+          "proof": null,
+          "files": [
+            {
+              "format": "EPUB",
+              "bytes": 60832,
+              "sha256": "092921f0be89f4abbc530eef1d6fa5ce9a56b1487c3c93ab0d93d558d69b49fb",
+              "path": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/data/state/editions/understanding-infection-associated-chronic-illness/understanding-infection-associated-chronic-illness.epub"
+            },
+            {
+              "format": "PDF",
+              "bytes": 207715,
+              "sha256": "8fc4603381ef6b3a7c9369fb5ec210eb8b6fd1ba79a477e916882e2963783dd8",
+              "path": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/data/state/editions/understanding-infection-associated-chronic-illness/understanding-infection-associated-chronic-illness.pdf"
+            }
+          ]
+        },
+        "manuscript": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/content/books/understanding-infection-associated-chronic-illness"
+      }
+    },
+    {
       "id": "the-agent-operators-handbook",
       "line": "@emsenn/artificial-intelligence-curriculum-enterprise",
-      "status": "live",
+      "status": "coming-soon",
       "priceCents": 2900,
       "currency": "usd",
       "release": "agent-operators-handbook",
@@ -599,6 +654,74 @@ export default {
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-strategy-course-by-course"
       }
+    },
+    {
+      "id": "the-whirling-crystal",
+      "line": "@emsenn/mathematics-curriculum-enterprise",
+      "status": "coming-soon",
+      "priceCents": 2900,
+      "currency": "usd",
+      "release": "the-whirling-crystal",
+      "title": "The Whirling Crystal",
+      "subtitle": "From Fregean Predication to Belnap’s FOUR, Chu Spaces, the Gyrobifastigial Cell, and the Spatiotemporal Manifold of Knowledge",
+      "blurb": "A working account of a live mathematics program, tracing a path from Fregean predicate application through Belnap’s FOUR, Chu spaces and Hoare programs to the gyrobifastigial cell, the dervish defect, witnessed time, thermodynamic cost and an executable inference kernel.",
+      "keywords": [
+        "predication",
+        "Belnap FOUR",
+        "Chu spaces",
+        "formal methods",
+        "knowledge representation"
+      ],
+      "book": {
+        "author": "emsenn",
+        "subjects": [
+          "MAT000000",
+          "PHI000000",
+          "COM000000"
+        ],
+        "marks": [],
+        "contents": [
+          "The Whirling Crystal",
+          "Chapter 1: The Absurd Beginning",
+          "Chapter 2: Frontmatter Is Predication",
+          "Chapter 3: Why Predication Forces Four",
+          "Chapter 4: Four Induces a Chu Space",
+          "Chapter 5: Programs as Contracts",
+          "Chapter 6: The Cell That Fills Space",
+          "Chapter 7: The Dervish",
+          "Chapter 8: Time Is a Witnessed Bit",
+          "Chapter 9: Heat",
+          "Chapter 10: The Manifold Running",
+          "Chapter 11: Ledger of Claims"
+        ],
+        "edition": {
+          "digest": "release the-whirling-crystal",
+          "pages": 154,
+          "proof": null,
+          "files": [
+            {
+              "format": "EPUB",
+              "bytes": 123429,
+              "sha256": "1d0aeb9b5ed7a0fd0612e62bdf62713350ba95b0ae7e0d7cc822178109773e7a",
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-mathematics-education-services-section/data/state/editions/the-whirling-crystal/the-whirling-crystal.epub"
+            },
+            {
+              "format": "PDF",
+              "bytes": 436653,
+              "sha256": "58b6ad2503e29ae5c1005bbe7a4d264b939303053ef404549218ce7e23484975",
+              "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-mathematics-education-services-section/data/state/editions/the-whirling-crystal/the-whirling-crystal.pdf"
+            }
+          ]
+        },
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-mathematics-education-services-section/content/books/the-whirling-crystal"
+      }
+    },
+    {
+      "id": "health-education-newsletter",
+      "title": "The Second Day",
+      "line": "@emsenn/health-education-newsletter-enterprise",
+      "status": "coming-soon",
+      "blurb": "A health-synthesis newsletter about infection-associated chronic illness. No subscription is open yet."
     },
     {
       "id": "merch",

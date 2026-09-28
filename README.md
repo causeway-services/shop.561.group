@@ -1,9 +1,10 @@
 # shop.561.group
 
 The 561 Group's storefront for people: the books a person buys and reads,
-and merch when it opens. Agents buy the same books at `market.561.group`
-over x402, from the same accepted files. APIs, briefings and games are
-sold on their own sites and are not listed here. The design is in
+the publications a person subscribes to, and merch when it opens. Agents
+buy market-listed books at `market.561.group` over x402, from the same
+accepted files. APIs, agent briefings and games are sold on their own sites
+and are not listed here. The design is in
 `engineering-services-section/content/text/documents/articles/notes/2026/09/27/2026-09-27-note-on-the-human-storefront.md`.
 
 ## What this is
@@ -36,6 +37,11 @@ bindings and the `ShopFulfillment` Durable Object registration.
 - its acceptance record, or the directory of its files for an edition
   older than acceptance records;
 - the cover the ebook pipeline made.
+
+A historical rendition without an `EbookEditionAcceptance` may be listed only
+as `coming-soon`. Its surviving files make the work inspectable but do not
+turn fabrication into editorial proof or an accepted edition. A cover is
+optional until the publication is accepted.
 
 `scripts/compile-catalog.mjs` reads those records into
 `src/compiled-catalog.mjs`: title, series, contents, page count, file
