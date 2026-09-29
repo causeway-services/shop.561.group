@@ -744,7 +744,8 @@ export default {
       ],
       "cover": "/covers/ice-out.png",
       "book": {
-        "author": "561 Group",
+        "author": "Sigrid Song",
+        "publisher": "Causeway Services",
         "profile": "fiction",
         "coverArt": true,
         "subjects": [
@@ -769,30 +770,30 @@ export default {
           "About This Book"
         ],
         "edition": {
-          "digest": "ni:///sha-256;5cn6AYaJ-Xum9qg4TOQJ84GDlHQULazBSjWvlLUlPWI",
-          "acceptedAt": "2026-09-28T05:49:26.140Z",
+          "digest": "ni:///sha-256;PVxCm8PQ61alL6BTqMt6RAJcRBi-ZghKX4GVjHLVyPA",
+          "acceptedAt": "2026-09-29T20:56:56.094Z",
           "pages": 79,
           "proof": {
-            "errors": 4,
-            "corrections": 1,
+            "errors": 0,
+            "corrections": 2,
             "notes": 4,
-            "carried": true
+            "carried": false
           },
           "files": [
             {
               "format": "EPUB",
-              "bytes": 171308,
-              "sha256": "eb0177d48829e4d8dd819eec8734f176976081ab30f9e30df34bbb9bff9ef90c",
+              "bytes": 183336,
+              "sha256": "9beddc8c7fde4b31286c41d16c53526dfa26ee30ad0b5be31c03d8a1e925f600",
               "path": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out.epub"
             },
             {
               "format": "PDF",
-              "bytes": 248145,
-              "sha256": "8e273d60c267d68f32417f4a10feff1bb64043d3c18684b884aa85a31186706c",
+              "bytes": 248334,
+              "sha256": "5229c5df8fbdf68835de0e44d07d53b4934224e5afcb192ae6ce1db974d97cb5",
               "path": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out.pdf"
             }
           ],
-          "record": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-28-ice-out-second-edition-acceptance.json"
+          "record": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-29-ice-out-third-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/content/books/ice-out"
       }
