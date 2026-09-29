@@ -740,8 +740,7 @@ export default {
         "Chinese American romance",
         "fake dating",
         "second chance romance",
-        "Duluth",
-        "Lake Superior"
+        "Duluth"
       ],
       "cover": "/covers/ice-out.png",
       "book": {
