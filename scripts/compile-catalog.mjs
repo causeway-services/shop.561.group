@@ -16,7 +16,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync,
 import { basename, dirname, join, normalize, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { listChapters, sha256File } from "@red-cup-engineering/ebook-production-services-section";
+import { coverFileName, listChapters, sha256File } from "@red-cup-engineering/ebook-production-services-section";
 import { validateCatalog } from "@red-cup-engineering/digital-goods-storefront-services-section";
 
 const site = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -60,6 +60,11 @@ function contents(manuscript) {
   });
 }
 
+// What a reader and a retailer are told about an illustrated cover's making: never the receipt's path.
+function coverIllustrationOf({ model, modelName, provider, references }) {
+  return { model, ...(modelName ? { modelName } : {}), ...(provider ? { provider } : {}), ...(references ? { references } : {}) };
+}
+
 export function generatedIllustrationsFrom(manifest) {
   return (manifest.assets ?? [])
     .filter((asset) => typeof asset.provenance?.model === "string")
@@ -67,11 +72,11 @@ export function generatedIllustrationsFrom(manifest) {
 }
 
 // A book's built files, where its manifest builds them: <book>/<distDir>/<slug>.{epub,pdf}
-// and <slug>-cover.png, read from the main worktree (they are untracked state).
+// and its cover (coverFileName), read from the main worktree (they are untracked state).
 function builtFiles(row, manifest) {
   const directory = stateFile(normalize(join(row.book.manuscript, manifest.distDir)));
   const at = (name) => join(directory, name);
-  return { epub: at(`${manifest.slug}.epub`), pdf: at(`${manifest.slug}.pdf`), cover: at(`${manifest.slug}-cover.png`) };
+  return { epub: at(`${manifest.slug}.epub`), pdf: at(`${manifest.slug}.pdf`), cover: at(coverFileName(manifest)) };
 }
 
 // The edition a book is sold as. Its files are found through its manifest and,
@@ -102,8 +107,9 @@ export function compileCatalog(source) {
     const built = builtFiles(row, manifest);
     let cover;
     if (existsSync(built.cover)) {
-      copyFileSync(built.cover, join(covers, `${row.id}.png`));
-      cover = `/covers/${row.id}.png`;
+      const name = `${row.id}${built.cover.slice(built.cover.lastIndexOf("."))}`;
+      copyFileSync(built.cover, join(covers, name));
+      cover = `/covers/${name}`;
     }
     const { book, ...offering } = row;
     return {
@@ -118,8 +124,10 @@ export function compileCatalog(source) {
         ...(manifest.publisher ? { publisher: manifest.publisher } : {}),
         ...(manifest.series ? { series: manifest.series } : {}),
         ...(manifest.profile ? { profile: manifest.profile } : {}),
-        // Cover art drawn in code (a TikZ file an agent wrote) is disclosed as such.
-        ...(manifest.coverArt ? { coverArt: true } : {}),
+        // Cover art drawn in code (a TikZ file an agent wrote) is disclosed as such, and so is
+        // an illustrated cover's image model.
+        ...(manifest.coverArt && manifest.cover !== "illustrated" ? { coverArt: true } : {}),
+        ...(manifest.cover === "illustrated" && manifest.coverArtProvenance ? { coverIllustration: coverIllustrationOf(manifest.coverArtProvenance) } : {}),
         ...(generatedIllustrations.length ? { generatedIllustrations } : {}),
         subjects: manifest.subjects ?? [],
         ...(cover ? { coverFile: servicesRelative(built.cover) } : {}),
