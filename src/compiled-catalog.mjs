@@ -771,19 +771,19 @@ export default {
         ],
         "edition": {
           "digest": "ni:///sha-256;PVxCm8PQ61alL6BTqMt6RAJcRBi-ZghKX4GVjHLVyPA",
-          "acceptedAt": "2026-09-29T20:56:56.094Z",
+          "acceptedAt": "2026-09-29T21:27:12.247Z",
           "pages": 79,
           "proof": {
             "errors": 0,
             "corrections": 2,
             "notes": 4,
-            "carried": false
+            "carried": true
           },
           "files": [
             {
               "format": "EPUB",
-              "bytes": 183336,
-              "sha256": "9beddc8c7fde4b31286c41d16c53526dfa26ee30ad0b5be31c03d8a1e925f600",
+              "bytes": 183399,
+              "sha256": "94763cd9b2cb7e3f8314df6dd5ee43022b5816b0d2c6770e457d8e1f39573a8f",
               "path": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out.epub"
             },
             {
@@ -793,7 +793,7 @@ export default {
               "path": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out.pdf"
             }
           ],
-          "record": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-29-ice-out-third-edition-acceptance.json"
+          "record": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-29-ice-out-fourth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/content/books/ice-out"
       }
