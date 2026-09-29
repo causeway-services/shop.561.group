@@ -52,11 +52,14 @@ function pages(pdf) {
   try { return Number(/^Pages:\s+(\d+)/mu.exec(execFileSync("pdfinfo", [pdf], { encoding: "utf8" }))?.[1]) || undefined; } catch { return undefined; }
 }
 
+// The book's table of contents: every chapter heading except those pandoc leaves out of it (.unlisted).
 function contents(manuscript) {
-  return listChapters(manuscript).map((chapter) => {
+  return listChapters(manuscript).flatMap((chapter) => {
     const heading = /^# (.+)$/mu.exec(readFileSync(chapter, "utf8"))?.[1];
     if (!heading) throw new Error(`${chapter} has no title heading`);
-    return heading.replace(/\s*\{[^}]*\}\s*$/u, "").trim();
+    const attributes = /\{([^}]*)\}\s*$/u.exec(heading)?.[1] ?? "";
+    if (/(^|\s)\.unlisted(\s|$)/u.test(attributes)) return [];
+    return [heading.replace(/\s*\{[^}]*\}\s*$/u, "").trim()];
   });
 }
 

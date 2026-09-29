@@ -742,17 +742,26 @@ export default {
         "second chance romance",
         "Duluth"
       ],
-      "cover": "/covers/ice-out.png",
+      "cover": "/covers/ice-out.jpg",
       "book": {
         "author": "Sigrid Song",
         "publisher": "Causeway Services",
+        "series": {
+          "name": "Duluth Romance",
+          "number": 1
+        },
         "profile": "fiction",
-        "coverArt": true,
+        "coverIllustration": {
+          "model": "@cf/black-forest-labs/flux-2-dev",
+          "modelName": "FLUX.2 [dev]",
+          "provider": "Cloudflare Workers AI",
+          "references": "public-domain photographs of the Aerial Lift Bridge"
+        },
         "subjects": [
           "FIC027020",
           "FIC054000"
         ],
-        "coverFile": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out-cover.png",
+        "coverFile": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out-cover.jpg",
         "marks": [],
         "contents": [
           "The Walk-In",
@@ -767,33 +776,38 @@ export default {
           "Icebreaker",
           "Out Loud",
           "Ice Out",
-          "About This Book"
+          "An Ocean with No Salt",
+          "About This Book",
+          "The Duluth Romance",
+          "Tong Yuen for the Lantern Festival",
+          "Words and Places",
+          "For Book Clubs"
         ],
         "edition": {
-          "digest": "ni:///sha-256;PVxCm8PQ61alL6BTqMt6RAJcRBi-ZghKX4GVjHLVyPA",
-          "acceptedAt": "2026-09-29T21:27:12.247Z",
-          "pages": 79,
+          "digest": "ni:///sha-256;gkOivXJtY0fyG9usn4M00vIeTgb41-f3vTpd-p3jfds",
+          "acceptedAt": "2026-09-29T23:11:27.553Z",
+          "pages": 93,
           "proof": {
             "errors": 0,
-            "corrections": 2,
-            "notes": 4,
-            "carried": true
+            "corrections": 9,
+            "notes": 7,
+            "carried": false
           },
           "files": [
             {
               "format": "EPUB",
-              "bytes": 183399,
-              "sha256": "94763cd9b2cb7e3f8314df6dd5ee43022b5816b0d2c6770e457d8e1f39573a8f",
+              "bytes": 1053291,
+              "sha256": "1accbb94676eb5a25009d9c59913716e3f600f225fe12b34b6ea1cbf2b0774c7",
               "path": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out.epub"
             },
             {
               "format": "PDF",
-              "bytes": 248334,
-              "sha256": "5229c5df8fbdf68835de0e44d07d53b4934224e5afcb192ae6ce1db974d97cb5",
+              "bytes": 292483,
+              "sha256": "d53ec3e4cb84110c70f6f34607f124c0dd2d770fb4fbaccb02e6ab1d7941da7e",
               "path": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out.pdf"
             }
           ],
-          "record": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-29-ice-out-fourth-edition-acceptance.json"
+          "record": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-29-ice-out-fifth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/content/books/ice-out"
       }
