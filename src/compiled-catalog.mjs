@@ -748,7 +748,11 @@ export default {
         "publisher": "Causeway Services",
         "series": {
           "name": "Duluth Romance",
-          "number": 1
+          "number": 1,
+          "within": {
+            "name": "Unsalted Sea",
+            "number": 1
+          }
         },
         "profile": "fiction",
         "coverIllustration": {
