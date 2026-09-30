@@ -755,6 +755,22 @@ export default {
           }
         },
         "profile": "fiction",
+        "authorship": "This novel was written by AI agents working for the 561 Group. Sigrid Song, whose name it bears, is a fictional author-character they perform.",
+        "textProvenance": {
+          "tool": "Claude (Anthropic)"
+        },
+        "print": {
+          "trim": {
+            "width": 5,
+            "height": 8
+          },
+          "paper": "cream",
+          "ink": "black",
+          "finish": "matte",
+          "priceCents": 1199,
+          "isbn": "kdp-assigned",
+          "expandedDistribution": true
+        },
         "coverIllustration": {
           "model": "@cf/black-forest-labs/flux-2-dev",
           "modelName": "FLUX.2 [dev]",

@@ -127,6 +127,10 @@ export function compileCatalog(source) {
         ...(manifest.publisher ? { publisher: manifest.publisher } : {}),
         ...(manifest.series ? { series: manifest.series } : {}),
         ...(manifest.profile ? { profile: manifest.profile } : {}),
+        // Who made the text, as the copyright page says it; retailers that ask for an AI credit name the tool.
+        ...(manifest.rights?.authorship ? { authorship: manifest.rights.authorship } : {}),
+        ...(manifest.textProvenance ? { textProvenance: manifest.textProvenance } : {}),
+        ...(manifest.print ? { print: manifest.print } : {}),
         // Cover art drawn in code (a TikZ file an agent wrote) is disclosed as such, and so is
         // an illustrated cover's image model.
         ...(manifest.coverArt && manifest.cover !== "illustrated" ? { coverArt: true } : {}),
