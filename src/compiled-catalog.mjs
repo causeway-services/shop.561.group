@@ -140,7 +140,8 @@ export default {
       ],
       "cover": "/covers/the-x402-economy.png",
       "book": {
-        "author": "561 Group",
+        "author": "Causeway Services",
+        "publisher": "Causeway Services",
         "subjects": [
           "BUS090000",
           "BUS114000",
@@ -164,30 +165,30 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;JHNhRRUgZedFD7krPOz_mpxwluWbxzIOk4jbCYOEHl0",
-          "acceptedAt": "2026-09-28T05:49:47.888Z",
+          "digest": "ni:///sha-256;VrNUMIDVQk7pxREEVzFa9I0ge1pOaGfFS8sx8vJRjbw",
+          "acceptedAt": "2026-09-30T01:19:00.849Z",
           "pages": 63,
           "proof": {
-            "errors": 3,
-            "corrections": 4,
+            "errors": 0,
+            "corrections": 0,
             "notes": 2,
-            "carried": true
+            "carried": false
           },
           "files": [
             {
               "format": "EPUB",
-              "bytes": 126738,
-              "sha256": "fd0c312fe20ec5ee500a1de3bf1f0c84c2964946d946b7bacdb93a9e336b94fc",
+              "bytes": 132833,
+              "sha256": "a9fc32125cadb4baacf0f87c48edae1f9645cc50bdb9b6b7518d976c9ee209d6",
               "path": "public-services-section/services/public-economic-services-section/data/state/editions/the-x402-economy/the-x402-economy.epub"
             },
             {
               "format": "PDF",
-              "bytes": 193573,
-              "sha256": "9644899b367e43f1538969bdf7243ca1d531937300a5a03e60bb955f756e1106",
+              "bytes": 192790,
+              "sha256": "84a155521a1f9070fac32f868b7b22fd2f854f7c2ae856c02f0aa29ecd3d2a2e",
               "path": "public-services-section/services/public-economic-services-section/data/state/editions/the-x402-economy/the-x402-economy.pdf"
             }
           ],
-          "record": "public-services-section/services/public-economic-services-section/data/records/editions/2026-09-28-the-x402-economy-fifth-edition-acceptance.json"
+          "record": "public-services-section/services/public-economic-services-section/data/records/editions/2026-09-30-the-x402-economy-sixth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-economic-services-section/content/books/the-x402-economy"
       }
@@ -201,7 +202,7 @@ export default {
       "release": "project-management-course-by-course",
       "agentOfferUrl": "https://market.561.group/#publications-project-management-course-by-course",
       "title": "Project Management, Course by Course",
-      "subtitle": "An Independent Study Companion to the Google Project Management Professional Certificate",
+      "subtitle": "An Independent Study Companion for Entry-Level Project Management Certificate Courses",
       "blurb": "A study companion to Google’s Project Management Certificate: one chapter per course, self-checks with answers, and a guide to the capstone. Independent of Google and Coursera.",
       "keywords": [
         "project management",
@@ -211,9 +212,10 @@ export default {
       ],
       "cover": "/covers/project-management-course-by-course.png",
       "book": {
-        "author": "561 Group",
+        "author": "Causeway Services",
+        "publisher": "Causeway Services",
         "series": {
-          "name": "561 Group Study Companions",
+          "name": "Causeway Study Companions",
           "number": 1
         },
         "profile": "study-guide",
@@ -242,30 +244,30 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;Ri5Z9rxN40KV46bLP2evLd_yhSM1HFUkwQOmoxrvHgw",
-          "acceptedAt": "2026-09-28T05:50:32.293Z",
+          "digest": "ni:///sha-256;Yrt5q6LR8iyK2uQkqhn0aNtc_hXkTY54Jxokubl7kLw",
+          "acceptedAt": "2026-09-30T01:19:16.597Z",
           "pages": 82,
           "proof": {
-            "errors": 2,
-            "corrections": 11,
-            "notes": 8,
-            "carried": true
+            "errors": 0,
+            "corrections": 0,
+            "notes": 3,
+            "carried": false
           },
           "files": [
             {
               "format": "EPUB",
-              "bytes": 162844,
-              "sha256": "cc3e1d2a88fcba7df345f02b291ec22ce9ec8980934aa395b076fe401739751d",
+              "bytes": 171410,
+              "sha256": "65f69909eefc9d3fb0778a56f105f8f02cfa8ecedf0ba2ee7f0a83ff445115c8",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/project-management-course-by-course/project-management-course-by-course.epub"
             },
             {
               "format": "PDF",
-              "bytes": 256209,
-              "sha256": "1ced2d0d546c3608d07650756b8232a83e3f9c535f96ddb2dc138d4e7cba785d",
+              "bytes": 256149,
+              "sha256": "f726e598198aebc4a45b2a28e748b624744432a35df150db88cab82805e2276f",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/project-management-course-by-course/project-management-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-28-project-management-course-by-course-fifth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-project-management-course-by-course-sixth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/project-management-course-by-course"
       }
@@ -278,8 +280,8 @@ export default {
       "currency": "usd",
       "release": "the-capm-domain-by-domain",
       "agentOfferUrl": "https://market.561.group/#publications-the-capm-domain-by-domain",
-      "title": "The CAPM, Domain by Domain",
-      "subtitle": "An Independent Study Companion to PMI's Certified Associate in Project Management Exam",
+      "title": "Project Management Fundamentals, Domain by Domain",
+      "subtitle": "An Independent Study Companion for the Entry-Level Project Management Certification Exam",
       "blurb": "A study companion to PMI’s CAPM exam that follows the 2023 outline task by task and ends with a 40-question practice exam. Independent of PMI.",
       "keywords": [
         "CAPM",
@@ -289,9 +291,10 @@ export default {
       ],
       "cover": "/covers/the-capm-domain-by-domain.png",
       "book": {
-        "author": "561 Group",
+        "author": "Causeway Services",
+        "publisher": "Causeway Services",
         "series": {
-          "name": "561 Group Study Companions",
+          "name": "Causeway Study Companions",
           "number": 2
         },
         "profile": "study-guide",
@@ -321,30 +324,30 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;hEC7gqsw3d7qnwvgDPOpLP9lXGv47eg3sh1R9AmZw8I",
-          "acceptedAt": "2026-09-28T05:50:49.275Z",
+          "digest": "ni:///sha-256;KTLeetKYqd2HBOwRiTO1EX0qlvfSmlIKKls0mafVoYA",
+          "acceptedAt": "2026-09-30T01:19:27.065Z",
           "pages": 82,
           "proof": {
-            "errors": 5,
-            "corrections": 14,
-            "notes": 2,
-            "carried": true
+            "errors": 0,
+            "corrections": 0,
+            "notes": 4,
+            "carried": false
           },
           "files": [
             {
               "format": "EPUB",
-              "bytes": 155944,
-              "sha256": "15739cfd658ffb055a7dfe68393007fa19b037b54e3d274e101c542bf2c502e6",
+              "bytes": 190538,
+              "sha256": "31bba37acad286c5c5dffc272b364da4597c3383d3f0993c6a1e80580d71983f",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/the-capm-domain-by-domain/the-capm-domain-by-domain.epub"
             },
             {
               "format": "PDF",
-              "bytes": 240975,
-              "sha256": "beace4557542a3aff0f9aa81c42b0efe3b3cb1ea70290aece00eccba837a9ae1",
+              "bytes": 241218,
+              "sha256": "335d2e733bb2feffde741c861688639c4bede9e4b1cccc0be916c219bfba4090",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/the-capm-domain-by-domain/the-capm-domain-by-domain.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-28-the-capm-domain-by-domain-fifth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-the-capm-domain-by-domain-sixth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/the-capm-domain-by-domain"
       }
@@ -358,7 +361,7 @@ export default {
       "release": "data-analytics-course-by-course",
       "agentOfferUrl": "https://market.561.group/#publications-data-analytics-course-by-course",
       "title": "Data Analytics, Course by Course",
-      "subtitle": "An Independent Study Companion to the Google Data Analytics Professional Certificate",
+      "subtitle": "An Independent Study Companion for Entry-Level Data Analytics Certificate Courses",
       "blurb": "A study companion to Google’s Data Analytics Certificate: spreadsheets, SQL, Tableau and Python, with tested code and answered self-checks. Independent of Google and Coursera.",
       "keywords": [
         "data analytics",
@@ -369,9 +372,10 @@ export default {
       ],
       "cover": "/covers/data-analytics-course-by-course.png",
       "book": {
-        "author": "561 Group",
+        "author": "Causeway Services",
+        "publisher": "Causeway Services",
         "series": {
-          "name": "561 Group Study Companions",
+          "name": "Causeway Study Companions",
           "number": 3
         },
         "profile": "study-guide",
@@ -399,30 +403,30 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;qrvK4fX9UGSEpgfbtJU6_nYBdoJh_tQjCd4rR3ywtgc",
-          "acceptedAt": "2026-09-28T05:51:02.957Z",
+          "digest": "ni:///sha-256;QqXkBzuCLPCC2vy1uaAkwaZ5805sz8MQOYJFNU7pKQA",
+          "acceptedAt": "2026-09-30T01:19:36.084Z",
           "pages": 62,
           "proof": {
-            "errors": 3,
-            "corrections": 11,
+            "errors": 0,
+            "corrections": 0,
             "notes": 2,
-            "carried": true
+            "carried": false
           },
           "files": [
             {
               "format": "EPUB",
-              "bytes": 146741,
-              "sha256": "359fe4b3fa9806513d86c821b850e0822007da7463720b39e791e54fd1aec782",
+              "bytes": 151111,
+              "sha256": "5380536ca3786b4b83fe24c6db90edf45fb1febf7184ab816a5352860b079d47",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/data-analytics-course-by-course/data-analytics-course-by-course.epub"
             },
             {
               "format": "PDF",
-              "bytes": 243789,
-              "sha256": "28679c0353ee3a213dc5d78dcf6d45aa9a860d37df4ca8dad059658180566e28",
+              "bytes": 243253,
+              "sha256": "408838b00e20f503818a50af6d4d87f3d2808d1e90e28fc75671cf52c44bf37e",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/data-analytics-course-by-course/data-analytics-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-28-data-analytics-course-by-course-fifth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-30-data-analytics-course-by-course-sixth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/data-analytics-course-by-course"
       }
@@ -436,7 +440,7 @@ export default {
       "release": "ux-design-course-by-course",
       "agentOfferUrl": "https://market.561.group/#publications-ux-design-course-by-course",
       "title": "UX Design, Course by Course",
-      "subtitle": "An Independent Study Companion to the Google UX Design Professional Certificate",
+      "subtitle": "An Independent Study Companion for Entry-Level UX Design Certificate Courses",
       "blurb": "A study companion to Google’s UX Design Certificate: the design process from its sources, accessibility throughout, and a portfolio guide. Independent of Google and Coursera.",
       "keywords": [
         "UX design",
@@ -446,9 +450,10 @@ export default {
       ],
       "cover": "/covers/ux-design-course-by-course.png",
       "book": {
-        "author": "561 Group",
+        "author": "Causeway Services",
+        "publisher": "Causeway Services",
         "series": {
-          "name": "561 Group Study Companions",
+          "name": "Causeway Study Companions",
           "number": 4
         },
         "profile": "study-guide",
@@ -476,30 +481,30 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;N3A4OMWkXmS5XRaIObjpoVYPXDeuxZUxAyyJ4OAaZTI",
-          "acceptedAt": "2026-09-28T05:51:18.260Z",
+          "digest": "ni:///sha-256;Tz4Lq8ElAOA_7Xe3SA7mJgXz_nrskT32PbL7-CwJY38",
+          "acceptedAt": "2026-09-30T01:19:45.661Z",
           "pages": 66,
           "proof": {
-            "errors": 2,
-            "corrections": 14,
-            "notes": 1,
-            "carried": true
+            "errors": 0,
+            "corrections": 0,
+            "notes": 2,
+            "carried": false
           },
           "files": [
             {
               "format": "EPUB",
-              "bytes": 137992,
-              "sha256": "002e1e16c66cb0e22ce3a18eb73c1a49a18022aeb3011a3f67710a05ceb5f954",
+              "bytes": 143017,
+              "sha256": "d854af788ed428b5f9e5d9f382a82724aa1f296cec30bdd164e6283cbd081722",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/ux-design-course-by-course/ux-design-course-by-course.epub"
             },
             {
               "format": "PDF",
-              "bytes": 201934,
-              "sha256": "fbd7f0d34f184c1e0dd39a992899cff57791e944cfa3a57a8145366c6401d7a8",
+              "bytes": 201306,
+              "sha256": "7d13baf16273cc68137c6492278ecd133d4abe97f695a4daad550b7c34897c16",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/ux-design-course-by-course/ux-design-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-28-ux-design-course-by-course-fifth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-30-ux-design-course-by-course-sixth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/ux-design-course-by-course"
       }
@@ -513,7 +518,7 @@ export default {
       "release": "business-management-course-by-course",
       "agentOfferUrl": "https://market.561.group/#publications-business-management-course-by-course",
       "title": "Business Management, Course by Course",
-      "subtitle": "An Independent Study Companion to Cornell's Business Management Essentials Certificate",
+      "subtitle": "An Independent Study Companion for Online Business Management Certificate Courses",
       "blurb": "A study companion to Cornell’s Business Management Essentials certificate: finance, marketing, strategy, organizing and leading. Independent of Cornell.",
       "keywords": [
         "business management",
@@ -522,9 +527,10 @@ export default {
       ],
       "cover": "/covers/business-management-course-by-course.png",
       "book": {
-        "author": "561 Group",
+        "author": "Causeway Services",
+        "publisher": "Causeway Services",
         "series": {
-          "name": "561 Group Study Companions",
+          "name": "Causeway Study Companions",
           "number": 5
         },
         "profile": "study-guide",
@@ -551,30 +557,30 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;215AesJG1AxbqsdqtnzVAh65mmG83Ui6Qm5-arLgYKc",
-          "acceptedAt": "2026-09-28T05:50:01.527Z",
+          "digest": "ni:///sha-256;MEk0cHrRBXtlfvzA4t6i55QjU1LmcyX_2d5Lzq76fe8",
+          "acceptedAt": "2026-09-30T01:19:53.800Z",
           "pages": 61,
           "proof": {
-            "errors": 2,
-            "corrections": 13,
-            "notes": 4,
-            "carried": true
+            "errors": 0,
+            "corrections": 0,
+            "notes": 2,
+            "carried": false
           },
           "files": [
             {
               "format": "EPUB",
-              "bytes": 140157,
-              "sha256": "fc99a570cfd002162f70f9e17c4cf47925320a44461cee32c11646d4de45f5ee",
+              "bytes": 146692,
+              "sha256": "2840cefb03118178b10bd0b5986ca397da4c0c82123f5f66c60300c5466d8c4b",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-management-course-by-course/business-management-course-by-course.epub"
             },
             {
               "format": "PDF",
-              "bytes": 186698,
-              "sha256": "b9e64b7bcb60090aab3384ce8c8957989bbdcbc77eaef5984b4ff12e7a04c475",
+              "bytes": 184912,
+              "sha256": "4fbe5838fea08433be87ce35652a6165887cb284d2d66bb375444db9b0f0462d",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-management-course-by-course/business-management-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-28-business-management-course-by-course-fifth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-business-management-course-by-course-sixth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-management-course-by-course"
       }
@@ -588,7 +594,7 @@ export default {
       "release": "business-strategy-course-by-course",
       "agentOfferUrl": "https://market.561.group/#publications-business-strategy-course-by-course",
       "title": "Business Strategy, Course by Course",
-      "subtitle": "An Independent Study Companion to Cornell's Business Strategy Certificate",
+      "subtitle": "An Independent Study Companion for Online Business Strategy Certificate Courses",
       "blurb": "A study companion to Cornell’s Business Strategy certificate: value, disruption, alliances, game theory and platforms. Independent of Cornell.",
       "keywords": [
         "business strategy",
@@ -598,9 +604,10 @@ export default {
       ],
       "cover": "/covers/business-strategy-course-by-course.png",
       "book": {
-        "author": "561 Group",
+        "author": "Causeway Services",
+        "publisher": "Causeway Services",
         "series": {
-          "name": "561 Group Study Companions",
+          "name": "Causeway Study Companions",
           "number": 6
         },
         "profile": "study-guide",
@@ -627,30 +634,30 @@ export default {
           "Glossary"
         ],
         "edition": {
-          "digest": "ni:///sha-256;D2DLF2giwWzto8-klSvhjTUSg-cy0EFtI_grpElvANo",
-          "acceptedAt": "2026-09-28T05:50:17.382Z",
+          "digest": "ni:///sha-256;UblTKtTBQSy0QgyI-VJFT0eoP20H_Fu8k9tuNZygSE0",
+          "acceptedAt": "2026-09-30T01:20:05.811Z",
           "pages": 58,
           "proof": {
             "errors": 0,
-            "corrections": 17,
-            "notes": 1,
-            "carried": true
+            "corrections": 0,
+            "notes": 2,
+            "carried": false
           },
           "files": [
             {
               "format": "EPUB",
-              "bytes": 144237,
-              "sha256": "c3fb1329eca5c4e88a99098bd22acd37dec7c3c0278da0bffe87385bb261f19b",
+              "bytes": 151723,
+              "sha256": "db9ba27a84a98f4a06b5c41fd818cde045d588fb8970a2b1b43b39705add51a2",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-strategy-course-by-course/business-strategy-course-by-course.epub"
             },
             {
               "format": "PDF",
-              "bytes": 176724,
-              "sha256": "7ac1783966a30e875add09bb5adfd83fff09a289406401450f604263c6d691f6",
+              "bytes": 176354,
+              "sha256": "3c4c636f07d79f247b175b31f731beadb95eea51aac8f51fca888e126410b91a",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-strategy-course-by-course/business-strategy-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-28-business-strategy-course-by-course-fifth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-business-strategy-course-by-course-sixth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-strategy-course-by-course"
       }
