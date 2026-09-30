@@ -20,12 +20,13 @@
       "id": "the-agent-operators-handbook",
       "line": "@emsenn/artificial-intelligence-curriculum-enterprise",
       "status": "coming-soon",
-      "priceCents": 2900,
+      "priceCents": 1200,
       "currency": "usd",
       "release": "agent-operators-handbook",
       "agentOfferUrl": "https://market.561.group/#publications-agent-operators-handbook",
       "book": {
-        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/content/books/the-agent-operators-handbook"
+        "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/content/books/the-agent-operators-handbook",
+        "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/data/records/editions/2026-09-30-the-agent-operators-handbook-first-edition-acceptance.json"
       }
     },
     {

@@ -16,14 +16,18 @@ export default {
       "subtitle": "A Public Guide to Long COVID, Post-Exertional Malaise, and the Science Behind the Diagnosis",
       "blurb": "A public guide to Long COVID, post-exertional malaise, and infection-associated chronic illness: what is established, what is a well-supported hypothesis, and what remains contested. This is educational material, not medical advice.",
       "keywords": [
-        "infection-associated chronic illness",
         "Long COVID",
         "post-exertional malaise",
+        "ME/CFS",
         "pacing",
-        "health education"
+        "chronic fatigue",
+        "post-viral illness",
+        "infection-associated chronic illness"
       ],
       "book": {
-        "author": "561 Group",
+        "author": "Culvert Health",
+        "publisher": "Causeway Services",
+        "authorship": "This book was written by AI agents working for the 561 Group and proofread by a separate AI agent. Culvert Health, whose name it bears, is the health division of Causeway Services.",
         "subjects": [
           "HEA000000",
           "MED000000",
@@ -31,7 +35,7 @@ export default {
         ],
         "marks": [],
         "contents": [
-          "Understanding Infection-Associated Chronic Illness",
+          "About this book",
           "Chapter 1: What Infection-Associated Chronic Illness Is",
           "Chapter 2: Long COVID — Definitions and Why They Disagree",
           "Chapter 3: What Researchers Think Is Happening",
@@ -64,7 +68,7 @@ export default {
       "id": "the-agent-operators-handbook",
       "line": "@emsenn/artificial-intelligence-curriculum-enterprise",
       "status": "coming-soon",
-      "priceCents": 2900,
+      "priceCents": 1200,
       "currency": "usd",
       "release": "agent-operators-handbook",
       "agentOfferUrl": "https://market.561.group/#publications-agent-operators-handbook",
@@ -72,20 +76,34 @@ export default {
       "subtitle": "A Field Guide to Dispatching, Steering, and Recovering Multiple AI Coding Agents at Once",
       "blurb": "A field guide to operating several AI coding agents at once: writing the complete brief, when to split work and when not to, steering a running agent, recovering an interrupted one, and reading its report.",
       "keywords": [
-        "AI agents",
-        "coding agents",
-        "field guide"
+        "AI coding agents",
+        "agentic coding",
+        "AI pair programming",
+        "multi-agent workflow",
+        "prompt engineering",
+        "software engineering workflow",
+        "developer productivity"
       ],
+      "cover": "/covers/the-agent-operators-handbook.png",
       "book": {
-        "author": "561 Group",
+        "author": "Causeway Services",
+        "publisher": "Causeway Services",
+        "authorship": "This book was written by AI agents working for the 561 Group and proofread by a separate AI agent.",
         "subjects": [
           "COM004000",
           "COM051230",
           "COM100000"
         ],
-        "marks": [],
+        "coverFile": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/data/state/editions/the-agent-operators-handbook/the-agent-operators-handbook-cover.png",
+        "marks": [
+          "Claude Code",
+          "Codex",
+          "Claude",
+          "OpenAI",
+          "Anthropic"
+        ],
         "contents": [
-          "The Agent Operator's Handbook",
+          "About this book",
           "Chapter 1: The Complete Brief",
           "Chapter 2: The Fan-Out Anti-Pattern",
           "Chapter 3: Steering a Running Agent",
@@ -100,23 +118,30 @@ export default {
           "Appendix: Five Templates"
         ],
         "edition": {
-          "digest": "release agent-operators-handbook",
-          "pages": 42,
-          "proof": null,
+          "digest": "ni:///sha-256;d7xgAJVknJhrMOSoQmdKG3xQjmyEsdZ7T7fB1PuBku8",
+          "acceptedAt": "2026-09-30T01:49:14.677Z",
+          "pages": 62,
+          "proof": {
+            "errors": 0,
+            "corrections": 6,
+            "notes": 9,
+            "carried": false
+          },
           "files": [
             {
               "format": "EPUB",
-              "bytes": 62974,
-              "sha256": "1591a87c150a10bf87c30d037f66c1c2af8032a5a694ecb5e20a758007681a54",
+              "bytes": 152222,
+              "sha256": "bf04217cc5ab2906f2eb00a6938bddc6285f3695cfc2794f607fa20911069283",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/data/state/editions/the-agent-operators-handbook/the-agent-operators-handbook.epub"
             },
             {
               "format": "PDF",
-              "bytes": 182525,
-              "sha256": "b86cc5dd88408f4c417c2a1264520e4200c3dffc6e866980ee3e5fabee9fa2b5",
+              "bytes": 202099,
+              "sha256": "65fcffdb30f6cbd3d451ce37598a61dcca250b69adbbd0b5beffefa87f8ea525",
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/data/state/editions/the-agent-operators-handbook/the-agent-operators-handbook.pdf"
             }
-          ]
+          ],
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/data/records/editions/2026-09-30-the-agent-operators-handbook-first-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/content/books/the-agent-operators-handbook"
       }
@@ -136,7 +161,10 @@ export default {
         "x402",
         "stablecoins",
         "agent payments",
-        "HTTP 402"
+        "HTTP 402",
+        "machine payments",
+        "API monetization",
+        "crypto payments"
       ],
       "cover": "/covers/the-x402-economy.png",
       "book": {
@@ -208,7 +236,12 @@ export default {
         "project management",
         "Google certificate",
         "Coursera",
-        "study guide"
+        "study guide",
+        "project management certificate",
+        "agile and scrum",
+        "project planning",
+        "exam prep",
+        "career change"
       ],
       "cover": "/covers/project-management-course-by-course.png",
       "book": {
@@ -287,7 +320,12 @@ export default {
         "CAPM",
         "PMI",
         "project management",
-        "exam prep"
+        "exam prep",
+        "project management certification",
+        "agile and scrum",
+        "practice questions",
+        "study guide",
+        "entry-level project manager"
       ],
       "cover": "/covers/the-capm-domain-by-domain.png",
       "book": {
@@ -368,7 +406,11 @@ export default {
         "SQL",
         "Python",
         "Google certificate",
-        "study guide"
+        "study guide",
+        "data analyst certificate",
+        "spreadsheets",
+        "Tableau",
+        "career change"
       ],
       "cover": "/covers/data-analytics-course-by-course.png",
       "book": {
@@ -446,7 +488,11 @@ export default {
         "UX design",
         "accessibility",
         "Google certificate",
-        "study guide"
+        "study guide",
+        "UX design certificate",
+        "user research",
+        "wireframes and prototypes",
+        "career change"
       ],
       "cover": "/covers/ux-design-course-by-course.png",
       "book": {
@@ -523,7 +569,11 @@ export default {
       "keywords": [
         "business management",
         "eCornell",
-        "study guide"
+        "study guide",
+        "management certificate",
+        "leadership",
+        "business fundamentals",
+        "career development"
       ],
       "cover": "/covers/business-management-course-by-course.png",
       "book": {
@@ -600,7 +650,11 @@ export default {
         "business strategy",
         "eCornell",
         "game theory",
-        "study guide"
+        "study guide",
+        "strategy certificate",
+        "competitive strategy",
+        "strategic management",
+        "career development"
       ],
       "cover": "/covers/business-strategy-course-by-course.png",
       "book": {
