@@ -9,11 +9,12 @@
       "id": "understanding-infection-associated-chronic-illness",
       "line": "@emsenn/health-education-curriculum-enterprise",
       "status": "coming-soon",
-      "priceCents": 1900,
+      "priceCents": 900,
       "currency": "usd",
       "release": "understanding-infection-associated-chronic-illness",
       "book": {
-        "manuscript": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/content/books/understanding-infection-associated-chronic-illness"
+        "manuscript": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/content/books/understanding-infection-associated-chronic-illness",
+        "acceptance": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/data/records/editions/2026-09-30-understanding-infection-associated-chronic-illness-first-edition-acceptance.json"
       }
     },
     {

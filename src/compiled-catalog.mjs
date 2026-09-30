@@ -9,7 +9,7 @@ export default {
       "id": "understanding-infection-associated-chronic-illness",
       "line": "@emsenn/health-education-curriculum-enterprise",
       "status": "coming-soon",
-      "priceCents": 1900,
+      "priceCents": 900,
       "currency": "usd",
       "release": "understanding-infection-associated-chronic-illness",
       "title": "Understanding Infection-Associated Chronic Illness",
@@ -24,6 +24,7 @@ export default {
         "post-viral illness",
         "infection-associated chronic illness"
       ],
+      "cover": "/covers/understanding-infection-associated-chronic-illness.png",
       "book": {
         "author": "Culvert Health",
         "publisher": "Causeway Services",
@@ -33,6 +34,7 @@ export default {
           "MED000000",
           "SCI000000"
         ],
+        "coverFile": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/data/state/editions/understanding-infection-associated-chronic-illness/understanding-infection-associated-chronic-illness-cover.png",
         "marks": [],
         "contents": [
           "About this book",
@@ -43,23 +45,30 @@ export default {
           "Chapter 5: How to Read Research About Your Own Illness"
         ],
         "edition": {
-          "digest": "release understanding-infection-associated-chronic-illness",
-          "pages": 52,
-          "proof": null,
+          "digest": "ni:///sha-256;DrndM4sDovHlmwFMjionFoRpNaOxesWMfrg_IlQ5wn4",
+          "acceptedAt": "2026-09-30T02:11:25.444Z",
+          "pages": 57,
+          "proof": {
+            "errors": 6,
+            "corrections": 17,
+            "notes": 7,
+            "carried": false
+          },
           "files": [
             {
               "format": "EPUB",
-              "bytes": 60832,
-              "sha256": "092921f0be89f4abbc530eef1d6fa5ce9a56b1487c3c93ab0d93d558d69b49fb",
+              "bytes": 167912,
+              "sha256": "a6ffcdc9f457e828ea07a20bf444e1c4456b7131c88343c194f965471b24ec81",
               "path": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/data/state/editions/understanding-infection-associated-chronic-illness/understanding-infection-associated-chronic-illness.epub"
             },
             {
               "format": "PDF",
-              "bytes": 207715,
-              "sha256": "8fc4603381ef6b3a7c9369fb5ec210eb8b6fd1ba79a477e916882e2963783dd8",
+              "bytes": 219403,
+              "sha256": "f4ac5ab05eac49f6b007112d65db94d960050e412bfb2403c1357eb90c3e649e",
               "path": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/data/state/editions/understanding-infection-associated-chronic-illness/understanding-infection-associated-chronic-illness.pdf"
             }
-          ]
+          ],
+          "record": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/data/records/editions/2026-09-30-understanding-infection-associated-chronic-illness-first-edition-acceptance.json"
         },
         "manuscript": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/content/books/understanding-infection-associated-chronic-illness"
       }
