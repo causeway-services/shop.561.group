@@ -829,6 +829,22 @@ export default {
           ],
           "record": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-29-ice-out-fifth-edition-acceptance.json"
         },
+        "printEdition": {
+          "profile": "kdp-paperback-v1",
+          "pages": 166,
+          "interior": {
+            "path": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out-print-interior.pdf",
+            "bytes": 332840,
+            "sha256": "412b5f05a1aa068e36da4b9196e84c344be3adec9046f214b7b1e034bf14d4dc"
+          },
+          "cover": {
+            "path": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out-print-cover.pdf",
+            "bytes": 1273342,
+            "sha256": "cc681c2c83a20ffe73a3ed90fd840a1269f7bdd33f7fb6c4fbb4bc4f6bfcb3e8"
+          },
+          "acceptedAt": "2026-09-30T01:03:57.682Z",
+          "record": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-29-ice-out-fifth-edition-print-acceptance.json"
+        },
         "manuscript": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/content/books/ice-out"
       }
     },

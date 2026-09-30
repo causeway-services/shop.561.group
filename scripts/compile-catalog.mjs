@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 // Compile catalog.json into the catalog the Worker serves. A book row names
 // its manuscript, its acceptance record (or, for an edition that predates
-// acceptance records, the directory holding its files) and the pipeline's
-// cover; everything a reader is told about the book -- title, series,
-// description, keywords, subjects, contents, formats, sizes, digests, the
-// proof's counts -- is read from
-// those records here rather than typed into the catalog. The cover is copied
-// into public/covers/, which the Worker serves as static assets.
+// acceptance records, the directory holding its files), its print acceptance
+// when it has a paperback, and the pipeline's cover; everything a reader is
+// told about the book -- title, series, description, keywords, subjects,
+// contents, formats, sizes, digests, the proof's counts -- is read from those
+// records here rather than typed into the catalog. The cover is copied into
+// public/covers/, which the Worker serves as static assets.
 //
 // Tracked files (manuscripts, records) are read from the checkout being
 // built; edition state (EPUBs, PDFs, covers) is untracked and is read from
@@ -98,6 +98,27 @@ function edition(row, manifest) {
   return { digest: record.editionInputDigest, acceptedAt: record.acceptedAt, pages: pages(built.pdf), proof: record.proof ? { ...record.proof.findings, carried: /^Carried from /u.test(record.proof.method ?? "") } : null, files, record: row.book.acceptance };
 }
 
+// The paperback a book is printed as, when its row names a print acceptance.
+// Its files must be byte for byte the accepted ones, and it must print the
+// edition the shop sells; a print edition of an earlier text is left out.
+function printEdition(row, sold) {
+  if (!row.book.printAcceptance) return undefined;
+  const record = JSON.parse(readFileSync(join(checkout, row.book.printAcceptance), "utf8"));
+  if (record.type !== "PrintEditionAcceptance" || record.status !== "accepted") throw new Error(`${row.id}: ${row.book.printAcceptance} is not an accepted print edition`);
+  if (servicesRelative(record.textAcceptance) !== sold.record) {
+    console.warn(`${row.id}: the print edition prints ${servicesRelative(record.textAcceptance)}, not the edition sold (${sold.record}); it is left out until the print edition is made again`);
+    return undefined;
+  }
+  const file = (accepted) => {
+    const path = stateFile(accepted.path);
+    if (!existsSync(path)) throw new Error(`${row.id}: no print file at ${servicesRelative(path)}; produce the print edition first`);
+    const sha256 = hexOf(sha256File(path));
+    if (sha256 !== hexOf(accepted.sha256)) throw new Error(`${row.id}: ${servicesRelative(path)} is not the accepted print file (${sha256} is not ${hexOf(accepted.sha256)})`);
+    return { path: servicesRelative(path), bytes: accepted.bytes, sha256 };
+  };
+  return { profile: record.profile, pages: record.pages, interior: file(record.interior), cover: file(record.cover), acceptedAt: record.acceptedAt, record: row.book.printAcceptance };
+}
+
 export function compileCatalog(source) {
   const covers = join(site, "public", "covers");
   rmSync(covers, { recursive: true, force: true });
@@ -115,6 +136,8 @@ export function compileCatalog(source) {
       cover = `/covers/${name}`;
     }
     const { book, ...offering } = row;
+    const sold = edition(row, manifest);
+    const printed = printEdition(row, sold);
     return {
       ...offering,
       title: row.title ?? manifest.title,
@@ -140,7 +163,8 @@ export function compileCatalog(source) {
         ...(cover ? { coverFile: servicesRelative(built.cover) } : {}),
         marks: manifest.marks ?? [],
         contents: contents(manuscript),
-        edition: edition(row, manifest),
+        edition: sold,
+        ...(printed ? { printEdition: printed } : {}),
         manuscript: book.manuscript,
       },
     };
