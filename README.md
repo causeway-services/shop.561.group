@@ -81,9 +81,18 @@ worktree, so a deploy from a clean worktree compiles the same catalog.
   - `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`: the Group's Google OAuth
     client, with `https://shop.561.group/oauth/callback` registered as a
     redirect URI.
-- The founder's own items, not set here: `STRIPE_SECRET_KEY`,
-  `STRIPE_WEBHOOK_SECRET` and `STRIPE_CUSTOMER_CONTRACT_TOKEN`. Until they
-  are set, each book says card checkout opens soon and offers x402.
+- Card checkout's secrets: `STRIPE_SECRET_KEY` (a restricted key with only
+  Checkout Sessions: Write), `STRIPE_WEBHOOK_SECRET` (the signing secret of
+  the destination for `checkout.session.completed` at `/webhooks/stripe`) and
+  `STRIPE_CUSTOMER_CONTRACT_TOKEN` (minted when the founder arms, accepting
+  the customer-settlement contract). Until all three are set, each book says
+  card checkout opens soon and offers x402. `pnpm arm-checkout` sets them:
+  the founder signs in to Stripe in the node's assisted browser, creates the
+  key and the destination there with the values its step panel shows, and
+  pastes each secret into the panel. The script checks the key with Stripe
+  and puts each secret into the Worker with `wrangler secret put`; nothing is
+  printed or written to disk. It keeps secrets that are already set unless
+  `--replace`, and `--test` arms with test-mode Stripe instead.
 
 ## Deploying
 
