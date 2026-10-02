@@ -29,6 +29,8 @@ export default {
       accounts: { clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET, sessionSecret: env.SHOP_SESSION_SECRET },
       // The comma-separated emails that may give books.
       gifters: String(env.SHOP_GIFTERS ?? "").split(",").map((email) => email.trim()).filter(Boolean),
+      // The house's agents give books through /api/gifts with this key (pnpm arm-gift-agent); their gifts are Causeway's press office's.
+      giftAgent: { key: env.SHOP_GIFT_AGENT_KEY, as: "press@561.group" },
     });
   },
 };

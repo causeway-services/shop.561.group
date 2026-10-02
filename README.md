@@ -28,6 +28,9 @@ bindings and the `ShopFulfillment` Durable Object registration.
   from `/gifts` and gets a link to send. The link delivers the book at once,
   and the recipient keeps it by signing in with that address. A gift can be
   withdrawn.
+- A gift API for the house's agents. Review copies are gifts: the outreach
+  runner gives one through `/api/gifts` with the gift-agent key, and every
+  such gift is recorded as given by `press@561.group`.
 
 ## The catalog
 
@@ -63,6 +66,8 @@ worktree, so a deploy from a clean worktree compiles the same catalog.
 | `GET /gifts`, `POST /gifts` | The gifter's form and the gifts they have given. |
 | `GET /gifts/:id` | A gift's link: the book, the note and the download. |
 | `POST /gifts/:id/revoke` | Withdraws a gift. |
+| `GET /api/gifts`, `POST /api/gifts` | Bearer `SHOP_GIFT_AGENT_KEY`. The giftable books; give one (`{offering, email, note?, reference?}` → `{id, url, disposition}`). A `reference` names the same gift every time, so a repeat never gives twice. |
+| `GET /api/gifts/:id`, `POST /api/gifts/:id/revoke` | A gift the agent gave: its status; withdraw it. |
 | `GET /oauth/login`, `/oauth/callback`, `/oauth/logout` | Google sign-in. |
 | `GET /download/:token` | A signed, one-hour link to the entitlement's current release bytes. |
 | `GET /catalog.json` | The compiled catalog. |
@@ -78,6 +83,10 @@ worktree, so a deploy from a clean worktree compiles the same catalog.
   - `SHOP_TOKEN_SECRET`
   - `SHOP_SESSION_SECRET`
   - `SHOP_GIFTERS` (comma-separated emails)
+  - `SHOP_GIFT_AGENT_KEY`: the gift API's key. `pnpm arm-gift-agent` makes
+    it, keeps the node's copy at
+    `~/.config/561-group/shop.561.group/gift-agent.key` (0600) and puts it
+    into the Worker; nothing is printed.
   - `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`: the Group's Google OAuth
     client, with `https://shop.561.group/oauth/callback` registered as a
     redirect URI.
