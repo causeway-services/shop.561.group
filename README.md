@@ -28,9 +28,15 @@ bindings and the `ShopFulfillment` Durable Object registration.
   from `/gifts` and gets a link to send. The link delivers the book at once,
   and the recipient keeps it by signing in with that address. A gift can be
   withdrawn.
-- A gift API for the house's agents. Review copies are gifts: the outreach
-  runner gives one through `/api/gifts` with the gift-agent key, and every
-  such gift is recorded as given by `press@561.group`.
+- A gift API for the house's agents, with the gift-agent key; every such
+  gift is recorded as given by `press@561.group`.
+- Review copies. A review copy is not a gift of the retail release: it is
+  the advance-reader rendition stamped for one reader, staged under its
+  grant at `goods/<offering>/review-copies/<grant>/` in
+  `shop-561-group-goods`. The publisher records it through
+  `/api/review-copies` with the same key once it is staged. It can be given
+  while a book is coming soon, its link states the review terms, it stops
+  downloading when the reading window closes, and it can be withdrawn.
 
 ## The catalog
 
@@ -68,6 +74,9 @@ worktree, so a deploy from a clean worktree compiles the same catalog.
 | `POST /gifts/:id/revoke` | Withdraws a gift. |
 | `GET /api/gifts`, `POST /api/gifts` | Bearer `SHOP_GIFT_AGENT_KEY`. The giftable books; give one (`{offering, email, note?, reference?}` → `{id, url, disposition}`). A `reference` names the same gift every time, so a repeat never gives twice. |
 | `GET /api/gifts/:id`, `POST /api/gifts/:id/revoke` | A gift the agent gave: its status; withdraw it. |
+| `GET /review-copies/:id` | A review copy's link: the stamped copy, the review terms and the date it stops working. 410 once expired or withdrawn. |
+| `POST /api/review-copies` | Bearer `SHOP_GIFT_AGENT_KEY`. Records a staged review copy (`{id, offering, email, release, artifactSha256, expiresAt, note?}` → `{id, url, disposition}`); 409 until the stamped copy under that grant names the same edition and bytes. |
+| `GET /api/review-copies/:id`, `POST /api/review-copies/:id/revoke` | A review copy the agent recorded: its status and expiry; withdraw it. |
 | `GET /oauth/login`, `/oauth/callback`, `/oauth/logout` | Google sign-in. |
 | `GET /download/:token` | A signed, one-hour link to the entitlement's current release bytes. |
 | `GET /catalog.json` | The compiled catalog. |
@@ -75,9 +84,9 @@ worktree, so a deploy from a clean worktree compiles the same catalog.
 ## Bindings and secrets
 
 - Durable Object `SHOP_FULFILLMENT` / `ShopFulfillment`: checkouts,
-  entitlements, accounts and gifts.
+  entitlements, accounts, gifts and review copies.
 - R2 bucket `shop-561-group-goods` (`SHOP_GOODS`): release pointers and
-  bundles.
+  bundles, and each review copy's pointer and stamped EPUB.
 - KV `SHOP_ENTITLEMENTS`: historical custody only. It grants nothing.
 - Secrets:
   - `SHOP_TOKEN_SECRET`

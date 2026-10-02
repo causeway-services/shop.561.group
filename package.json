@@ -17,7 +17,7 @@
     "node": ">=22.18"
   },
   "dependencies": {
-    "@red-cup-engineering/digital-goods-storefront-services-section": "0.3.0",
+    "@red-cup-engineering/digital-goods-storefront-services-section": "0.4.0",
     "@red-cup-engineering/stripe-services-section": "0.1.9",
     "wrangler": "4.127.1"
   },
