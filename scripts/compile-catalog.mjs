@@ -20,7 +20,10 @@ import { coverFileName, listChapters, sha256File } from "@red-cup-engineering/eb
 import { validateCatalog } from "@red-cup-engineering/digital-goods-storefront-services-section";
 
 const site = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const SERVICES = "lib/emsenn/services/561-group/services";
+// The Group's services directory under the checkout, read from this site's own path rather than named here.
+const SERVICES_PATTERN = /\/lib\/[^/]+\/services\/561-group\/services\//u;
+const SERVICES = SERVICES_PATTERN.exec(`${site}/`)?.[0].slice(1, -1);
+if (SERVICES === undefined) throw new Error(`cannot locate the Group's services directory above ${site}`);
 
 // Resolve the checkout and its primary worktree without spawning git. Besides
 // making compilation independent of PATH/process policy, this preserves the
@@ -45,8 +48,8 @@ const mainTree = join(mainRoot, SERVICES);
 
 const hexOf = (ni) => Buffer.from(ni.replace(/^ni:\/\/\/sha-256;/u, ""), "base64url").toString("hex");
 // A path as the catalog records it: relative to the services root, the same on every checkout.
-const servicesRelative = (path) => path.replace(/^.*?\/lib\/emsenn\/services\/561-group\/services\//u, "");
-const stateFile = (path) => (path.startsWith("/") ? path.replace(/^.*?\/lib\/emsenn\/services\/561-group\/services\//u, `${mainTree}/`) : join(mainTree, path));
+const servicesRelative = (path) => path.replace(new RegExp(`^.*?${SERVICES_PATTERN.source}`, "u"), "");
+const stateFile = (path) => (path.startsWith("/") ? path.replace(new RegExp(`^.*?${SERVICES_PATTERN.source}`, "u"), `${mainTree}/`) : join(mainTree, path));
 
 function pages(pdf) {
   try { return Number(/^Pages:\s+(\d+)/mu.exec(execFileSync("pdfinfo", [pdf], { encoding: "utf8" }))?.[1]) || undefined; } catch { return undefined; }
