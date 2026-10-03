@@ -2,7 +2,7 @@
   "$comment": "The human storefront's catalog: books and publications a person buys, reads or subscribes to. Agents buy market-listed books at market.561.group over x402; APIs, agent briefings and games remain on their own sites. Book facts (title, description, contents, edition, verification) are compiled from each book's manifest, built files and acceptance record by scripts/compile-catalog.mjs; paths are relative to lib/emsenn/services/561-group/services/. A book without an EbookEditionAcceptance remains coming-soon even when historical rendition files survive.",
   "merchant": {
     "name": "561 Group",
-    "legalBody": "emsenn"
+    "legalBody": "561 Group"
   },
   "offerings": [
     {
