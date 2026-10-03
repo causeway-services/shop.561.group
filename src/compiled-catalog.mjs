@@ -2,7 +2,7 @@
 export default {
   "merchant": {
     "name": "561 Group",
-    "legalBody": "emsenn"
+    "legalBody": "561 Group"
   },
   "offerings": [
     {
@@ -743,7 +743,7 @@ export default {
         "knowledge representation"
       ],
       "book": {
-        "author": "emsenn",
+        "author": "561 Group",
         "subjects": [
           "MAT000000",
           "PHI000000",

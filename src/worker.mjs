@@ -17,8 +17,32 @@ const runtime = createDigitalGoodsStorefrontWorker({
   },
 });
 
+// The public catalog.json is a projection: what a buyer needs to read, never the house's
+// internal settlement line or the repository paths its editions were compiled from.
+function publicCatalog() {
+  const offerings = catalog.offerings.map(({ line: _settlement, book, ...offering }) => {
+    if (!book) return offering;
+    const { manuscript: _m, coverFile: _c, edition, printEdition, ...publicBook } = book;
+    const stripFile = ({ path: _p, ...file }) => file;
+    const { record: _r, files, ...publicEdition } = edition ?? {};
+    const { record: _pr, interior, cover, ...publicPrint } = printEdition ?? {};
+    return {
+      ...offering,
+      book: {
+        ...publicBook,
+        ...(edition ? { edition: { ...publicEdition, files: (files ?? []).map(stripFile) } } : {}),
+        ...(printEdition ? { printEdition: { ...publicPrint, interior: stripFile(interior), cover: stripFile(cover) } } : {}),
+      },
+    };
+  });
+  return { ...catalog, offerings };
+}
+
 export default {
   fetch(request, env) {
+    if (new URL(request.url).pathname === "/catalog.json" && request.method === "GET") {
+      return new Response(JSON.stringify(publicCatalog()), { headers: { "content-type": "application/json; charset=utf-8" } });
+    }
     return runtime.fetch(request, {
       ...env,
       fulfillment: createShopFulfillment(env.SHOP_FULFILLMENT),
