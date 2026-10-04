@@ -22,6 +22,11 @@ function paidEvent({ eventId = "evt_test", sessionId = "cs_test", offeringId = "
   return { id: eventId, type: "checkout.session.completed", livemode: false, data: { object: { id: sessionId, amount_total: amount, currency, payment_status: paymentStatus, status: "complete", metadata: { offering_id: offeringId, request_digest: "digest" } } } };
 }
 
+test("the public merchant keeps the 561 Group brand distinct from the current legal seller", () => {
+  assert.equal(CATALOG.merchant.name, "561 Group");
+  assert.equal(CATALOG.merchant.legalBody, "emsenn");
+});
+
 test("the shop lists human publications and merch without presenting unaccepted books as live", () => {
   assert.equal(CATALOG_VALIDATION.valid, true);
   for (const offering of CATALOG.offerings) assert.ok(offering.book || offering.line === "merch" || offering.line === "@561-group/health-education-newsletter-enterprise", offering.id);

@@ -2,7 +2,7 @@
 export default {
   "merchant": {
     "name": "561 Group",
-    "legalBody": "561 Group"
+    "legalBody": "emsenn"
   },
   "offerings": [
     {
