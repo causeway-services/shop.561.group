@@ -7,7 +7,7 @@ export default {
   "offerings": [
     {
       "id": "understanding-infection-associated-chronic-illness",
-      "line": "@emsenn/health-education-curriculum-enterprise",
+      "line": "@561-group/health-education-curriculum-enterprise",
       "status": "coming-soon",
       "priceCents": 900,
       "currency": "usd",
@@ -75,7 +75,7 @@ export default {
     },
     {
       "id": "the-agent-operators-handbook",
-      "line": "@emsenn/artificial-intelligence-curriculum-enterprise",
+      "line": "@561-group/artificial-intelligence-curriculum-enterprise",
       "status": "coming-soon",
       "priceCents": 1200,
       "currency": "usd",
@@ -727,7 +727,7 @@ export default {
     },
     {
       "id": "the-whirling-crystal",
-      "line": "@emsenn/mathematics-curriculum-enterprise",
+      "line": "@561-group/mathematics-curriculum-enterprise",
       "status": "coming-soon",
       "priceCents": 2900,
       "currency": "usd",
@@ -789,7 +789,7 @@ export default {
     {
       "id": "health-education-newsletter",
       "title": "The Second Day",
-      "line": "@emsenn/health-education-newsletter-enterprise",
+      "line": "@561-group/health-education-newsletter-enterprise",
       "status": "coming-soon",
       "blurb": "A health-synthesis newsletter about infection-associated chronic illness. No subscription is open yet."
     },
