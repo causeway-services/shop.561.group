@@ -140,12 +140,13 @@ receipt proves deployment work; it does not prove what an outside receiver can
 currently observe. Likewise, this observer proves the public catalog projection
 only; it does not prove checkout, fulfillment, sales, revenue or demand.
 
-The repository's `.github/workflows/public-receiver-observation.yml` runs this
-same observer from a GitHub-hosted external network vantage after relevant
-`main` changes and once daily. It preserves the exact JSON observation as a
-30-day workflow artifact. A reached contract mismatch fails that job; an
+The repository's `.github/workflows/public-receiver-observation.yml` is an
+external-vantage carrier for the same observer. It runs after relevant `main`
+changes or by manual dispatch and prints the exact JSON observation into the job
+log and step summary. A reached contract mismatch fails that job; an
 unreachable/indeterminate observer emits a warning and preserves `unknown`
-instead of manufacturing an outage.
+instead of manufacturing an outage. The carrier deliberately has no deployment
+or payment credentials.
 
 ## Deploying
 
