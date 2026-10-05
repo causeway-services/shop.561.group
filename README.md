@@ -140,13 +140,11 @@ receipt proves deployment work; it does not prove what an outside receiver can
 currently observe. Likewise, this observer proves the public catalog projection
 only; it does not prove checkout, fulfillment, sales, revenue or demand.
 
-The repository's `.github/workflows/public-receiver-observation.yml` is an
-external-vantage carrier for the same observer. It runs after relevant `main`
-changes or by manual dispatch and prints the exact JSON observation into the job
-log and step summary. A reached contract mismatch fails that job; an
-unreachable/indeterminate observer emits a warning and preserves `unknown`
-instead of manufacturing an outage. The carrier deliberately has no deployment
-or payment credentials.
+For institutional observation, prefer the Red Cup
+`public-http-json-observe` MetroPlat operation once the current node has
+received that operation. It performs the transport read under the shared
+public-network/redirect/size policy. This shop script remains the local
+contract comparator and CLI fallback.
 
 ## Deploying
 
