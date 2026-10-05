@@ -112,6 +112,34 @@ worktree, so a deploy from a clean worktree compiles the same catalog.
   printed or written to disk. It keeps secrets that are already set unless
   `--replace`, and `--test` arms with test-mode Stripe instead.
 
+## Receiver-side observation
+
+Deployment and public receiving are separate facts. After a deploy, or whenever
+the public catalog's receiver-visible contract matters, run:
+
+```sh
+pnpm observe-public
+```
+
+This performs a read-only `GET https://shop.561.group/catalog.json` and compares
+the receiver-relevant public contract against the compiled source catalog:
+merchant name/legal seller plus each offering's id, status, price, currency and
+release.
+
+The observer returns one of three evidence states:
+
+- `supported` — the public endpoint was reached and its projected contract
+  matches the compiled source contract;
+- `refuted` — the public endpoint was reached and at least one contract field
+  differs; the output names each difference;
+- `unknown` — this observer could not establish the public contract (for
+  example network failure, timeout, non-success HTTP, or invalid JSON).
+
+`unknown` is deliberately not treated as storefront downtime. A deployment
+receipt proves deployment work; it does not prove what an outside receiver can
+currently observe. Likewise, this observer proves the public catalog projection
+only; it does not prove checkout, fulfillment, sales, revenue or demand.
+
 ## Deploying
 
 From a clean worktree of the commit:
