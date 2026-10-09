@@ -1,0 +1,27 @@
+{
+  "name": "@causeway-services/shop",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Deployable Cloudflare Worker for shop.561.group, the 561 Group's storefront for people: the books a person buys and reads, reader accounts through Google sign-in, a library per reader, and gifts. Composes @red-cup-engineering/digital-goods-storefront-services-section (TUFTE storefront, checkout, delivery, accounts, gifts); catalog.json is the catalog and scripts/compile-catalog.mjs fills each book's facts from its records.",
+  "scripts": {
+    "check": "node --check src/worker.mjs && node --check src/fulfillment.mjs && node --check scripts/compile-catalog.mjs && node --check scripts/arm-checkout.mjs && node --check scripts/arm-gift-agent.mjs",
+    "compile": "node scripts/compile-catalog.mjs",
+    "test": "node --test test/*.test.mjs",
+    "deploy": "node scripts/compile-catalog.mjs && wrangler deploy",
+    "dev": "wrangler dev",
+    "arm-checkout": "node scripts/arm-checkout.mjs",
+    "arm-gift-agent": "node scripts/arm-gift-agent.mjs"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
+  "dependencies": {
+    "@red-cup-engineering/digital-goods-storefront-services-section": "0.4.0",
+    "@red-cup-engineering/stripe-services-section": "0.1.9",
+    "wrangler": "4.127.1"
+  },
+  "devDependencies": {
+    "@red-cup-engineering/ebook-production-services-section": "0.3.3"
+  }
+}
