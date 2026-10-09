@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "shop-561-group",
+  "main": "src/worker.mjs",
+  "compatibility_date": "2026-09-02",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  // Book covers, copied from each edition by scripts/compile-catalog.mjs.
+  "assets": { "directory": "./public" },
+  "routes": [
+    {
+      "pattern": "shop.561.group",
+      "custom_domain": true
+    }
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "SHOP_FULFILLMENT", "class_name": "ShopFulfillment" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ShopFulfillment"] }],
+  "kv_namespaces": [
+    {
+      "binding": "SHOP_ENTITLEMENTS",
+      "id": "9372634aa5ca4c87937c6d3dd457bef6"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "SHOP_GOODS",
+      "bucket_name": "shop-561-group-goods"
+    }
+  ]
+}
