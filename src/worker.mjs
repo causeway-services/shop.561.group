@@ -38,8 +38,20 @@ function publicCatalog() {
   return { ...catalog, offerings };
 }
 
+// Crawler documents are the catalog's own view: the storefront and one page per offering.
+const ORIGIN = "https://shop.561.group";
+function sitemap() {
+  const paths = ["/", ...catalog.offerings.map((offering) => `/goods/${offering.id}`)];
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${paths.map((path) => `  <url><loc>${ORIGIN}${path}</loc></url>`).join("\n")}\n</urlset>\n`;
+}
+
 export default {
   fetch(request, env) {
+    const { pathname } = new URL(request.url);
+    if (request.method === "GET" && pathname === "/robots.txt") {
+      return new Response(`User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /oauth/\n\nSitemap: ${ORIGIN}/sitemap.xml\n`, { headers: { "content-type": "text/plain; charset=utf-8" } });
+    }
+    if (request.method === "GET" && pathname === "/sitemap.xml") return new Response(sitemap(), { headers: { "content-type": "application/xml; charset=utf-8" } });
     if (new URL(request.url).pathname === "/catalog.json" && request.method === "GET") {
       return new Response(JSON.stringify(publicCatalog()), { headers: { "content-type": "application/json; charset=utf-8" } });
     }
