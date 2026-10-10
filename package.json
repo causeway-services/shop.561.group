@@ -22,6 +22,6 @@
     "wrangler": "4.127.1"
   },
   "devDependencies": {
-    "@red-cup-engineering/ebook-production-services-section": "0.3.3"
+    "@red-cup-engineering/ebook-engineering-services-section": "0.3.3"
   }
 }

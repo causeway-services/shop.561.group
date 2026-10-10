@@ -7,7 +7,7 @@ export default {
   "offerings": [
     {
       "id": "understanding-infection-associated-chronic-illness",
-      "line": "@561-group/health-education-curriculum-enterprise",
+      "line": "@561-group/health-education-curriculum-services-section",
       "status": "coming-soon",
       "priceCents": 900,
       "currency": "usd",
@@ -789,7 +789,7 @@ export default {
     {
       "id": "health-education-newsletter",
       "title": "The Second Day",
-      "line": "@561-group/health-education-newsletter-enterprise",
+      "line": "@561-group/health-education-newsletter-services-section",
       "status": "coming-soon",
       "blurb": "A health-synthesis newsletter about infection-associated chronic illness. No subscription is open yet."
     },

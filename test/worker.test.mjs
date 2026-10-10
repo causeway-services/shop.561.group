@@ -24,7 +24,7 @@ function paidEvent({ eventId = "evt_test", sessionId = "cs_test", offeringId = "
 
 test("the shop lists human publications and merch without presenting unaccepted books as live", () => {
   assert.equal(CATALOG_VALIDATION.valid, true);
-  for (const offering of CATALOG.offerings) assert.ok(offering.book || offering.line === "merch" || offering.line === "@561-group/health-education-newsletter-enterprise", offering.id);
+  for (const offering of CATALOG.offerings) assert.ok(offering.book || offering.line === "merch" || offering.line === "@561-group/health-education-newsletter-services-section", offering.id);
   for (const offering of CATALOG.offerings.filter((item) => item.book)) {
     assert.equal(offering.status, offering.book.edition.acceptedAt ? "live" : "coming-soon", offering.id);
     assert.match(offering.release, /^[a-z0-9-]+$/u, offering.id);

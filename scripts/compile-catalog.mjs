@@ -16,7 +16,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync,
 import { basename, dirname, join, normalize, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { coverFileName, listChapters, sha256File } from "@red-cup-engineering/ebook-production-services-section";
+import { coverFileName, listChapters, sha256File } from "@red-cup-engineering/ebook-engineering-services-section";
 import { validateCatalog } from "@red-cup-engineering/digital-goods-storefront-services-section";
 
 const site = resolve(dirname(fileURLToPath(import.meta.url)), "..");
