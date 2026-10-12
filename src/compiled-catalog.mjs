@@ -68,7 +68,7 @@ export default {
               "path": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/data/state/editions/understanding-infection-associated-chronic-illness/understanding-infection-associated-chronic-illness.pdf"
             }
           ],
-          "record": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/data/records/editions/2026-09-30-understanding-infection-associated-chronic-illness-first-edition-acceptance.json"
+          "record": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/data/records/edition-records/2026-09-30-understanding-infection-associated-chronic-illness-first-edition-acceptance.json"
         },
         "manuscript": "science-services-section/services/natural-science-services-section/services/biological-science-services-section/services/medical-science-services-section/content/books/understanding-infection-associated-chronic-illness"
       }
@@ -150,7 +150,7 @@ export default {
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/data/state/editions/the-agent-operators-handbook/the-agent-operators-handbook.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/data/records/editions/2026-09-30-the-agent-operators-handbook-first-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/data/records/edition-records/2026-09-30-the-agent-operators-handbook-first-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/content/books/the-agent-operators-handbook"
       }
@@ -225,7 +225,7 @@ export default {
               "path": "public-services-section/services/public-economic-services-section/data/state/editions/the-x402-economy/the-x402-economy.pdf"
             }
           ],
-          "record": "public-services-section/services/public-economic-services-section/data/records/editions/2026-09-30-the-x402-economy-sixth-edition-acceptance.json"
+          "record": "public-services-section/services/public-economic-services-section/data/records/edition-records/2026-09-30-the-x402-economy-sixth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-economic-services-section/content/books/the-x402-economy"
       }
@@ -309,7 +309,7 @@ export default {
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/project-management-course-by-course/project-management-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-project-management-course-by-course-sixth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/edition-records/2026-09-30-project-management-course-by-course-sixth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/project-management-course-by-course"
       }
@@ -394,7 +394,7 @@ export default {
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/the-capm-domain-by-domain/the-capm-domain-by-domain.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-the-capm-domain-by-domain-sixth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/edition-records/2026-09-30-the-capm-domain-by-domain-sixth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/the-capm-domain-by-domain"
       }
@@ -477,7 +477,7 @@ export default {
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/data-analytics-course-by-course/data-analytics-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-30-data-analytics-course-by-course-sixth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/edition-records/2026-09-30-data-analytics-course-by-course-sixth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/data-analytics-course-by-course"
       }
@@ -559,7 +559,7 @@ export default {
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/state/editions/ux-design-course-by-course/ux-design-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-30-ux-design-course-by-course-sixth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/edition-records/2026-09-30-ux-design-course-by-course-sixth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/ux-design-course-by-course"
       }
@@ -639,7 +639,7 @@ export default {
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-management-course-by-course/business-management-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-business-management-course-by-course-sixth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/edition-records/2026-09-30-business-management-course-by-course-sixth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-management-course-by-course"
       }
@@ -720,7 +720,7 @@ export default {
               "path": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/state/editions/business-strategy-course-by-course/business-strategy-course-by-course.pdf"
             }
           ],
-          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-business-strategy-course-by-course-sixth-edition-acceptance.json"
+          "record": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/edition-records/2026-09-30-business-strategy-course-by-course-sixth-edition-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-strategy-course-by-course"
       }
@@ -897,7 +897,7 @@ export default {
               "path": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/state/editions/ice-out/ice-out.pdf"
             }
           ],
-          "record": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-29-ice-out-fifth-edition-acceptance.json"
+          "record": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/edition-records/2026-09-29-ice-out-fifth-edition-acceptance.json"
         },
         "printEdition": {
           "profile": "kdp-paperback-v1",
@@ -913,7 +913,7 @@ export default {
             "sha256": "cc681c2c83a20ffe73a3ed90fd840a1269f7bdd33f7fb6c4fbb4bc4f6bfcb3e8"
           },
           "acceptedAt": "2026-09-30T01:03:57.682Z",
-          "record": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/editions/2026-09-29-ice-out-fifth-edition-print-acceptance.json"
+          "record": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/data/records/edition-records/2026-09-29-ice-out-fifth-edition-print-acceptance.json"
         },
         "manuscript": "public-services-section/services/public-media-services-section/services/public-fiction-media-services-section/content/books/ice-out"
       }
