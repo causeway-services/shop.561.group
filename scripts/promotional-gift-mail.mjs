@@ -11,11 +11,11 @@ import { fulfillPromotionalSend, shopGiftAdapters } from "../src/promotion-email
 const USINGS = ["urn:ietf:params:jmap:core", "urn:ietf:params:jmap:mail", "urn:ietf:params:jmap:submission"];
 const fail = (message) => { throw new Error(message); };
 const required = (value, name) => typeof value === "string" && value.trim() ? value.trim() : fail(`missing ${name}`);
-const email = (value) => { const v = required(value, "email"); if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/u.test(v)) fail("invalid email"); return v.toLowerCase(); };
+const email = (value) => { const v = required(value, "email"); if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/u.test(v)) fail("invalid email"); return v.toLowerCase(); };
 async function save(file, value) {
   await mkdir(dirname(file), { recursive: true, mode: 0o700 });
   const temp = `${file}.${process.pid}.tmp`;
-  await writeFile(temp, JSON.stringify(value, null, 2) + "\\n", { mode: 0o600, flag: "wx" });
+  await writeFile(temp, JSON.stringify(value, null, 2) + "\n", { mode: 0o600, flag: "wx" });
   await rename(temp, file);
 }
 async function requestJson(url, token, body) {
@@ -82,7 +82,7 @@ export async function prepareJob(file, spec) {
   if (job.to === job.from) fail("self-send not a recipient gift");
   await mkdir(dirname(file), { recursive: true, mode: 0o700 });
   const handle = await open(file, "wx", 0o600);
-  try { await handle.writeFile(JSON.stringify(job, null, 2) + "\\n"); } finally { await handle.close(); }
+  try { await handle.writeFile(JSON.stringify(job, null, 2) + "\n"); } finally { await handle.close(); }
   return job;
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
