@@ -18,8 +18,8 @@ async function save(file, value) {
   await writeFile(temp, JSON.stringify(value, null, 2) + "\n", { mode: 0o600, flag: "wx" });
   await rename(temp, file);
 }
-async function requestJson(url, token, body) {
-  const r = await fetch(url, { method: body ? "POST" : "GET", headers: { authorization: `Bearer ${token}`, ...(body ? { "content-type": "application/json" } : {}) }, ...(body ? { body: JSON.stringify(body) } : {}) });
+async function requestJson(url, token, body, fetchImpl = fetch) {
+  const r = await fetchImpl(url, { method: body ? "POST" : "GET", headers: { authorization: `Bearer ${token}`, ...(body ? { "content-type": "application/json" } : {}) }, ...(body ? { body: JSON.stringify(body) } : {}) });
   if (!r.ok) fail(`Fastmail HTTP ${r.status}`);
   return r.json();
 }
@@ -28,19 +28,25 @@ function response(data, type, id) {
   if (!match) fail(`JMAP ${type} missing response`);
   return match[1];
 }
-async function sendFastmail(job, token) {
-  const session = await requestJson("https://api.fastmail.com/jmap/session", token);
+export async function sendFastmail(job, token, fetchImpl = fetch) {
+  const session = await requestJson("https://api.fastmail.com/jmap/session", token, undefined, fetchImpl);
   const accountId = session.primaryAccounts?.["urn:ietf:params:jmap:submission"];
-  if (!accountId || !session.apiUrl) fail("Fastmail submission account unavailable");
-  const ids = await requestJson(session.apiUrl, token, { using: USINGS, methodCalls: [["Identity/get", { accountId }, "identities"]] });
+  const mailAccountId = session.primaryAccounts?.["urn:ietf:params:jmap:mail"];
+  if (!accountId || !mailAccountId || accountId !== mailAccountId || !session.apiUrl) fail("Fastmail mail/submission account unavailable or mismatched");
+  const ids = await requestJson(session.apiUrl, token, { using: USINGS, methodCalls: [
+    ["Identity/get", { accountId }, "identities"],
+    ["Mailbox/query", { accountId: mailAccountId, filter: { role: "drafts" } }, "drafts"]
+  ] }, fetchImpl);
   const identity = response(ids, "Identity/get", "identities").list?.find(i => i.email?.toLowerCase() === job.from);
   if (!identity) fail("sender is not a verified Fastmail identity");
+  const draftsId = response(ids, "Mailbox/query", "drafts").ids?.[0];
+  if (!draftsId) fail("Fastmail drafts mailbox unavailable");
   // The JMAP response must acknowledge actual EmailSubmission creation.
-  const draft = { from: [{ email: job.from }], to: [{ email: job.to }], subject: job.subject, textBody: [{ partId: "body", type: "text/plain" }], bodyValues: { body: { value: job.body } }, keywords: { "$draft": true } };
+  const draft = { from: [{ email: job.from }], to: [{ email: job.to }], subject: job.subject, mailboxIds: { [draftsId]: true }, textBody: [{ partId: "body", type: "text/plain" }], bodyValues: { body: { value: job.body } }, keywords: { "$draft": true } };
   const result = await requestJson(session.apiUrl, token, { using: USINGS, methodCalls: [
     ["Email/set", { accountId, create: { draft } }, "draft"],
     ["EmailSubmission/set", { accountId, create: { submission: { emailId: "#draft", identityId: identity.id } }, onSuccessDestroyEmail: ["#submission"] }, "submission"]
-  ] });
+  ] }, fetchImpl);
   const createdDraft = response(result, "Email/set", "draft").created?.draft;
   const submitted = response(result, "EmailSubmission/set", "submission");
   if (!createdDraft?.id || !submitted.created?.submission?.id) fail("Fastmail did not acknowledge submission; verify remotely before retrying");
@@ -51,7 +57,10 @@ export async function runJob(file, { send = sendFastmail, grant } = {}) {
   const handle = await open(lock, "wx", 0o600);
   try {
   const record = JSON.parse(await readFile(file, "utf8"));
-  if (record.state === "received") return record;
+  // Historical jobs called grant API readback "received" without independently
+  // observing a reader download. Normalize that inaccurate state without re-sending.
+  if (record.state === "received") { record.state = "grant-verified"; await save(file, record); }
+  if (record.state === "grant-verified") return record;
   if (!["prepared", "send-accepted", "grant-failed"].includes(record.state)) fail("unknown or uncertain send state; reconcile manually, do not resend");
   const key = required(process.env.SHOP_GIFT_AGENT_KEY, "SHOP_GIFT_AGENT_KEY");
   const adapters = grant ?? shopGiftAdapters({ key });
@@ -70,7 +79,8 @@ export async function runJob(file, { send = sendFastmail, grant } = {}) {
   try {
     const result = await fulfillPromotionalSend({ receipt: record.receipt, offering: record.offering, recipient: record.to, ...adapters });
     record.gift = result;
-    record.state = "received";
+    // A grant API readback is not evidence of recipient access or download.
+    record.state = "grant-verified";
     await save(file, record);
     return record;
   } catch (error) {
