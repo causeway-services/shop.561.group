@@ -48,7 +48,8 @@ async function sendFastmail(job, token) {
 }
 export async function runJob(file, { send = sendFastmail, grant } = {}) {
   const lock = file + ".lock";
-  const handle = await open(lock, "wx", 0o600);\n  try {
+  const handle = await open(lock, "wx", 0o600);
+  try {
   const record = JSON.parse(await readFile(file, "utf8"));
   if (record.state === "received") return record;
   if (!["prepared", "send-accepted", "grant-failed"].includes(record.state)) fail("unknown or uncertain send state; reconcile manually, do not resend");
@@ -78,6 +79,7 @@ export async function runJob(file, { send = sendFastmail, grant } = {}) {
     await save(file, record);
     throw error;
   }
+  } finally { await handle.close(); await unlink(lock); }
 }
 export async function prepareJob(file, spec) {
   const job = { state: "prepared", id: randomUUID(), from: email(spec.from), to: email(spec.to), offering: required(spec.offering, "offering"), subject: required(spec.subject, "subject"), body: required(spec.body, "body") };
