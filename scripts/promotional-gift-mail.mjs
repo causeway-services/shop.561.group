@@ -2,7 +2,7 @@
 // Real promotional send + retail gift, using Fastmail JMAP and existing shop grants.
 // A one-recipient job is persisted before submission. An uncertain send is NEVER
 // automatically repeated: reconcile it against Fastmail first to avoid duplicates.
-import { readFile, writeFile, rename, mkdir, open } from "node:fs/promises";
+import { readFile, writeFile, rename, mkdir, open, unlink } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { randomUUID } from "node:crypto";
 import { fileURLToPath } from "node:url";
@@ -47,6 +47,8 @@ async function sendFastmail(job, token) {
   return { accepted: true, status: "sent", provider: "fastmail-jmap", messageId: submitted.created.submission.id, to: [job.to] };
 }
 export async function runJob(file, { send = sendFastmail, grant } = {}) {
+  const lock = file + ".lock";
+  const handle = await open(lock, "wx", 0o600);\n  try {
   const record = JSON.parse(await readFile(file, "utf8"));
   if (record.state === "received") return record;
   if (!["prepared", "send-accepted", "grant-failed"].includes(record.state)) fail("unknown or uncertain send state; reconcile manually, do not resend");
