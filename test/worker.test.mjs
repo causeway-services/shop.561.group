@@ -76,3 +76,18 @@ test("sign-in and gifts stay closed until the shop's Google client and session s
   assert.equal(login.status, 302);
   assert.match(login.headers.get("location"), /redirect_uri=https%3A%2F%2Fshop.561.group%2Foauth%2Fcallback/);
 });
+
+
+test("gift-to-email is a mail-side instruction, never a browser authorization", async () => {
+  const withGift = await worker.fetch(new Request("https://shop.561.group/goods/ice-out?gift-to-email=Reader%2BTest%40example.org"), env());
+  assert.equal(withGift.status, 303);
+  assert.equal(withGift.headers.get("location"), "https://shop.561.group/goods/ice-out");
+  assert.equal(withGift.headers.get("cache-control"), "private, no-store");
+  assert.equal(withGift.headers.get("referrer-policy"), "no-referrer");
+  assert.equal(withGift.headers.get("x-robots-tag"), "noindex");
+  assert.ok(!withGift.headers.get("location").includes("example.org"));
+
+  // The clean book page renders without a gift being made merely by browsing.
+  const clean = await worker.fetch(new Request(withGift.headers.get("location")), env());
+  assert.equal(clean.status, 200);
+});

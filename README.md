@@ -30,6 +30,14 @@ bindings and the `ShopFulfillment` Durable Object registration.
   withdrawn.
 - A gift API for the house's agents, with the gift-agent key; every such
   gift is recorded as given by `press@561.group`.
+- A sent-mail gift contract for opted-in outreach campaigns. The authorized
+  sender may place `gift-to-email={{RECIPIENT_EMAIL}}` on a book's shop URL.
+  The email transport resolves the actual recipient and, only after its
+  authenticated send succeeds, calls the already existing `/api/gifts` with
+  a stable reference. Merely visiting that URL never creates an entitlement:
+  the Worker redirects to the clean book page without retaining recipient PII.
+  Pending grants retry independently of the outbound email, and gift bearer
+  links remain private even when campaign receipts are retained in Git.
 - Review copies. A review copy is not a gift of the retail release: it is
   the advance-reader rendition stamped for one reader, staged under its
   grant at `goods/<offering>/review-copies/<grant>/` in
@@ -65,6 +73,7 @@ worktree, so a deploy from a clean worktree compiles the same catalog.
 |---|---|
 | `GET /` | The catalog, with search and facets. |
 | `GET /goods/:id` | One book's page. |
+| `GET /goods/:id?gift-to-email=...` | Discards mail-side gift intent and redirects to the clean page; no free grant occurs on GET. |
 | `POST /checkout/:id` | Starts a Stripe Checkout Session (same-origin only) and records the signed-in reader's account on it. |
 | `POST /webhooks/stripe` | Verifies a Stripe signature and admits a paid, complete session as an entitlement. |
 | `GET /thanks?session_id=` | Downloads for a purchase, and "keep it in your library". |
