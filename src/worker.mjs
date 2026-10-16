@@ -47,7 +47,22 @@ function sitemap() {
 
 export default {
   fetch(request, env) {
-    const { pathname } = new URL(request.url);
+    const incoming = new URL(request.url);
+    const { pathname } = incoming;
+    // The recipient parameter is meaningful to the authenticated *sender* only.
+    // Browsing a forwarded or forged link must never confer book ownership.
+    // Drop email PII from the browser-visible destination and referrer chain.
+    if (request.method === "GET" && /^\/goods\/[a-z0-9]+(?:-[a-z0-9]+)*\/?$/u.test(pathname) && incoming.searchParams.has("gift-to-email")) {
+      return new Response(null, {
+        status: 303,
+        headers: {
+          location: ORIGIN + pathname,
+          "cache-control": "private, no-store",
+          "referrer-policy": "no-referrer",
+          "x-robots-tag": "noindex",
+        },
+      });
+    }
     if (request.method === "GET" && pathname === "/robots.txt") {
       return new Response(`User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /oauth/\n\nSitemap: ${ORIGIN}/sitemap.xml\n`, { headers: { "content-type": "text/plain; charset=utf-8" } });
     }
