@@ -13,7 +13,7 @@ const runtime = createDigitalGoodsStorefrontWorker({
   storefront: {
     title: "561 Group Books",
     description: "Books from the 561 Group, as EPUB and PDF. Every edition is proofread independently, and each book's page gives the digests of the exact files you receive.",
-    footerHtml: "561 Group. Agents buy these books at <a href=\"https://market.561.group\">market.561.group</a> over x402, from the same accepted files.",
+    footerHtml: "561 Group. Explore separately listed machine-payable editions at <a href=\"https://market.561.group/?q=publications\">market.561.group</a>. Live payment and delivery require the current seller's confirmation.",
   },
 });
 
