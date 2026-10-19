@@ -122,3 +122,45 @@ test("sign-in and gifts stay closed until the shop's Google client and session s
   assert.equal(login.status, 302);
   assert.match(login.headers.get("location"), /redirect_uri=https%3A%2F%2Fshop.561.group%2Foauth%2Fcallback/);
 });
+
+
+test('source-owned Shop offers public read-only product discovery over the original MCP transport', async () => {
+  const origin = 'https://shop.561.group';
+  const request = (method, params) => new Request(origin + '/mcp', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, ...(params ? { params } : {}) }),
+  });
+  const readout = await (await worker.fetch(new Request(origin + '/catalog.json'), env())).json();
+  const list = await worker.fetch(request('tools/list'), env());
+  assert.equal(list.status, 200);
+  const names = (await list.json()).result.tools.map(tool => tool.name);
+  assert.deepEqual(names, ['list_products', 'search_products', 'get_product']);
+
+  const detail = await worker.fetch(request('tools/call', {
+    name: 'get_product', arguments: { id: 'the-x402-economy' },
+  }), env());
+  assert.equal(detail.status, 200);
+  const product = (await detail.json()).result.structuredContent;
+  const original = readout.offerings.find(item => item.id === 'the-x402-economy');
+  assert.equal(product.id, original.id);
+  assert.equal(product.url, origin + '/goods/the-x402-economy');
+  assert.equal(product.buyable, false, 'unconfigured card checkout cannot become agent-buyable');
+  assert.equal(product.agentOfferUrl, original.agentOfferUrl);
+  assert.equal(product.book.edition.files[0].sha256, original.book.edition.files[0].sha256);
+  assert.equal(Object.hasOwn(product, 'line'), false);
+  assert.equal(Object.hasOwn(product.book, 'manuscript'), false);
+  assert.equal(Object.hasOwn(product.book.edition.files[0], 'path'), false);
+
+  const found = await worker.fetch(request('tools/call', {
+    name: 'search_products', arguments: { query: 'x402' },
+  }), env());
+  const matches = (await found.json()).result.structuredContent.products;
+  assert.ok(matches.some(item => item.id === 'the-x402-economy'));
+  const unauthorized = await worker.fetch(new Request(origin + '/mcp', {
+    method: 'POST', headers: {
+      'content-type': 'application/json', origin: 'https://other.example',
+    }, body: JSON.stringify({ jsonrpc: '2.0', id: 2, method: 'tools/list' }),
+  }), env());
+  assert.equal(unauthorized.status, 403);
+  assert.equal((await worker.fetch(new Request(origin + '/mcp'), env())).status, 405);
+});
