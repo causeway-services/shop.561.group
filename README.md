@@ -129,6 +129,46 @@ covers into `public/covers/` (untracked), which the Worker serves as
 static assets. Edition state is untracked and is read from the main
 worktree, so a deploy from a clean worktree compiles the same catalog.
 
+## Retailer submission drafts (publisher-side; not retailer accounts)
+
+The real Shop compiler is now also the **only selected source** for the original
+Red Cup retailer form projection. Running `pnpm compile` or `pnpm deploy`
+first compiles the original book manuscripts, `EbookEditionAcceptance` and
+`PrintEditionAcceptance` into `src/compiled-catalog.mjs`, then calls the
+original `@red-cup-engineering/digital-goods-storefront-services-section/retail-submission-drafts`
+producer. This replaces the stale unselected Group-generated copy at
+`561-group/561-group-services-section/data/records/listings/book-retail-listings.json`.
+Do not treat that historical source as the current book authority.
+
+The producer writes `generated/retail-submission-drafts/book-retailer-submission-drafts.json`
+and `generated/retail-submission-drafts/book-retailer-submission-guide.md`.
+The first is a typed **v2 draft collection**, with `bookOfferingId`,
+`retailerCode`, `proposedSubmissionFields`, `submissionBlockers`, and
+`operatorReviewNotes` rather than opaque nested `id`, `fields`,
+`blocks`, and `attention`; its `sourceCatalog` names this exact repo,
+module, and the source byte digest (`ni:///sha-256`). The second is the
+operator-readable renderer of those same forms. Both live in ignored generated
+state, **not in a second authoritative JSON register**.
+
+The Shop already exposes `schema.org/Book` and conditional `schema.org/Offer`
+structured data through the native storefront presentation. Retailer-specific
+form packets are not an ONIX feed: ONIX exchange would need separate qualified
+product identifiers, edition/rights and retailer data. Do not pretend the
+presence of BISAC subject codes, a currency, or a generated PDF establishes
+retailer acceptance. The draft generator never logs into, uploads to,
+submits to, or accepts terms for any retailer. `candidate-needs-publisher-review`
+is not approval, and the lack of an accepted source edition is a submission
+blocker. Any external retailer submission requires its actual authorized
+publishing owner, retailer-specific rules, received metadata, and separate
+provider receipt. A book can be `coming-soon` at Shop while other retailers
+have independent distribution decisions; Shop status alone is not a grant or
+a universal prohibition.
+
+To inspect the present source without deploying the Worker: `pnpm retail:derive`.
+On a clean source checkout the first compilation still needs the original
+book/release inputs; a tracked `src/compiled-catalog.mjs` by itself is not
+proof that those releases are installed on a running node.
+
 ## Routes
 
 | Route | Behavior |
@@ -188,7 +228,7 @@ From a clean worktree of the commit:
 
 ```sh
 pnpm --filter "@causeway-services/shop..." install --offline --frozen-lockfile
-node scripts/compile-catalog.mjs
+pnpm compile
 wrangler deploy
 ```
 
