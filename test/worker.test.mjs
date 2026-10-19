@@ -31,7 +31,11 @@ test("the Shop's public catalog uses the shared Bazaar-readable seller projectio
   assert.equal(response.headers.get("access-control-allow-origin"), "*");
   assert.equal(response.headers.get("x-content-type-options"), "nosniff");
   const publicReadout = await response.json();
-  assert.deepEqual(publicReadout.offerings.map(({ id }) => id), CATALOG.offerings.map(({ id }) => id));
+  assert.deepEqual(new Set(publicReadout.offerings.map(({ id }) => id)), new Set(CATALOG.offerings.map(({ id }) => id)),
+    "the Shop must preserve every original offer while prioritizing source-live books");
+  assert.ok(publicReadout.offerings.slice(0, 8).every((offering) => offering.status === "live"),
+    "the first eight Shop tiles are the existing source-live books");
+  assert.equal(publicReadout.offerings[0].id, "the-x402-economy");
   assert.equal(publicReadout.merchant.name, CATALOG.merchant.name);
   assert.equal(Object.hasOwn(publicReadout.merchant, "privateKey"), false);
   for (const offered of publicReadout.offerings) {
@@ -69,9 +73,18 @@ test("the shop lists human publications and merch without presenting unaccepted 
   assert.equal(CATALOG_VALIDATION.valid, true);
   for (const offering of CATALOG.offerings) assert.ok(offering.book || offering.line === "merch" || offering.line === "@561-group/health-education-newsletter-services-section", offering.id);
   for (const offering of CATALOG.offerings.filter((item) => item.book)) {
-    assert.equal(offering.status, offering.book.edition.acceptedAt ? "live" : "coming-soon", offering.id);
+    if (offering.status === "live") assert.ok(offering.book.edition.acceptedAt, offering.id);
+    else assert.equal(offering.status, "coming-soon", offering.id);
     assert.match(offering.release, /^[a-z0-9-]+$/u, offering.id);
-    if (offering.agentOfferUrl) assert.match(offering.agentOfferUrl, /^https:\/\/market\.561\.group\/#publications-/u, offering.id);
+    if (offering.agentOfferUrl) {
+      assert.equal(offering.status, "live", "a coming-soon publication cannot advertise a paid Market listing");
+      const destination = new URL(offering.agentOfferUrl);
+      assert.equal(destination.origin, "https://market.561.group", offering.id);
+      assert.equal(destination.pathname, "/", offering.id);
+      assert.equal(destination.hash, "", offering.id);
+      assert.deepEqual([...destination.searchParams.keys()], ["q"], offering.id);
+      assert.equal(destination.searchParams.get("q"), offering.release, "Market searches the seller's source operation, not a stale anchor");
+    }
     assert.ok(offering.book.contents.length > 0, offering.id);
     for (const file of offering.book.edition.files) assert.match(file.sha256, /^[0-9a-f]{64}$/u, `${offering.id} ${file.format}`);
   }
@@ -89,7 +102,8 @@ test("the catalog and a book page render through TUFTE with the verification rec
   assert.match(page, /Verification record/);
   assert.match(page, /property="og:image" content="https:\/\/shop.561.group\/covers\/the-x402-economy.png"/);
   assert.match(page, /Card checkout opens soon/);
-  assert.match(page, /Buy with USDC over x402/);
+  assert.match(page, /Explore x402 offer/);
+  assert.match(page, /https:\/\/market\.561\.group\/\?q=the-x402-economy/u);
 });
 
 test("checkout remains unavailable without all payment capabilities", async () => {
