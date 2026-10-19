@@ -1,10 +1,53 @@
 # shop.561.group
 
-The 561 Group's storefront for people: the books a person buys and reads,
-the publications a person subscribes to, and merch when it opens. Agents
-buy market-listed books at `market.561.group` over x402, from the same
-accepted files. APIs, agent briefings and games are sold on their own sites
-and are not listed here. The design is in
+**Intended product, from the Leader's October 18 requirement:** a sovereign,
+human-and-agent **Shop** serving the Group's own offerings and reusable
+storefront capabilities that another independently entitled enterprise can
+purchase as a metered service. A Shop is a member of a Bazaar, which is a
+member/observed arena of a Market: `Shop ∈ Bazaar ∈ Market` expresses typed,
+source-attributed incidence, not a legal or protocol authority transfer.
+Canonical Shop requirements and dated peer acceptance are in
+[Public Services #17](https://github.com/causeway-services/public-services-section/issues/17);
+the cross-enterprise requirement is
+[Group market-bazaar-shop](https://github.com/561-group/561-group-services-section/blob/main/lib/agency/requirements/market-bazaar-shop-agentic-composable-enterprise.json).
+
+## Destination and acceptance — not today's running implementation
+
+- The Group's Shop offers first-party human-and-agent commerce: content/merch,
+  rights-cleared digital/physical goods, services, APIs and signed entitlements
+  where their original producers and commercial terms admit them. The existing
+  book-shop features, release pointers, gifts and Stripe checkout remain valid
+  supplier/consumer commitments.
+- The actual upstream Computer Code/Web/TUFTE storefront supplier becomes a
+  **sellable, pay-per-accepted-use** provider: any authorized Actor/Enterprise
+  may rent its own branded Shop/catalog/page render, separately pay for
+  checkout, delivery or other selected capability, and retain independent
+  merchandise, books, payee, rights and portable data. An account may be both
+  buyer and seller under different scoped rights. The Shop does not own global
+  aggregation, original Bazaar ranking or Market statistics.
+- Its discoverable shop identity, seller-authored contracts and lawful agent
+  metadata may be indexed by bazaar.561.group alongside independently
+  consenting outside Shops. Customers can find that Bazaar from market.561.group;
+  neither host clones this Shop's payment keys or converts inclusion to agency.
+- Future `shop.assist.561.group` consumes the ONE ASSIST engine to give chat
+  and MCP access for browsing plus **grant-scoped** seller/manager operations;
+  it is not provisioned just by this source requirement. Merchant account
+  access, purchase/refund, spending and agent model usage have separate consent,
+  authorizations, price units, revocation and idempotent receipts.
+- Meet then beat **Shopify**, **WooCommerce**, **BigCommerce**, **Medusa** and
+  creator Shop tasks of **Gumroad/Ko-fi/itch.io** on real comparable workloads:
+  checkout and delivery, browsing, storefront authoring, storefront portability,
+  agent tools, independent seller control, actual total cost per use and support.
+  Etsy-wide cross-shop aggregation belongs to Bazaar; Shop can still meet the
+  seller's Etsy experience. A source declaration or attractive UI does not beat
+  an existing deployed storefront.
+
+**Current source state, below:** this Worker is primarily a book/reader
+storefront, not yet a federated multi-enterprise Shop or proven agentic
+commerce service. Earlier product separation placed machine buyers on the
+canonical `market.561.group` x402 merchant; changing that original paid URL,
+release, entitlements or ledger requires independent receiving, not an abrupt
+domain redirect. Historic shop design:
 `engineering-services-section/content/text/documents/articles/notes/2026/09/27/2026-09-27-note-on-the-human-storefront.md`.
 
 ## What this is
