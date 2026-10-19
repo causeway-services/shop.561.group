@@ -35,6 +35,9 @@ test("the Shop's public catalog uses the shared Bazaar-readable seller projectio
   assert.equal(publicReadout.merchant.name, CATALOG.merchant.name);
   assert.equal(Object.hasOwn(publicReadout.merchant, "privateKey"), false);
   for (const offered of publicReadout.offerings) {
+    // Release approval and the runtime's card checkout admission are distinct:
+    // public Bazaar buyers must not see a sale action this Worker cannot take.
+    assert.equal(offered.buyable, false, offered.id);
     assert.equal(Object.hasOwn(offered, "line"), false, offered.id);
     if (offered.book) {
       assert.equal(Object.hasOwn(offered.book, "manuscript"), false, offered.id);
