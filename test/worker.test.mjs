@@ -22,6 +22,23 @@ function paidEvent({ eventId = "evt_test", sessionId = "cs_test", offeringId = "
   return { id: eventId, type: "checkout.session.completed", livemode: false, data: { object: { id: sessionId, amount_total: amount, currency, payment_status: paymentStatus, status: "complete", metadata: { offering_id: offeringId, request_digest: "digest" } } } };
 }
 
+test("the public Shop serves the original Group Brand as JSON-LD, not a new legal entity",async()=>{
+  const response=await worker.fetch(new Request("https://shop.561.group/brand.jsonld"),env());
+  assert.equal(response.status,200);
+  assert.match(response.headers.get("content-type"),/application\/ld\+json/u);
+  const original=await response.json();
+  assert.deepEqual(original,CATALOG.merchant.brand);
+  assert.equal(original["@context"],"https://schema.org");
+  assert.equal(original["@type"],"Brand");
+  assert.equal(original["@id"],"https://561.group/#brand");
+  assert.equal(original.name,CATALOG.merchant.name);
+  assert.equal(CATALOG.merchant.legalBody,"emsenn");
+  assert.equal("legalBody" in original,false);
+  assert.equal("legalName" in original,false);
+  const map=await worker.fetch(new Request("https://shop.561.group/sitemap.xml"),env());
+  assert.ok((await map.text()).includes("/brand.jsonld"));
+});
+
 test("the Shop's public catalog uses the shared Bazaar-readable seller projection", async () => {
   const url = "https://shop.561.group/catalog.json";
   const response = await worker.fetch(new Request(url), env());
