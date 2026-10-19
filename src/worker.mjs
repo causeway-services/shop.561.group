@@ -20,7 +20,7 @@ const runtime = createDigitalGoodsStorefrontWorker({
 // Crawler documents are the catalog's own view: the storefront and one page per offering.
 const ORIGIN = "https://shop.561.group";
 function sitemap() {
-  const paths = ["/", ...catalog.offerings.map((offering) => `/goods/${offering.id}`)];
+  const paths = ["/", "/brand.jsonld", ...catalog.offerings.map((offering) => `/goods/${offering.id}`)];
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${paths.map((path) => `  <url><loc>${ORIGIN}${path}</loc></url>`).join("\n")}\n</urlset>\n`;
 }
 
@@ -31,6 +31,19 @@ export default {
       return new Response(`User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /oauth/\n\nSitemap: ${ORIGIN}/sitemap.xml\n`, { headers: { "content-type": "text/plain; charset=utf-8" } });
     }
     if (request.method === "GET" && pathname === "/sitemap.xml") return new Response(sitemap(), { headers: { "content-type": "application/xml; charset=utf-8" } });
+    // One actual consuming public resource for the Group-authored Brand
+    // JSON-LD, distinct from the merchant.legalBody seller claim.
+    if (request.method === "GET" && pathname === "/brand.jsonld") {
+      if (!catalog.merchant?.brand) return new Response("Brand source unavailable", { status: 503 });
+      return new Response(JSON.stringify(catalog.merchant.brand), {
+        headers: {
+          "content-type": "application/ld+json; charset=utf-8",
+          "cache-control": "public, max-age=60",
+          "access-control-allow-origin": "*",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
     return runtime.fetch(request, {
       ...env,
       fulfillment: createShopFulfillment(env.SHOP_FULFILLMENT),

@@ -18,6 +18,7 @@ import { fileURLToPath } from "node:url";
 
 import { coverFileName, listChapters, sha256File } from "@red-cup-engineering/ebook-engineering-services-section";
 import { validateCatalog } from "@red-cup-engineering/digital-goods-storefront-services-section";
+import { compileShopMerchant, GROUP_BRAND_SOURCE } from "../src/merchant-source.mjs";
 
 const site = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 // The Group's services directory under the checkout, read from this site's own path rather than named here.
@@ -123,6 +124,13 @@ function printEdition(row, sold) {
 }
 
 export function compileCatalog(source) {
+  // Read and admit the Group's original BRAND before touching local output.
+  // The Group owns the brand name, while Causeway owns the actual seller
+  // claim. An unformed LLC is not an automatically selected legal merchant.
+  if (source.merchant?.brandSource?.recordPath !== GROUP_BRAND_SOURCE.recordPath)
+    throw new TypeError("Shop catalog must select its exact original Group brand source");
+  const merchant = compileShopMerchant(source.merchant,
+    readFileSync(join(checkout, GROUP_BRAND_SOURCE.recordPath), "utf8"));
   const covers = join(site, "public", "covers");
   rmSync(covers, { recursive: true, force: true });
   mkdirSync(covers, { recursive: true });
@@ -173,7 +181,7 @@ export function compileCatalog(source) {
     };
   });
   const { $comment, ...rest } = source;
-  const catalog = { ...rest, offerings };
+  const catalog = { ...rest, merchant, offerings };
   const validation = validateCatalog(catalog);
   if (!validation.valid) throw new Error(`compiled catalog is invalid: ${validation.errors.map((error) => `${error.path}: ${error.message}`).join("; ")}`);
   return catalog;
