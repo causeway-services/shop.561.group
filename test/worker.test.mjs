@@ -57,8 +57,11 @@ test("checkout remains unavailable without all payment capabilities", async () =
 test("webhook requires a paid event joined to the issued checkout", async () => {
   const secret = "whsec_test"; const store = fulfillment(); const runtime = env({ SHOP_FULFILLMENT: store.namespace, STRIPE_WEBHOOK_SECRET: secret });
   await store.post("/checkout", { sessionId: "cs_test", offeringId: "the-x402-economy", requestDigest: "digest", amountTotal: 900, currency: "usd", stripeMode: "test", release: "the-x402-economy" });
-  const unpaid = JSON.stringify(paidEvent({ paymentStatus: "unpaid" }));
-  assert.equal((await worker.fetch(new Request("https://shop.561.group/webhooks/stripe", { method: "POST", body: unpaid, headers: { "stripe-signature": signature(unpaid, secret) } }), runtime)).status, 409);
+  const unpaid = JSON.stringify(paidEvent({ eventId: "evt_pending", paymentStatus: "unpaid" }));
+  const pending = await worker.fetch(new Request("https://shop.561.group/webhooks/stripe", { method: "POST", body: unpaid, headers: { "stripe-signature": signature(unpaid, secret) } }), runtime);
+  assert.equal(pending.status, 200);
+  assert.deepEqual(await pending.json(), { accepted: true, pending: true });
+  assert.equal(await store.entitlement("cs_test"), null);
   const mismatch = JSON.stringify(paidEvent({ eventId: "evt_mismatch", amount: 1 }));
   assert.equal((await worker.fetch(new Request("https://shop.561.group/webhooks/stripe", { method: "POST", body: mismatch, headers: { "stripe-signature": signature(mismatch, secret) } }), runtime)).status, 409);
   const body = JSON.stringify(paidEvent());
