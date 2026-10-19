@@ -11,7 +11,7 @@ import { createHash } from "node:crypto";
 import { validateSchemaNode } from "@red-cup-engineering/schema-org-services-section/vocabulary";
 
 const SOURCE = "561-group/561-group-services-section";
-const PATH = "561-group-services-section/data/records/service-records/561-group-services-section-enterprise-brand-service-record.json";
+const PATH = "561-group-services-section/data/records/brand-records/561-group.jsonld";
 const BRAND_ID = "https://561.group/#brand";
 const fail = message => { throw new TypeError("Shop merchant source: " + message); };
 

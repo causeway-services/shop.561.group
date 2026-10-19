@@ -12,7 +12,7 @@ export default {
     },
     "brandSource": {
       "repository": "561-group/561-group-services-section",
-      "recordPath": "561-group-services-section/data/records/service-records/561-group-services-section-enterprise-brand-service-record.json",
+      "recordPath": "561-group-services-section/data/records/brand-records/561-group.jsonld",
       "brandId": "https://561.group/#brand",
       "contentDigest": "ni:///sha-256;JGKlUnvgMqWHX6MskjQKuahdhUt8P4_HfH7m-gEFf08"
     }

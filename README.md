@@ -145,7 +145,7 @@ could have meant an owning repository, institutional authority or a legal
 seller; none of those follows from a marketing name. The actual Group author
 now writes an ordinary **schema.org/Brand JSON-LD 1.1** node, at the original
 path
-`561-group-services-section/data/records/service-records/561-group-services-section-enterprise-brand-service-record.json`
+`561-group-services-section/data/records/brand-records/561-group.jsonld`
 (repository `561-group/561-group-services-section`), with globally
 qualified `@id: https://561.group/#brand`. The original ambiguous
 `custody` field is gone: the consuming declaration explicitly says
