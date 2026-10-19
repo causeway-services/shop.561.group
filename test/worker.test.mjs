@@ -22,6 +22,46 @@ function paidEvent({ eventId = "evt_test", sessionId = "cs_test", offeringId = "
   return { id: eventId, type: "checkout.session.completed", livemode: false, data: { object: { id: sessionId, amount_total: amount, currency, payment_status: paymentStatus, status: "complete", metadata: { offering_id: offeringId, request_digest: "digest" } } } };
 }
 
+test("the Shop's public catalog uses the shared Bazaar-readable seller projection", async () => {
+  const url = "https://shop.561.group/catalog.json";
+  const response = await worker.fetch(new Request(url), env());
+  assert.equal(response.status, 200);
+  assert.ok(response.headers.get("content-type").includes("application/json"));
+  assert.equal(response.headers.get("cache-control"), "public, max-age=60");
+  assert.equal(response.headers.get("access-control-allow-origin"), "*");
+  assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+  const publicReadout = await response.json();
+  assert.deepEqual(publicReadout.offerings.map(({ id }) => id), CATALOG.offerings.map(({ id }) => id));
+  assert.equal(publicReadout.merchant.name, CATALOG.merchant.name);
+  assert.equal(Object.hasOwn(publicReadout.merchant, "privateKey"), false);
+  for (const offered of publicReadout.offerings) {
+    assert.equal(Object.hasOwn(offered, "line"), false, offered.id);
+    if (offered.book) {
+      assert.equal(Object.hasOwn(offered.book, "manuscript"), false, offered.id);
+      assert.equal(Object.hasOwn(offered.book, "coverFile"), false, offered.id);
+      assert.equal(Object.hasOwn(offered.book.edition ?? {}, "record"), false, offered.id);
+      for (const file of offered.book.edition?.files ?? []) {
+        assert.equal(Object.hasOwn(file, "path"), false, offered.id);
+      }
+    }
+  }
+  const original = CATALOG.offerings.find(({ id }) => id === "the-x402-economy");
+  const published = publicReadout.offerings.find(({ id }) => id === "the-x402-economy");
+  assert.equal(published.agentOfferUrl, original.agentOfferUrl);
+  assert.equal(published.book.edition.files[0].sha256, original.book.edition.files[0].sha256);
+
+  const head = await worker.fetch(new Request(url, { method: "HEAD" }), env());
+  assert.equal(head.status, 200);
+  assert.equal(head.headers.get("access-control-allow-origin"), "*");
+  assert.equal(await head.text(), "");
+  const options = await worker.fetch(new Request(url, { method: "OPTIONS" }), env());
+  assert.equal(options.status, 204);
+  assert.match(options.headers.get("access-control-allow-methods"), /GET, HEAD, OPTIONS/u);
+  const refused = await worker.fetch(new Request(url, { method: "POST" }), env());
+  assert.equal(refused.status, 405);
+  assert.equal(refused.headers.get("allow"), "GET, HEAD, OPTIONS");
+});
+
 test("the shop lists human publications and merch without presenting unaccepted books as live", () => {
   assert.equal(CATALOG_VALIDATION.valid, true);
   for (const offering of CATALOG.offerings) assert.ok(offering.book || offering.line === "merch" || offering.line === "@561-group/health-education-newsletter-services-section", offering.id);
