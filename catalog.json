@@ -1,5 +1,5 @@
 {
-  "$comment": "The human storefront's catalog: books and publications a person buys, reads or subscribes to. Agents buy market-listed books at market.561.group over x402; APIs, agent briefings and games remain on their own sites. Book facts (title, description, contents, edition, verification) are compiled from each book's manifest, built files and acceptance record by scripts/compile-catalog.mjs; paths are relative to the Group's services directory. A book without an EbookEditionAcceptance remains coming-soon even when historical rendition files survive.",
+  "$comment": "The human storefront's catalog: books and publications a person buys, reads or subscribes to. Market-listed editions are discoverable at market.561.group; payment and delivery require the Market's own current availability; APIs, agent briefings and games remain on their own sites. Book facts (title, description, contents, edition, verification) are compiled from each book's manifest, built files and acceptance record by scripts/compile-catalog.mjs; paths are relative to the Group's services directory. A book without an EbookEditionAcceptance remains coming-soon even when historical rendition files survive.",
   "merchant": {
     "name": "561 Group",
     "legalBody": "561 Group"
@@ -24,7 +24,6 @@
       "priceCents": 1200,
       "currency": "usd",
       "release": "agent-operators-handbook",
-      "agentOfferUrl": "https://market.561.group/#publications-agent-operators-handbook",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/content/books/the-agent-operators-handbook",
         "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/services/artificial-intelligence-education-services-section/services/artificial-intelligence-curriculum-enterprise/data/records/editions/2026-09-30-the-agent-operators-handbook-first-edition-acceptance.json"
@@ -37,7 +36,7 @@
       "priceCents": 900,
       "currency": "usd",
       "release": "the-x402-economy",
-      "agentOfferUrl": "https://market.561.group/#publications-the-x402-economy",
+      "agentOfferUrl": "https://market.561.group/?q=the-x402-economy",
       "book": {
         "manuscript": "public-services-section/services/public-economic-services-section/content/books/the-x402-economy",
         "acceptance": "public-services-section/services/public-economic-services-section/data/records/editions/2026-09-30-the-x402-economy-sixth-edition-acceptance.json"
@@ -50,7 +49,7 @@
       "priceCents": 900,
       "currency": "usd",
       "release": "project-management-course-by-course",
-      "agentOfferUrl": "https://market.561.group/#publications-project-management-course-by-course",
+      "agentOfferUrl": "https://market.561.group/?q=project-management-course-by-course",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/project-management-course-by-course",
         "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-project-management-course-by-course-sixth-edition-acceptance.json"
@@ -63,7 +62,7 @@
       "priceCents": 1200,
       "currency": "usd",
       "release": "the-capm-domain-by-domain",
-      "agentOfferUrl": "https://market.561.group/#publications-the-capm-domain-by-domain",
+      "agentOfferUrl": "https://market.561.group/?q=the-capm-domain-by-domain",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/the-capm-domain-by-domain",
         "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-the-capm-domain-by-domain-sixth-edition-acceptance.json"
@@ -76,7 +75,7 @@
       "priceCents": 900,
       "currency": "usd",
       "release": "data-analytics-course-by-course",
-      "agentOfferUrl": "https://market.561.group/#publications-data-analytics-course-by-course",
+      "agentOfferUrl": "https://market.561.group/?q=data-analytics-course-by-course",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/data-analytics-course-by-course",
         "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-30-data-analytics-course-by-course-sixth-edition-acceptance.json"
@@ -89,7 +88,7 @@
       "priceCents": 900,
       "currency": "usd",
       "release": "ux-design-course-by-course",
-      "agentOfferUrl": "https://market.561.group/#publications-ux-design-course-by-course",
+      "agentOfferUrl": "https://market.561.group/?q=ux-design-course-by-course",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/ux-design-course-by-course",
         "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-30-ux-design-course-by-course-sixth-edition-acceptance.json"
@@ -102,7 +101,7 @@
       "priceCents": 1200,
       "currency": "usd",
       "release": "business-management-course-by-course",
-      "agentOfferUrl": "https://market.561.group/#publications-business-management-course-by-course",
+      "agentOfferUrl": "https://market.561.group/?q=business-management-course-by-course",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-management-course-by-course",
         "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-business-management-course-by-course-sixth-edition-acceptance.json"
@@ -115,7 +114,7 @@
       "priceCents": 1200,
       "currency": "usd",
       "release": "business-strategy-course-by-course",
-      "agentOfferUrl": "https://market.561.group/#publications-business-strategy-course-by-course",
+      "agentOfferUrl": "https://market.561.group/?q=business-strategy-course-by-course",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-strategy-course-by-course",
         "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-business-strategy-course-by-course-sixth-edition-acceptance.json"
