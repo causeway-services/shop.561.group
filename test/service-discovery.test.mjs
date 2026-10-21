@@ -65,6 +65,23 @@ test("search and paging select existing identities without inventing catalog row
   assert.equal(projectOriginalMarketServices(source(), { query: "nothing" }).total, 0);
 });
 
+test("human pagination keeps its requested page size, search context and accessible navigation", () => {
+  const first = renderServiceBrowse(projectOriginalMarketServices(source(), { query: "api", limit: 1 }));
+  assert.match(first, /showing 1–1 of 2/u);
+  assert.match(first, /<nav aria-label="Service results pages">/u);
+  assert.match(first, /rel="next" href="\/services\?q=api&amp;offset=1&amp;limit=1"/u);
+  assert.doesNotMatch(first, /rel="prev"/u);
+  const second = renderServiceBrowse(projectOriginalMarketServices(source(), {
+    query: "api", offset: 1, limit: 1
+  }));
+  assert.match(second, /showing 2–2 of 2/u);
+  assert.match(second, /rel="prev" href="\/services\?q=api&amp;offset=0&amp;limit=1"/u);
+  assert.doesNotMatch(second, /rel="next"/u);
+  const none = renderServiceBrowse(projectOriginalMarketServices(source(), { query: "no such offering" }));
+  assert.match(none, /showing 0 of 0/u);
+  assert.doesNotMatch(none, /aria-label="Service results pages"/u);
+});
+
 test("service cards HTML-escape seller descriptions and do not make a fake buy button", () => {
   const html = renderServiceBrowse(projectOriginalMarketServices(source()));
   assert.match(html, /&amp; &lt;script&gt;not markup&lt;\/script&gt;/u);
