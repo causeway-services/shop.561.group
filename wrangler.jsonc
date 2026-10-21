@@ -2,6 +2,9 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "shop-561-group",
   "main": "src/worker.mjs",
+  // Fail a direct Wrangler build/deploy before bundling if Shop's public service
+  // projection can leak fields from the upstream seller record.
+  "build": { "command": "node --check src/service-discovery.mjs && node --test test/service-discovery.test.mjs" },
   "compatibility_date": "2026-09-02",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": false,
