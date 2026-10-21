@@ -1,0 +1,300 @@
+{
+  "observedAt": "2026-10-21T04:53:54.001Z",
+  "outcome": "met-for-seven-live-sites-and-original-three-mutual-navigation",
+  "scope": "Operating evidence only. This record adds no runtime or configuration change; deployed runtime source and its merge remain identified below.",
+  "runtimeSource": {
+    "shop": {
+      "repository": "causeway-services/shop.561.group",
+      "proposalHead": "217bd632487347de1ca41e1fc034d4aebf7fa4f2",
+      "merge": "94c67532f61567e98ae69a86962c93637ac9355a",
+      "pullRequest": "https://github.com/causeway-services/shop.561.group/pull/4"
+    },
+    "marketBazaar": {
+      "sourceMerge": "90db641e271e72038930eb698d4b189818ccc122"
+    }
+  },
+  "provider": {
+    "shop": {
+      "service": "shop-561-group",
+      "version": "e06b55fd-610d-4dcd-83ea-e65835deae82",
+      "deployment": "4a649b90-8610-4f8d-83b3-c20e5e1c85af",
+      "traffic": [
+        {
+          "version": "e06b55fd-610d-4dcd-83ea-e65835deae82",
+          "percentage": 100
+        }
+      ],
+      "domains": [
+        {
+          "hostname": "shop.561.group",
+          "service": "shop-561-group",
+          "environment": "production"
+        }
+      ],
+      "uploadedWorker": [
+        {
+          "name": "worker.mjs",
+          "bytes": 627303,
+          "sha256": "6b0505887b541710f2d2bde0a0dde6dac8cccb374e3130a0bee592c554338e3b"
+        }
+      ],
+      "exactQualifiedBundle": true,
+      "allOriginalBindingsEqualBefore": true,
+      "bindingCount": 12,
+      "bindingTypes": {
+        "secret_text": 9,
+        "kv_namespace": 1,
+        "durable_object_namespace": 1,
+        "r2_bucket": 1
+      }
+    },
+    "marketBazaar": [
+      {
+        "service": "market-navigation-561-group",
+        "version": "f5d293d5-260b-43c1-aefc-52b550a0a58c",
+        "deployment": "94671dc9-65a8-4aaf-b19c-7c427d6cd212",
+        "traffic": [
+          {
+            "version": "f5d293d5-260b-43c1-aefc-52b550a0a58c",
+            "percentage": 100
+          }
+        ],
+        "domains": [
+          {
+            "hostname": "market.561.group",
+            "service": "market-navigation-561-group",
+            "environment": "production"
+          }
+        ]
+      },
+      {
+        "service": "bazaar-561-group",
+        "version": "b9121332-c6c1-4094-aff8-f149ea0b200f",
+        "deployment": "491a4d4d-2252-4c74-bb9f-4d4d788149cc",
+        "traffic": [
+          {
+            "version": "b9121332-c6c1-4094-aff8-f149ea0b200f",
+            "percentage": 100
+          }
+        ],
+        "domains": [
+          {
+            "hostname": "bazaar.561.group",
+            "service": "bazaar-561-group",
+            "environment": "production"
+          }
+        ]
+      },
+      {
+        "service": "market-561-group",
+        "version": "456a7355-3f14-4a78-bc0b-a0dab639a175",
+        "deployment": "1f938985-5e8b-4170-87cf-55c30edec73f",
+        "traffic": [
+          {
+            "version": "456a7355-3f14-4a78-bc0b-a0dab639a175",
+            "percentage": 100
+          }
+        ],
+        "domains": []
+      }
+    ]
+  },
+  "publicReceiving": {
+    "domains": [
+      {
+        "domain": "market.561.group",
+        "status": 200,
+        "contentType": "text/html; charset=utf-8",
+        "sha256": "24f6fbc13a872ae8f6a993fcbe82656ba066d6ce0f3a09cb3de59b2cc0204ec6",
+        "requiredPeerLinks": [
+          "market",
+          "bazaar",
+          "shop"
+        ],
+        "allRequiredPeerLinksPresent": true
+      },
+      {
+        "domain": "bazaar.561.group",
+        "status": 200,
+        "contentType": "text/html; charset=utf-8",
+        "sha256": "a16d23a811b3b8c49aa75c25dce299704248b3c7dc55f42ed95d4b5a868b945e",
+        "requiredPeerLinks": [
+          "market",
+          "bazaar",
+          "shop"
+        ],
+        "allRequiredPeerLinksPresent": true
+      },
+      {
+        "domain": "shop.561.group",
+        "status": 200,
+        "contentType": "text/html; charset=utf-8",
+        "sha256": "730e57431cb7c348a0b95a1da636858d68a178e4ff43e92efcabac4b53e1829e",
+        "requiredPeerLinks": [
+          "market",
+          "bazaar",
+          "shop"
+        ],
+        "allRequiredPeerLinksPresent": true
+      },
+      {
+        "domain": "science.561.group",
+        "status": 200,
+        "contentType": "text/html",
+        "sha256": "f7a21867df307734a136d072f944a36c2a48a65b44e5289f09120404a1b08c39",
+        "requiredPeerLinks": [
+          "market",
+          "bazaar",
+          "shop",
+          "science",
+          "engineering",
+          "operations",
+          "services"
+        ],
+        "allRequiredPeerLinksPresent": true
+      },
+      {
+        "domain": "engineering.561.group",
+        "status": 200,
+        "contentType": "text/html",
+        "sha256": "99fa75538b39173c56c9ad6789235de6ae890b0158f4f871cf51c3f7e157be8e",
+        "requiredPeerLinks": [
+          "market",
+          "bazaar",
+          "shop",
+          "science",
+          "engineering",
+          "operations",
+          "services"
+        ],
+        "allRequiredPeerLinksPresent": true
+      },
+      {
+        "domain": "operations.561.group",
+        "status": 200,
+        "contentType": "text/html",
+        "sha256": "ad0fda6d1756682bcc8a99c02f1022170702aaa388ebbf181e1baf9b14fbe5d9",
+        "requiredPeerLinks": [
+          "market",
+          "bazaar",
+          "shop",
+          "science",
+          "engineering",
+          "operations",
+          "services"
+        ],
+        "allRequiredPeerLinksPresent": true
+      },
+      {
+        "domain": "services.561.group",
+        "status": 200,
+        "contentType": "text/html",
+        "sha256": "6a08eb6b22f94e7cede99e38ac9cd8669396099fabb2b02df0f9528f9d14aeaa",
+        "requiredPeerLinks": [
+          "market",
+          "bazaar",
+          "shop",
+          "science",
+          "engineering",
+          "operations",
+          "services"
+        ],
+        "allRequiredPeerLinksPresent": true
+      }
+    ],
+    "navigation": {
+      "originalThreeMutualLinks": true,
+      "fourNewPortalsLinkAllSeven": true,
+      "exactRequirement": "Original three sites link to each other; four new subject portals carry all-seven navigation."
+    },
+    "shop": {
+      "publicCatalog": {
+        "offerings": 13,
+        "allOriginalProductMetadataStatusPriceEditionAndFileMetadataPreserved": true,
+        "buyableTrue": 8,
+        "buyableFalse": 5,
+        "readiness": "Existing production capability settings retained; readiness is not a completed payment or delivery receipt."
+      },
+      "allTenCoverBytesMatchQualifiedAssets": true,
+      "allSevenOriginalNiOfferLinksResolve200": true,
+      "readOnlyMcp": {
+        "tools": [
+          "list_products",
+          "search_products",
+          "get_product"
+        ],
+        "listCount": 13,
+        "searchX402Count": 1,
+        "getProductId": "the-x402-economy"
+      },
+      "refusals": {
+        "anonymousLibrary303ToLogin": true,
+        "anonymousGiftApi401": true,
+        "invalidDownload403": true,
+        "comingSoonCheckout404": true,
+        "crossOriginCheckout403": true
+      },
+      "unconfiguredNativeAssay": {
+        "products": 13,
+        "buyableTrue": 0,
+        "buyableFalse": 13,
+        "scope": "The earlier source assay supplied no production capabilities; production retains the existing capability settings and reports eight live buyable products."
+      }
+    },
+    "marketBazaar": {
+      "originalMerchantOfferings": 130,
+      "shopOfferings": 13,
+      "marketTools": [
+        "list_markets",
+        "read_observations"
+      ],
+      "bazaarTools": [
+        "search_offers",
+        "get_offer",
+        "compare_offers"
+      ],
+      "humanSearchAndCompare200": true,
+      "searchX402Results": 3,
+      "exactOriginalNiGet": true,
+      "comparison": {
+        "selected": 2,
+        "priceComparable": false,
+        "reason": "asset-mismatch",
+        "originalUsdAndUsdcTermsRetained": true
+      }
+    },
+    "judgment": {
+      "allSevenCanonicalHttpsDomainRoots200": true,
+      "correctResourcesAndOriginalIdentities": true,
+      "originalThreeMutualCrosslinks": true,
+      "humanSearchDetailsComparisonAndProductPagesReceived": true,
+      "readOnlyAgentDiscoveryAndActualToolCallsReceived": true,
+      "fourPortalSearchFeedsResourcesDiscoveryWithholdingReceived": true,
+      "scienceOriginalPrivateAccessBoundaryPreserved": true,
+      "noPrivateDisclosureNewGrantOrPaidTransaction": true
+    },
+    "paidActions": "No eligible live checkout, purchase, settlement or paid delivery was attempted during receiving."
+  },
+  "evidence": [
+    {
+      "owner": "public-services-section/services/public-resources-services-section/services/public-consumer-resources-services-section/sites/shop.561.group",
+      "record": "data/records/commerce-navigation/interlink-provider-after.json",
+      "sha256": "5db754c362a209d422417152a474928420edca6cc6d3c4554769be6a9b7b7340"
+    },
+    {
+      "owner": "public-services-section/services/public-agent-services-section/sites/market.561.group",
+      "record": "data/records/commerce-navigation/interlink-provider-after.json",
+      "sha256": "69c63c01693b281330547aa69cfe3c8d551ac06e00b2fbc1cb89acf438684c37"
+    },
+    {
+      "owner": "public-services-section/services/public-computer-services-section/services/public-web-services-section",
+      "record": "data/records/section-sites-20261020/independent-shop-source-native-worker-review.json",
+      "sha256": "8cb2d3b0d72321d02422f4b64afda752bef2b70e1beb8b5c059126f30792f93d"
+    },
+    {
+      "owner": "public-services-section/services/public-computer-services-section/services/public-web-services-section",
+      "record": "data/records/section-sites-20261020/independent-seven-site-public-witness.json",
+      "sha256": "cdc0406413624d67404eac8551bb99e3fbe48e569f1e9f714dd9c812d1e1dfc4"
+    }
+  ]
+}

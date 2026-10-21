@@ -31,8 +31,9 @@ if (SERVICES === undefined) throw new Error(`cannot locate the Group's services 
 // clean-linked-worktree behavior: tracked records come from this checkout and
 // untracked edition state comes from the primary worktree named by commondir.
 function repositoryRoots(from) {
-  let checkoutRoot = from;
-  while (!existsSync(join(checkoutRoot, ".git")) && dirname(checkoutRoot) !== checkoutRoot) checkoutRoot = dirname(checkoutRoot);
+  const services = SERVICES_PATTERN.exec(`${from}/`);
+  if (!services) throw new Error(`cannot locate Group services above ${from}`);
+  const checkoutRoot = from.slice(0, services.index);
   const dotGit = join(checkoutRoot, ".git");
   if (!existsSync(dotGit)) throw new Error(`cannot locate repository above ${from}`);
   if (!statSync(dotGit).isFile()) return { checkoutRoot, mainRoot: checkoutRoot };
