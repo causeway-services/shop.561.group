@@ -84,11 +84,24 @@ function escapeHtml(value) {
 }
 
 export function renderServiceBrowse(projection) {
-  const { query, offset, nextOffset, services } = projection;
-  const form = `<form action="/services" method="GET" role="search"><label for="service-query">Find a service</label> <input id="service-query" name="q" value="${escapeHtml(query)}" maxlength="120" placeholder="e.g. schema validation"> <button type="submit">Search</button></form>`;
+  const { query, offset, limit, nextOffset, total, services } = projection;
+  const form = `<form action="/services" method="GET" role="search"><label for="service-query">Find a service</label> <input id="service-query" name="q" value="${escapeHtml(query)}" maxlength="120" placeholder="e.g. schema validation"> <input type="hidden" name="limit" value="${limit}"> <button type="submit">Search</button></form>`;
   const list = services.map(row => `<li><article><h2><a href="${escapeHtml(row.inspectUrl)}">${escapeHtml(row.name)}</a></h2><p>${escapeHtml(row.description)}</p><p><strong>Price preview:</strong> ${escapeHtml(row.pricePreview ?? "Consult original offer")} · ${escapeHtml(row.method)} · ${escapeHtml(row.category)}. Provider: ${escapeHtml(row.seller?.enterprise ?? "Not independently established")}. Source rights: ${escapeHtml(row.sourceRightsVerification)}. Original seller listing; current paid availability and delivery unverified.</p><p><a href="${escapeHtml(row.inspectUrl)}">Inspect x402 service contract</a></p></article></li>`).join("");
-  const page = new URLSearchParams([["q", query], ["offset", String(nextOffset ?? Math.max(0, offset - 20))]]);
-  const nav = nextOffset !== null ? `<p><a href="/services?${escapeHtml(page)}">More services</a></p>` : "";
+  // Preserve validated page sizes across navigation; never skip a listed result.
+  const pageHref = target => `/services?${escapeHtml(new URLSearchParams([
+    ["q", query], ["offset", String(target)], ["limit", String(limit)]
+  ]))}`;
+  const lastStart = total > 0 ? Math.floor((total - 1) / limit) * limit : 0;
+  const previousOffset = offset > 0 && total > 0
+    ? Math.min(Math.max(0, offset - limit), lastStart) : null;
+  const links = [
+    previousOffset === null ? "" : `<a rel="prev" href="${pageHref(previousOffset)}">Previous services</a>`,
+    nextOffset === null ? "" : `<a rel="next" href="${pageHref(nextOffset)}">More services</a>`,
+  ].filter(Boolean).join(" · ");
+  const feedback = services.length ? "" : `<p role="status">${total === 0
+    ? "No matching source-listed services."
+    : "No services at this page offset. Choose Previous services to return to a matching page."}</p>`;
+  const nav = `${feedback}${links ? `<nav aria-label="Service results pages"><p>${links}</p></nav>` : ""}`;
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>561 Group Services · Shop</title><meta name="description" content="Browse original 561 Group source-qualified x402 services, then inspect current terms at the original merchant."><style>body{font:1rem/1.55 system-ui,sans-serif;color:#222;max-width:76rem;margin:auto;padding:1rem 2rem}header,footer{border-block:1px solid #aaa;padding:.8rem 0}a{color:#174b90}li{margin:0 0 1.25rem}ul{padding-left:1.25rem}article{max-width:62rem}h2{font-size:1.25rem}input{min-width:min(60vw,24rem);padding:.4rem}button{padding:.45rem}small{color:#555}</style></head><body><header><a href="/">561 Group Shop</a> · <a href="https://bazaar.561.group">Bazaar</a> · <a href="https://market.561.group">Market</a></header><main><h1>Services for people and agents</h1><p>These are source-listed services from the original 561 Group x402 merchant. Browse freely. A listed service is not a verified live payment or delivery; inspect its current original terms before authorizing a purchase.</p>${form}<p>${projection.total} matching source-listed services.</p><ul>${list}</ul>${nav}<p><a href="/services.json">Machine-readable service catalog</a> · <a href="https://market.561.group/v1/catalog">Original typed operation catalog</a></p></main><footer><small>Shop presents existing seller declarations. Market controls x402 contracts and payment; Bazaar federates discovery. No purchase or wallet authority is granted here.</small></footer></body></html>`;
 }
 
