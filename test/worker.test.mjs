@@ -182,3 +182,36 @@ test('source-owned Shop offers public read-only product discovery over the origi
   assert.equal(unauthorized.status, 403);
   assert.equal((await worker.fetch(new Request(origin + '/mcp'), env())).status, 405);
 });
+
+test("Shop routes original market services without mutating book checkout", async () => {
+  const sku = "ni:///sha-256;" + "G".repeat(43);
+  const source = { recordType: "561-group.x402-market-catalog",
+    market: "https://market.561.group", settlement: { protocol: "x402" },
+    offers: [
+      { sku, name: "Verification service", listed: true, method: "POST",
+        url: "https://market.561.group/v1/verify", price: "$0.02",
+        description: "Source-qualified typed validation", request: { bodySchema: { type: "object" } } },
+      { sku: "ni:///sha-256;" + "H".repeat(43), name: "held", listed: false },
+    ] };
+  let reads = 0;
+  const testEnv = env({ MARKET_SERVICE_CATALOG_FETCH: async (url, options) => {
+    reads++;
+    assert.equal(url, "https://market.561.group/v1/catalog");
+    assert.equal(options.redirect, "manual");
+    return Response.json(source);
+  } });
+  const machine = await worker.fetch(new Request("https://shop.561.group/services.json"), testEnv);
+  assert.equal(machine.status, 200);
+  const projection = await machine.json();
+  assert.equal(projection.total, 1);
+  assert.equal(projection.services[0].sku, sku);
+  assert.equal(projection.services[0].shopCheckoutAvailable, false);
+  const html = await worker.fetch(new Request("https://shop.561.group/services"), testEnv);
+  assert.equal(html.status, 200);
+  assert.match(await html.text(), /Verification service/u);
+  assert.equal(reads, 2);
+  assert.match(await (await worker.fetch(new Request("https://shop.561.group/sitemap.xml"), testEnv)).text(),
+    /shop\.561\.group\/services/u);
+  const originalGoods = await (await worker.fetch(new Request("https://shop.561.group/catalog.json"), testEnv)).json();
+  assert.equal(originalGoods.offerings.length, CATALOG.offerings.length);
+});
