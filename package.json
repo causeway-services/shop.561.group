@@ -17,12 +17,12 @@
     "node": ">=22.18"
   },
   "dependencies": {
-    "@red-cup-engineering/digital-goods-storefront-services-section": "workspace:*",
-    "@red-cup-engineering/stripe-services-section": "workspace:*",
+    "@red-cup-engineering/digital-goods-storefront-services-section": "0.4.4",
+    "@red-cup-engineering/stripe-services-section": "0.1.11",
     "wrangler": "4.127.1"
   },
   "devDependencies": {
-    "@red-cup-engineering/ebook-engineering-services-section": "workspace:*"
+    "@red-cup-engineering/ebook-engineering-services-section": "0.3.4"
   },
   "repository": {
     "type": "git",

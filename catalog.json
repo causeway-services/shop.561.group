@@ -36,7 +36,7 @@
       "priceCents": 900,
       "currency": "usd",
       "release": "the-x402-economy",
-      "agentOfferUrl": "https://market.561.group/?q=the-x402-economy",
+      "agentOfferUrl": "https://bazaar.561.group/offers?source=house-x402&id=ni%3A%2F%2F%2Fsha-256%3B-2a0jEZ7cWENXeYPs3xdboD6wd_xuNqgL1wVbZqQDK4",
       "book": {
         "manuscript": "public-services-section/services/public-economic-services-section/content/books/the-x402-economy",
         "acceptance": "public-services-section/services/public-economic-services-section/data/records/editions/2026-09-30-the-x402-economy-sixth-edition-acceptance.json"
@@ -49,7 +49,7 @@
       "priceCents": 900,
       "currency": "usd",
       "release": "project-management-course-by-course",
-      "agentOfferUrl": "https://market.561.group/?q=project-management-course-by-course",
+      "agentOfferUrl": "https://bazaar.561.group/offers?source=house-x402&id=ni%3A%2F%2F%2Fsha-256%3BCZy4itE60Trpyf_oX_6e2Bd_zgspAi6YFT8zXuYruNA",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/project-management-course-by-course",
         "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-project-management-course-by-course-sixth-edition-acceptance.json"
@@ -62,7 +62,7 @@
       "priceCents": 1200,
       "currency": "usd",
       "release": "the-capm-domain-by-domain",
-      "agentOfferUrl": "https://market.561.group/?q=the-capm-domain-by-domain",
+      "agentOfferUrl": "https://bazaar.561.group/offers?source=house-x402&id=ni%3A%2F%2F%2Fsha-256%3BCvLp1ukgCv1h9JS1ZTh1RJ1yDdwrNvIJf_WO9Iq-iEk",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/the-capm-domain-by-domain",
         "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-the-capm-domain-by-domain-sixth-edition-acceptance.json"
@@ -75,7 +75,7 @@
       "priceCents": 900,
       "currency": "usd",
       "release": "data-analytics-course-by-course",
-      "agentOfferUrl": "https://market.561.group/?q=data-analytics-course-by-course",
+      "agentOfferUrl": "https://bazaar.561.group/offers?source=house-x402&id=ni%3A%2F%2F%2Fsha-256%3BItsDC1opfeUaN0K63RZXgjPxI0HV8RteGTIh_y2vqoo",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/data-analytics-course-by-course",
         "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-30-data-analytics-course-by-course-sixth-edition-acceptance.json"
@@ -88,7 +88,7 @@
       "priceCents": 900,
       "currency": "usd",
       "release": "ux-design-course-by-course",
-      "agentOfferUrl": "https://market.561.group/?q=ux-design-course-by-course",
+      "agentOfferUrl": "https://bazaar.561.group/offers?source=house-x402&id=ni%3A%2F%2F%2Fsha-256%3BY_8aL-DaA1gWTjRBL08tgal_Eet-hUN4N9Ohvm4fuR8",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/content/books/ux-design-course-by-course",
         "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-computer-education-services-section/data/records/editions/2026-09-30-ux-design-course-by-course-sixth-edition-acceptance.json"
@@ -101,7 +101,7 @@
       "priceCents": 1200,
       "currency": "usd",
       "release": "business-management-course-by-course",
-      "agentOfferUrl": "https://market.561.group/?q=business-management-course-by-course",
+      "agentOfferUrl": "https://bazaar.561.group/offers?source=house-x402&id=ni%3A%2F%2F%2Fsha-256%3BymPydIkNHFvvHMYwhPnhZNml1PjGdapWpD7jo4CsPtY",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-management-course-by-course",
         "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-business-management-course-by-course-sixth-edition-acceptance.json"
@@ -114,7 +114,7 @@
       "priceCents": 1200,
       "currency": "usd",
       "release": "business-strategy-course-by-course",
-      "agentOfferUrl": "https://market.561.group/?q=business-strategy-course-by-course",
+      "agentOfferUrl": "https://bazaar.561.group/offers?source=house-x402&id=ni%3A%2F%2F%2Fsha-256%3B7m8XplNrrQPRkyuc6JYjoJixdaNLz4fiw7_FM7LgKLk",
       "book": {
         "manuscript": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/content/books/business-strategy-course-by-course",
         "acceptance": "public-services-section/services/public-social-services-section/services/public-education-services-section/services/public-business-education-services-section/data/records/editions/2026-09-30-business-strategy-course-by-course-sixth-edition-acceptance.json"
