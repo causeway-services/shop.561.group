@@ -54,6 +54,32 @@ test("source-owned seller readout stays one seller, one SKU and no Shop payment 
   assert.equal(JSON.stringify(projected).includes(hidden), false);
 });
 
+test("public seller projection strips private fields in both JSON and HTML", async () => {
+  const original = source();
+  original.offers[0].seller.internalToken = "private-seller-token";
+  original.offers[0].seller.payout = { accountNumber: "private-bank-data" };
+  original.offers[1].seller = { payout: { accountNumber: "private-only" } };
+  const projected = projectOriginalMarketServices(original);
+  assert.deepEqual(projected.services[0].seller, {
+    enterprise: "561 Group's actual original provider",
+  });
+  assert.equal(projected.services[1].seller, null,
+    "a seller with no public enterprise identity cannot export unknown private fields");
+  for (const leaked of ["private-seller-token", "private-bank-data", "private-only"]) {
+    assert.equal(JSON.stringify(projected).includes(leaked), false);
+    assert.equal(renderServiceBrowse(projected).includes(leaked), false);
+  }
+  const json = await serviceBrowseResponse(
+    new Request("https://shop.561.group/services.json"), { fetchSource: served(original) }
+  );
+  assert.equal(json.status, 200);
+  const machine = await json.json();
+  assert.deepEqual(machine.services[0].seller, projected.services[0].seller);
+  assert.equal(machine.services[1].seller, null);
+  for (const leaked of ["private-seller-token", "private-bank-data", "private-only"])
+    assert.equal(JSON.stringify(machine).includes(leaked), false);
+});
+
 test("search and paging select existing identities without inventing catalog rows", () => {
   assert.deepEqual(projectOriginalMarketServices(source(), { query: "beta", limit: 1 })
     .services.map(x => x.sku), [b]);
