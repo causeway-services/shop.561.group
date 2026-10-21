@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { createHmac } from "node:crypto";
 import test from "node:test";
 import worker, { CATALOG, CATALOG_VALIDATION, ShopFulfillment } from "../src/worker.mjs";
+import originalPublications from "../data/records/commerce-navigation/2026-10-20-original-publication-identities.json" with { type: "json" };
 
 function fulfillment() {
   const rows = new Map();
@@ -79,11 +80,14 @@ test("the shop lists human publications and merch without presenting unaccepted 
     if (offering.agentOfferUrl) {
       assert.equal(offering.status, "live", "a coming-soon publication cannot advertise a paid Market listing");
       const destination = new URL(offering.agentOfferUrl);
-      assert.equal(destination.origin, "https://market.561.group", offering.id);
-      assert.equal(destination.pathname, "/", offering.id);
+      const original = originalPublications.offers.find((item) => item.operation === offering.release);
+      assert.ok(original, offering.id);
+      assert.equal(destination.origin, "https://bazaar.561.group", offering.id);
+      assert.equal(destination.pathname, "/offers", offering.id);
       assert.equal(destination.hash, "", offering.id);
-      assert.deepEqual([...destination.searchParams.keys()], ["q"], offering.id);
-      assert.equal(destination.searchParams.get("q"), offering.release, "Market searches the seller's source operation, not a stale anchor");
+      assert.deepEqual([...destination.searchParams.keys()], ["source", "id"], offering.id);
+      assert.equal(destination.searchParams.get("source"), "house-x402", offering.id);
+      assert.equal(destination.searchParams.get("id"), original.sku, "Bazaar inspects the seller’s exact original operation identity");
     }
     assert.ok(offering.book.contents.length > 0, offering.id);
     for (const file of offering.book.edition.files) assert.match(file.sha256, /^[0-9a-f]{64}$/u, `${offering.id} ${file.format}`);
@@ -103,7 +107,7 @@ test("the catalog and a book page render through TUFTE with the verification rec
   assert.match(page, /property="og:image" content="https:\/\/shop.561.group\/covers\/the-x402-economy.png"/);
   assert.match(page, /Card checkout opens soon/);
   assert.match(page, /Explore x402 offer/);
-  assert.match(page, /https:\/\/market\.561\.group\/\?q=the-x402-economy/u);
+  assert.match(page, /https:\/\/bazaar\.561\.group\/offers\?source=house-x402&amp;id=ni%3A%2F%2F%2Fsha-256%3B-2a0jEZ7cWENXeYPs3xdboD6wd_xuNqgL1wVbZqQDK4/u);
 });
 
 test("checkout remains unavailable without all payment capabilities", async () => {
