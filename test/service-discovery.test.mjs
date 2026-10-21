@@ -108,7 +108,7 @@ test("HTTP routes serve source-described machine data and semantic human browse"
   const human = await serviceBrowseResponse(new Request("https://shop.561.group/services"), { fetchSource: served() });
   assert.equal(human.status, 200);
   assert.match(human.headers.get("content-security-policy"), /default-src 'none'/u);
-  assert.match(await human.text(), /Source-service catalog JSON/u);
+  assert.match(await human.text(), /Machine-readable service catalog/u);
   const head = await serviceBrowseResponse(new Request("https://shop.561.group/services.json", { method: "HEAD" }), { fetchSource: served() });
   assert.equal(head.status, 200);
   assert.equal(await head.text(), "");
@@ -150,4 +150,39 @@ test("shop does not report zero inventory or leak state when merchant response i
     assert.match(data.error, /temporarily unavailable/u);
     assert.equal(data.source, MARKET_CATALOG_URL);
   }
+});
+
+test("service browsing preserves page size and exposes accessible forward, back and empty results", () => {
+  const first = renderServiceBrowse(projectOriginalMarketServices(source(), { query: "api", limit: 1 }));
+  assert.match(first, /<nav aria-label="Service results pages">/u);
+  assert.match(first, /<a rel="next" href="\/services\?q=api&amp;offset=1&amp;limit=1">More services<\/a>/u);
+  assert.match(first, /<input type="hidden" name="limit" value="1">/u);
+  assert.doesNotMatch(first, /Previous services/u);
+
+  const second = renderServiceBrowse(projectOriginalMarketServices(source(), { query: "api", offset: 1, limit: 1 }));
+  assert.match(second, /<a rel="prev" href="\/services\?q=api&amp;offset=0&amp;limit=1">Previous services<\/a>/u);
+  assert.doesNotMatch(second, /More services/u);
+
+  const beyond = renderServiceBrowse(projectOriginalMarketServices(source(), { offset: 500, limit: 1 }));
+  assert.match(beyond, /No services at this page offset/u);
+  assert.match(beyond, /<a rel="prev" href="\/services\?q=&amp;offset=1&amp;limit=1">Previous services<\/a>/u);
+  const missing = renderServiceBrowse(projectOriginalMarketServices(source(), { query: "nothing" }));
+  assert.match(missing, /<p role="status">No matching source-listed services\.<\/p>/u);
+  assert.doesNotMatch(missing, /Service results pages/u);
+});
+
+test("HTTP service browser keeps exact page parameters and returns a useful no-match status", async () => {
+  const response = await serviceBrowseResponse(
+    new Request("https://shop.561.group/services?q=api&offset=1&limit=1"),
+    { fetchSource: served() }
+  );
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /<a rel="prev" href="\/services\?q=api&amp;offset=0&amp;limit=1">Previous services<\/a>/u);
+  assert.match(html, /<input type="hidden" name="limit" value="1">/u);
+  const empty = await serviceBrowseResponse(
+    new Request("https://shop.561.group/services?q=no-such-offer"),
+    { fetchSource: served() }
+  );
+  assert.match(await empty.text(), /<p role="status">No matching source-listed services\.<\/p>/u);
 });
