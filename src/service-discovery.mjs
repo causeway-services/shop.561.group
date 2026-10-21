@@ -64,7 +64,10 @@ export function projectOriginalMarketServices(source, options = {}) {
       category: row.category ?? "unclassified", gateway: row.gateway,
       operation: row.operation, method: row.method, endpoint: row.url,
       pricePreview: typeof row.price === "string" ? row.price : null,
-      seller: row.seller ?? null, cell: row.cell ?? null, law: row.law ?? null,
+      // Publicly project an explicit seller identity, never upstream private metadata.
+      seller: typeof row.seller?.enterprise === "string" && row.seller.enterprise.trim()
+        ? Object.freeze({ enterprise: row.seller.enterprise }) : null,
+      cell: row.cell ?? null, law: row.law ?? null,
       input: row.request ?? null, output: row.output ?? null,
       sourceRightsVerification: row.sourceRightsVerification ?? "not-declared",
       inspectUrl: MARKET_ORIGIN + "/?offer=" + encodeURIComponent(row.sku),
