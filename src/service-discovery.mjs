@@ -105,6 +105,36 @@ export function renderServiceBrowse(projection) {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>561 Group Services · Shop</title><meta name="description" content="Browse original 561 Group source-qualified x402 services, then inspect current terms at the original merchant."><style>body{font:1rem/1.55 system-ui,sans-serif;color:#222;max-width:76rem;margin:auto;padding:1rem 2rem}header,footer{border-block:1px solid #aaa;padding:.8rem 0}a{color:#174b90}li{margin:0 0 1.25rem}ul{padding-left:1.25rem}article{max-width:62rem}h2{font-size:1.25rem}input{min-width:min(60vw,24rem);padding:.4rem}button{padding:.45rem}small{color:#555}</style></head><body><header><a href="/">561 Group Shop</a> · <a href="https://bazaar.561.group">Bazaar</a> · <a href="https://market.561.group">Market</a></header><main><h1>Services for people and agents</h1><p>These are source-listed services from the original 561 Group x402 merchant. Browse freely. A listed service is not a verified live payment or delivery; inspect its current original terms before authorizing a purchase.</p>${form}<p>${projection.total} matching source-listed services.</p><ul>${list}</ul>${nav}<p><a href="/services.json">Machine-readable service catalog</a> · <a href="https://market.561.group/v1/catalog">Original typed operation catalog</a></p></main><footer><small>Shop presents existing seller declarations. Market controls x402 contracts and payment; Bazaar federates discovery. No purchase or wallet authority is granted here.</small></footer></body></html>`;
 }
 
+// Enforce the byte cap WHILE consuming a streamed upstream body. Calling
+// response.text() before checking size would still buffer an unbounded payload.
+async function readBoundedSource(response) {
+  if (!response.body) throw new TypeError("Original seller returned an empty body");
+  const reader = response.body.getReader();
+  const chunks = [];
+  let size = 0;
+  try {
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > MAX_UPSTREAM_BYTES) throw new TypeError("Seller read exceeds expected size");
+      chunks.push(value);
+    }
+  } catch (error) {
+    await reader.cancel().catch(() => {});
+    throw error;
+  } finally {
+    reader.releaseLock();
+  }
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes));
+}
+
 function reject(status, message) {
   return Response.json({ error: message, source: MARKET_CATALOG_URL }, {
     status, headers: { "cache-control": "no-store", "access-control-allow-origin": "*",
@@ -136,10 +166,7 @@ export async function serviceBrowseResponse(request, { fetchSource = fetch } = {
         !response.headers.get("content-type")?.includes("application/json") ||
         Number(response.headers.get("content-length") ?? 0) > MAX_UPSTREAM_BYTES)
       throw new TypeError("Original seller read is unavailable");
-    const payload = await response.text();
-    if (new TextEncoder().encode(payload).byteLength > MAX_UPSTREAM_BYTES)
-      throw new TypeError("Seller read exceeds expected size");
-    projection = projectOriginalMarketServices(JSON.parse(payload), selection);
+    projection = projectOriginalMarketServices(await readBoundedSource(response), selection);
   } catch {
     return reject(503, "Source-qualified service catalog temporarily unavailable");
   }
