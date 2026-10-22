@@ -4,7 +4,7 @@
   "main": "src/worker.mjs",
   // Fail a direct Wrangler build/deploy before bundling if Shop's public service
   // projection can leak fields from the upstream seller record.
-  "build": { "command": "node --check src/service-discovery.mjs && node --test test/service-discovery.test.mjs" },
+  "build": { "command": "node --check src/service-discovery.mjs && node --check src/external-stripe-payment-link-receiving.mjs && node --check src/worker.mjs && node --test test/service-discovery.test.mjs test/external-stripe-payment-link-receiving.test.mjs test/worker.test.mjs" },
   "compatibility_date": "2026-09-02",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": false,
