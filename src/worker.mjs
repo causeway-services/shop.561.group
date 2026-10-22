@@ -1,6 +1,7 @@
 import { validateCatalog } from "@red-cup-engineering/digital-goods-storefront-services-section";
 import { createDigitalGoodsStorefrontWorker } from "@red-cup-engineering/digital-goods-storefront-services-section/worker-runtime";
 import catalog from "./compiled-catalog.mjs";
+import { surface } from "./standards.mjs";
 import { createShopFulfillment, createShopStripeAudit } from "./fulfillment.mjs";
 
 export const CATALOG = catalog;
@@ -17,34 +18,24 @@ const runtime = createDigitalGoodsStorefrontWorker({
   },
 });
 
-// Crawler documents are the catalog's own view: the storefront and one page per offering.
-const ORIGIN = "https://shop.561.group";
-function sitemap() {
-  const paths = ["/", ...catalog.offerings.map((offering) => `/goods/${offering.id}`)];
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${paths.map((path) => `  <url><loc>${ORIGIN}${path}</loc></url>`).join("\n")}\n</urlset>\n`;
-}
+// The storefront runtime owns every route, price and payment path; the standards surface adds the
+// crawler documents, brand assets, missing head metadata and the response headers around it.
+const storefront = (request, env) => runtime.fetch(request, {
+  ...env,
+  fulfillment: createShopFulfillment(env.SHOP_FULFILLMENT),
+  goods: env.SHOP_GOODS,
+  tokenSecret: env.SHOP_TOKEN_SECRET,
+  audit: createShopStripeAudit(env.SHOP_FULFILLMENT),
+  // Google sign-in opens when all three are set (wrangler secret put).
+  accounts: { clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET, sessionSecret: env.SHOP_SESSION_SECRET },
+  // The comma-separated emails that may give books.
+  gifters: String(env.SHOP_GIFTERS ?? "").split(",").map((email) => email.trim()).filter(Boolean),
+  // The house's agents give books through /api/gifts with this key (pnpm arm-gift-agent); their gifts are Causeway's press office's.
+  giftAgent: { key: env.SHOP_GIFT_AGENT_KEY, as: "press@561.group" },
+});
 
 export default {
-  fetch(request, env) {
-    const { pathname } = new URL(request.url);
-    if (request.method === "GET" && pathname === "/robots.txt") {
-      return new Response(`User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /oauth/\n\nSitemap: ${ORIGIN}/sitemap.xml\n`, { headers: { "content-type": "text/plain; charset=utf-8" } });
-    }
-    if (request.method === "GET" && pathname === "/sitemap.xml") return new Response(sitemap(), { headers: { "content-type": "application/xml; charset=utf-8" } });
-    return runtime.fetch(request, {
-      ...env,
-      fulfillment: createShopFulfillment(env.SHOP_FULFILLMENT),
-      goods: env.SHOP_GOODS,
-      tokenSecret: env.SHOP_TOKEN_SECRET,
-      audit: createShopStripeAudit(env.SHOP_FULFILLMENT),
-      // Google sign-in opens when all three are set (wrangler secret put).
-      accounts: { clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET, sessionSecret: env.SHOP_SESSION_SECRET },
-      // The comma-separated emails that may give books.
-      gifters: String(env.SHOP_GIFTERS ?? "").split(",").map((email) => email.trim()).filter(Boolean),
-      // The house's agents give books through /api/gifts with this key (pnpm arm-gift-agent); their gifts are Causeway's press office's.
-      giftAgent: { key: env.SHOP_GIFT_AGENT_KEY, as: "press@561.group" },
-    });
-  },
+  fetch: (request, env) => surface.fetch(request, (inner) => storefront(inner, env)),
 };
 
 export { ShopFulfillment } from "./fulfillment.mjs";
