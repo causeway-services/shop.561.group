@@ -136,6 +136,44 @@ test("mismatched source identity, duplicate NI, secret origin and held products 
   assert.equal(projectOriginalMarketServices(heldOnly).total, 0);
 });
 
+test("streamed Market catalog is bounded before buffering and cancels oversized reads", async () => {
+  let cancelled = false;
+  let sent = 0;
+  const chunk = new Uint8Array(1_000_000);
+  const oversized = new ReadableStream({
+    pull(controller) {
+      if (++sent <= 10) controller.enqueue(chunk);
+      else controller.close();
+    },
+    cancel() { cancelled = true; },
+  });
+  const failed = await serviceBrowseResponse(
+    new Request("https://shop.561.group/services.json"),
+    { fetchSource: async () => new Response(oversized, {
+      status: 200, headers: { "content-type": "application/json", "content-length": "15" }
+    }) }
+  );
+  assert.equal(failed.status, 503);
+  assert.equal((await failed.json()).error, "Source-qualified service catalog temporarily unavailable");
+  assert.equal(cancelled, true, "oversized streaming bodies must be cancelled instead of being fully read");
+  assert.ok(sent <= 6, "only a bounded number of chunks may be read");
+
+  const encoded = new TextEncoder().encode(JSON.stringify(source()));
+  const valid = new ReadableStream({
+    start(controller) {
+      controller.enqueue(encoded.slice(0, 17));
+      controller.enqueue(encoded.slice(17));
+      controller.close();
+    }
+  });
+  const accepted = await serviceBrowseResponse(
+    new Request("https://shop.561.group/services.json"),
+    { fetchSource: async () => new Response(valid, { headers: { "content-type": "application/json" } }) }
+  );
+  assert.equal(accepted.status, 200, "ordinary chunked catalog reads must still work");
+  assert.equal((await accepted.json()).total, 2);
+});
+
 test("shop does not report zero inventory or leak state when merchant response is bad", async () => {
   for (const fetchSource of [
     async () => new Response("down", { status: 503, headers: { "content-type": "text/plain" } }),
