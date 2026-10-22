@@ -1,11 +1,16 @@
 import { validateCatalog } from "@red-cup-engineering/digital-goods-storefront-services-section";
-import { createDigitalGoodsStorefrontWorker } from "@red-cup-engineering/digital-goods-storefront-services-section/worker-runtime";
+import * as storefrontRuntime from "@red-cup-engineering/digital-goods-storefront-services-section/worker-runtime";
+import { externalStripePaymentLinkIds } from "./external-stripe-payment-link-receiving.mjs";
+const {createDigitalGoodsStorefrontWorker}=storefrontRuntime;
 import catalog from "./compiled-catalog.mjs";
 import { createShopFulfillment, createShopStripeAudit } from "./fulfillment.mjs";
 import { serviceBrowseResponse } from "./service-discovery.mjs";
 
 export const CATALOG = catalog;
 export const CATALOG_VALIDATION = validateCatalog(catalog);
+export const ORIGINAL_EXTERNAL_STRIPE_PAYMENT_LINK_IDS=externalStripePaymentLinkIds(catalog);
+export const EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED=
+ storefrontRuntime.SUPPORTS_EXTERNAL_STRIPE_PAYMENT_LINK_AUDIT===true;
 
 const runtime = createDigitalGoodsStorefrontWorker({
   catalog,
@@ -41,6 +46,11 @@ export default {
       goods: env.SHOP_GOODS,
       tokenSecret: env.SHOP_TOKEN_SECRET,
       audit: createShopStripeAudit(env.SHOP_FULFILLMENT),
+      // Source-qualified emsenn merchant event observations are distinct from
+      // this Shop's book checkout and entitlement custody. Older installed
+      // suppliers must NOT receive an unimplemented capability assertion.
+      externalPaymentLinks:EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED
+       ?ORIGINAL_EXTERNAL_STRIPE_PAYMENT_LINK_IDS:[],
       // Google sign-in opens when all three are set (wrangler secret put).
       accounts: { clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET, sessionSecret: env.SHOP_SESSION_SECRET },
       // The comma-separated emails that may give books.
