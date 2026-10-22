@@ -924,5 +924,22 @@ export default {
       "status": "coming-soon",
       "blurb": "Print-on-demand goods. Not open yet."
     }
+  ],
+  "externalStripePaymentLinkReceivers": [
+    {
+      "type": "ExternalStripePaymentLinkReceiver",
+      "schemaVersion": 1,
+      "stripePaymentLinkId": "plink_1USMywJ1vYnPQu2NWHtcqx0b",
+      "stripeMerchantAccountId": "acct_18eDiqJ1vYnPQu2N",
+      "merchantDisplayName": "emsenn",
+      "supportedProgramName": "561 Group public education and technical infrastructure",
+      "sourceObservedOn": "2026-10-22",
+      "sourceRevision": {
+        "repository": "causeway-services/emsenn-youtube-services-section",
+        "commitSha": "40dd6c9b9c2392f407fd0d22b1b587d80010ffd6",
+        "path": "config.json",
+        "blobSha": "e4fc13ccce67c2d07069825ab3e3b0dc93784aca"
+      }
+    }
   ]
 };
