@@ -123,6 +123,16 @@ bindings and the `ShopFulfillment` Durable Object registration.
   while a book is coming soon, its link states the review terms, it stops
   downloading when the reading window closes, and it can be withdrawn.
 
+## Receiving voluntary emsenn video-support checkouts into the original Shop economic audit
+
+An externally hosted payment link is **not** a Shop book checkout. The live emsenn channel's source-owned `config.json` identifies an active $10 USD/month Stripe Payment Link operated by checkout merchant **emsenn** for a 561 Group public education purpose. The current Shop seller catalog still names 561 Group for its separate books. These merchant/program identities must not be collapsed into one legal beneficiary or a sale of books.
+
+The existing `catalog.json` now carries one private, typed `externalStripePaymentLinkReceivers[]` source, with the exact original Payment Link ID, source-observed merchant, support program and pinned original emsenn channel `config.json` Git commit/blob. **This is a source-selected outside-catalog webhook receiver, NOT another offering.** The original `scripts/compile-catalog.mjs` carries the record unmodified into `src/compiled-catalog.mjs`; `src/external-stripe-payment-link-receiving.mjs` admits its exact field schema and returns only the verified IDs to the existing `src/worker.mjs` → Red Cup signed Stripe webhook. Industry JSON Schema Draft 2020-12 lives at `data/records/schema/external-stripe-payment-link-receiver.schema.json`. The Shop's public `/catalog.json`, buyer storefront and MCP product search continue exposing only original merchant/offering projections, **not** its internal webhook receiver inventory. The original 13 goods are unchanged.
+
+The existing Storefront Worker dependency `@red-cup-engineering/digital-goods-storefront-services-section@0.4.4` has not been shown to contain the new `SUPPORTS_EXTERNAL_STRIPE_PAYMENT_LINK_AUDIT` export. Shop tests and source preserve the difference between a merely merged upstream producer and an installed one: the Worker enables the external ID list only when the installed original provider declares that capability. Without the release, an unregistered hosted Payment Link remains unfulfilled/unobserved by Shop, not incorrectly booked as a book sale. A qualified new release must pass original signed-event, idempotent Durable Object audit, negative/PII, and no-entitlement tests before the Shop repins it and verifies the live Worker behavior. The `wrangler.jsonc` build guard now checks the native original source/test and Worker routes.
+
+The destination currently configured in the live Stripe account is `https://shop.561.group/webhooks/stripe` and subscribes to `checkout.session.completed` only. Its signed event can establish an observed Checkout completion and the actual provider payment status, but not the long-lived subscription history, invoice settlement, Stripe fees, payout, tax classification, legal ownership transfer or cleared Group treasury cash. Those require separately entitled Stripe subscription/invoice/balance and Group treasury receiving. Nothing in this source change purchases anything, registers a new webhook, edits customer accounts, spends on Notebook video generation or modifies public YouTube descriptions.
+
 ## The catalog
 
 `catalog.json` lists the offerings. A book row names:
