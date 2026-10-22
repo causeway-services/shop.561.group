@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Deployable Cloudflare Worker for shop.561.group, the 561 Group's storefront for people: the books a person buys and reads, reader accounts through Google sign-in, a library per reader, and gifts. Composes @red-cup-engineering/digital-goods-storefront-services-section (TUFTE storefront, checkout, delivery, accounts, gifts); catalog.json is the catalog and scripts/compile-catalog.mjs fills each book's facts from its records.",
   "scripts": {
-    "check": "node --check src/worker.mjs && node --check src/service-discovery.mjs && node --check src/fulfillment.mjs && node --check scripts/compile-catalog.mjs && node --check scripts/arm-checkout.mjs && node --check scripts/arm-gift-agent.mjs && node --check src/promotion-email-gifts.mjs && node --check scripts/promotional-gift-mail.mjs",
+    "check": "node --check src/worker.mjs && node --check src/service-discovery.mjs && node --check src/fulfillment.mjs && node --check scripts/compile-catalog.mjs && node --check scripts/arm-checkout.mjs && node --check scripts/arm-gift-agent.mjs && node --check src/promotion-email-gifts.mjs && node --check scripts/promotional-gift-mail.mjs && node --check src/merchant-source.mjs && node --check test/merchant-source.test.mjs",
     "compile": "node scripts/compile-catalog.mjs",
     "test": "node --test test/*.test.mjs",
     "deploy": "node scripts/compile-catalog.mjs && wrangler deploy",
@@ -19,7 +19,8 @@
   "dependencies": {
     "@red-cup-engineering/digital-goods-storefront-services-section": "0.4.4",
     "@red-cup-engineering/stripe-services-section": "0.1.11",
-    "wrangler": "4.127.1"
+    "wrangler": "4.127.1",
+    "@red-cup-engineering/schema-org-services-section": "0.1.0"
   },
   "devDependencies": {
     "@red-cup-engineering/ebook-engineering-services-section": "0.3.4"

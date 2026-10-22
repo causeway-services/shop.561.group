@@ -2,7 +2,20 @@
 export default {
   "merchant": {
     "name": "561 Group",
-    "legalBody": "561 Group"
+    "legalBody": "emsenn",
+    "brand": {
+      "@context": "https://schema.org",
+      "@id": "https://561.group/#brand",
+      "@type": "Brand",
+      "name": "561 Group",
+      "identifier": "561-group"
+    },
+    "brandSource": {
+      "repository": "561-group/561-group-services-section",
+      "recordPath": "561-group-services-section/data/records/brand-records/561-group.jsonld",
+      "brandId": "https://561.group/#brand",
+      "contentDigest": "ni:///sha-256;JGKlUnvgMqWHX6MskjQKuahdhUt8P4_HfH7m-gEFf08"
+    }
   },
   "offerings": [
     {

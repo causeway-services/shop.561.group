@@ -144,6 +144,70 @@ covers into `public/covers/` (untracked), which the Worker serves as
 static assets. Edition state is untracked and is read from the main
 worktree, so a deploy from a clean worktree compiles the same catalog.
 
+## Source-qualified brand identity and separate seller
+
+The former Group-owned enterprise-brand JSON was just
+`{"name":"561 Group","custody":"561-group"}`. Its ambiguous `custody`
+could have meant an owning repository, institutional authority or a legal
+seller; none of those follows from a marketing name. The actual Group author
+now writes an ordinary **schema.org/Brand JSON-LD 1.1** node, at the original
+path
+`561-group-services-section/data/records/brand-records/561-group.jsonld`
+(repository `561-group/561-group-services-section`), with globally
+qualified `@id: https://561.group/#brand`. The original ambiguous
+`custody` field is gone: the consuming declaration explicitly says
+`brandSource.repository` and `brandSource.recordPath`. The brand's
+`identifier` is the original human-readable corporate slug, **not** a
+legal filing or trademark assertion.
+
+**Original author → original public consumer:** the Shop's
+`catalog.json.merchant.brandSource` selects that specific Group source
+record. `scripts/compile-catalog.mjs` reads the actual selected bytes
+from the Group source checkout *before mutating build output* and invokes
+`src/merchant-source.mjs`, which uses the **existing original Red Cup
+schema.org vocabulary validator** (no forked JSON-LD grammar) to verify
+the schema type, allowed predicates, `@id` and required `name`.
+`src/compiled-catalog.mjs` receives the derived `merchant.name`,
+the fully typed original `merchant.brand`, and the exact source
+`ni:///sha-256` digest. A different Group brand name in the authorized
+source changes the Shop brand at its next compilation; putting another
+`merchant.name` in Shop's authored catalog is refused.
+
+The original Worker consumes that compiled brand in its ordinary storefront
+and `GET /catalog.json`, and additionally serves
+`GET /brand.jsonld` with `application/ld+json`. Its sitemap links this
+route. This is a machine-readable **brand** description, not a registration
+of a legal entity or a newly invented parallel branding service.
+
+**The legal seller is independent.** The Group's original
+`lib/agency/entities/561-group-llc.json` still says
+`standing:"proposed"`, `filed:null`, `fileNumber:null`.
+The [original 2026-10-04 Shop alignment source](https://github.com/561-group/561-group-services-section/blob/main/data/records/alignment-case-records/current/2026-10-04-shop-commercial-readiness.json)
+states that the 561 Group public brand and current seller are distinct:
+the Shop's current source label for its contracting seller is `emsenn`,
+not an inferred filed 561 Group LLC. This correction restores that
+claimed seller label in the authored/compiled catalog, rather than
+promoting the Group's brand record or unfiled company proposal to a
+contracting merchant. It **does not independently validate real-world
+incorporation, banking/KYC, seller rights or payment processing**. A newer
+qualified legal-seller decision must update the original seller source
+and its economic settlement/fulfillment contracts before the Shop changes
+that label; the brand remains independent of those acts.
+
+The 561 Group source, Shop compiler, schema.org engineering vocabulary,
+compiled Worker and real external buyer/discovery receive different kinds
+of authority. A Git commit is source, a compiled catalog is an artifact,
+and a public `/brand.jsonld` response is only a public description:
+none proves a buyer can pay, a seller can settle, or that an LLC exists.
+This branch updates one tracked compiled merchant projection while
+**preserving all 13 existing offering records unchanged**. The next
+actual immutable Shop build must read the mounted original Group source
+and regenerate both this projection and its edition-derived books. On a
+standalone checkout, the original compiler's historical monorepo
+`SERVICES_PATTERN` remains a separate upstream installation constraint;
+do not interpret a source-written Group/Shop PR as a successfully
+installed Worker.
+
 ## Routes
 
 | Route | Behavior |
