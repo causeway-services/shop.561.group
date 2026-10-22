@@ -25,3 +25,9 @@ jobs:
           package-manager-cache: false
       - name: Verify the source-only preflight contract and refusal cases
         run: node --test test/publication-source-preflight.test.mjs
+      # This public, dependency-free source check runs under the declared Node 24
+      # toolchain; it is not full pinned-package or deployed Worker receiving.
+      - name: Verify native Market service browsing and refusal behavior
+        run: |
+          node --check src/service-discovery.mjs
+          node --test test/service-discovery.test.mjs
