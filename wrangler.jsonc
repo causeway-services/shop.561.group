@@ -13,7 +13,14 @@
   ],
   "preview_urls": false,
   // Book covers, copied from each edition by scripts/compile-catalog.mjs.
-  "assets": { "directory": "./public" },
+  // Keep the original buyer-facing /support endpoints in the Worker even if
+  // accepted publisher assets contain a same-path file. This is a selective
+  // Cloudflare Worker-first source policy, NOT an installed-route receipt.
+  // Static book covers and all other paths retain normal assets-first serving.
+  "assets": {
+    "directory": "./public",
+    "run_worker_first": ["/support", "/support/*"]
+  },
   "routes": [
     {
       "pattern": "shop.561.group",
