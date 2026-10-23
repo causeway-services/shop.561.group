@@ -39,6 +39,12 @@ jobs:
           node --test test/support-campaign.test.mjs
           node scripts/export-support-campaign.mjs --json >/tmp/open-work-campaign.json
           node scripts/export-support-campaign.mjs --csv >/tmp/open-work-attribution.csv
+      - name: Verify source-qualified Stripe Checkout observation without payment authority
+        run: |
+          node --check src/support-checkout-attribution.mjs
+          node --check scripts/reconcile-support-checkouts.mjs
+          node --test test/support-checkout-attribution.test.mjs
+
       - name: Verify source-only accepted-books Atom discovery
         run: |
           node --check src/book-feed.mjs
