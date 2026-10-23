@@ -26,3 +26,23 @@ test("book covers and unrelated assets retain assets-first delivery", () => {
   assert.equal(config.assets.run_worker_first.includes("/goods/*"), false);
   assert.equal(config.assets.run_worker_first.includes("/books/*"), false);
 });
+
+test("direct Wrangler deploys require original source-qualified support and attribution guards", () => {
+  const command = config.build?.command;
+  assert.equal(typeof command, "string");
+  // CI is not the only release entrance: the Shop's existing npm deploy
+  // calls Wrangler directly, so the same bounded source gates must run there.
+  for (const originalGuard of [
+    "test/support-worker-routing.test.mjs",
+    "test/support-public-probe.test.mjs",
+    "test/support-checkout-attribution.test.mjs",
+    "src/support-public-probe.mjs",
+    "scripts/probe-public-support.mjs",
+    "src/support-checkout-attribution.mjs",
+    "scripts/reconcile-support-checkouts.mjs",
+  ]) {
+    assert.ok(command.includes(originalGuard), `missing direct deploy guard: ${originalGuard}`);
+  }
+  assert.ok(!command.includes("scripts/probe-public-support.mjs &&"),
+    "predeploy must syntax-check the public observer, not perform live network calls");
+});
