@@ -50,6 +50,9 @@ jobs:
           node --check src/support-public-probe.mjs
           node --check scripts/probe-public-support.mjs
           node --test test/support-public-probe.test.mjs
+      - name: Qualify Wrangler source policy for original support Worker routes
+        run: node --test test/support-worker-routing.test.mjs
+
       - name: Verify source-only accepted-books Atom discovery
         run: |
           node --check src/book-feed.mjs
