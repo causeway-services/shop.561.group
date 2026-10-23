@@ -2,6 +2,9 @@
 // Shop does not become another merchant, invent prices or accept agent payment here.
 export const MARKET_CATALOG_URL = "https://market.561.group/v1/catalog";
 const MARKET_ORIGIN = "https://market.561.group";
+// The Bazaar source declaration names this original seller as house-x402.
+// A source-qualified inspection link neither reissues its offer nor pays for it.
+const BAZAAR_SOURCE_OFFER_URL = "https://bazaar.561.group/offers?source=house-x402&id=";
 const MAX_UPSTREAM_BYTES = 4_000_000;
 const MAX_LISTED = 500;
 
@@ -70,7 +73,7 @@ export function projectOriginalMarketServices(source, options = {}) {
       cell: row.cell ?? null, law: row.law ?? null,
       input: row.request ?? null, output: row.output ?? null,
       sourceRightsVerification: row.sourceRightsVerification ?? "not-declared",
-      inspectUrl: MARKET_ORIGIN + "/?offer=" + encodeURIComponent(row.sku),
+      inspectUrl: BAZAAR_SOURCE_OFFER_URL + encodeURIComponent(row.sku),
       listed: true, shopCheckoutAvailable: false,
       externalPaidDeliveryVerified: false,
     }))),
@@ -86,7 +89,7 @@ function escapeHtml(value) {
 export function renderServiceBrowse(projection) {
   const { query, offset, limit, nextOffset, total, services } = projection;
   const form = `<form action="/services" method="GET" role="search"><label for="service-query">Find a service</label> <input id="service-query" name="q" value="${escapeHtml(query)}" maxlength="120" placeholder="e.g. schema validation"> <input type="hidden" name="limit" value="${limit}"> <button type="submit">Search</button></form>`;
-  const list = services.map(row => `<li><article><h2><a href="${escapeHtml(row.inspectUrl)}">${escapeHtml(row.name)}</a></h2><p>${escapeHtml(row.description)}</p><p><strong>Price preview:</strong> ${escapeHtml(row.pricePreview ?? "Consult original offer")} · ${escapeHtml(row.method)} · ${escapeHtml(row.category)}. Provider: ${escapeHtml(row.seller?.enterprise ?? "Not independently established")}. Source rights: ${escapeHtml(row.sourceRightsVerification)}. Original seller listing; current paid availability and delivery unverified.</p><p><a href="${escapeHtml(row.inspectUrl)}">Inspect x402 service contract</a></p></article></li>`).join("");
+  const list = services.map(row => `<li><article><h2><a href="${escapeHtml(row.inspectUrl)}">${escapeHtml(row.name)}</a></h2><p>${escapeHtml(row.description)}</p><p><strong>Price preview:</strong> ${escapeHtml(row.pricePreview ?? "Consult original offer")} · ${escapeHtml(row.method)} · ${escapeHtml(row.category)}. Provider: ${escapeHtml(row.seller?.enterprise ?? "Not independently established")}. Source rights: ${escapeHtml(row.sourceRightsVerification)}. Original seller listing; current paid availability and delivery unverified.</p><p><a href="${escapeHtml(row.inspectUrl)}">Inspect source-qualified offer in Bazaar</a></p></article></li>`).join("");
   // Preserve validated page sizes across navigation; never skip a listed result.
   const pageHref = target => `/services?${escapeHtml(new URLSearchParams([
     ["q", query], ["offset", String(target)], ["limit", String(limit)]
@@ -102,7 +105,7 @@ export function renderServiceBrowse(projection) {
     ? "No matching source-listed services."
     : "No services at this page offset. Choose Previous services to return to a matching page."}</p>`;
   const nav = `${feedback}${links ? `<nav aria-label="Service results pages"><p>${links}</p></nav>` : ""}`;
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>561 Group Services · Shop</title><meta name="description" content="Browse original 561 Group source-qualified x402 services, then inspect current terms at the original merchant."><style>body{font:1rem/1.55 system-ui,sans-serif;color:#222;max-width:76rem;margin:auto;padding:1rem 2rem}header,footer{border-block:1px solid #aaa;padding:.8rem 0}a{color:#174b90}li{margin:0 0 1.25rem}ul{padding-left:1.25rem}article{max-width:62rem}h2{font-size:1.25rem}input{min-width:min(60vw,24rem);padding:.4rem}button{padding:.45rem}small{color:#555}</style></head><body><header><a href="/">561 Group Shop</a> · <a href="https://bazaar.561.group">Bazaar</a> · <a href="https://market.561.group">Market</a></header><main><h1>Services for people and agents</h1><p>These are source-listed services from the original 561 Group x402 merchant. Browse freely. A listed service is not a verified live payment or delivery; inspect its current original terms before authorizing a purchase.</p>${form}<p>${projection.total} matching source-listed services.</p><ul>${list}</ul>${nav}<p><a href="/services.json">Machine-readable service catalog</a> · <a href="https://market.561.group/v1/catalog">Original typed operation catalog</a></p></main><footer><small>Shop presents existing seller declarations. Market controls x402 contracts and payment; Bazaar federates discovery. No purchase or wallet authority is granted here.</small></footer></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>561 Group Services · Shop</title><meta name="description" content="Browse original 561 Group source-qualified x402 services, then inspect current terms at the original merchant."><style>body{font:1rem/1.55 system-ui,sans-serif;color:#222;max-width:76rem;margin:auto;padding:1rem 2rem}header,footer{border-block:1px solid #aaa;padding:.8rem 0}a{color:#174b90}li{margin:0 0 1.25rem}ul{padding-left:1.25rem}article{max-width:62rem}h2{font-size:1.25rem}input{min-width:min(60vw,24rem);padding:.4rem}button{padding:.45rem}small{color:#555}</style></head><body><header><a href="/">561 Group Shop</a> · <a href="https://bazaar.561.group">Bazaar</a> · <a href="https://market.561.group">Market</a></header><main><h1>Services for people and agents</h1><p>These are source-listed services from the original 561 Group x402 merchant. Browse freely. A listing is not a verified live payment or delivery; inspect source-qualified details in Bazaar and confirm the original merchant\u0027s current terms before authorizing a purchase.</p>${form}<p>${projection.total} matching source-listed services.</p><ul>${list}</ul>${nav}<p><a href="/services.json">Machine-readable service catalog</a> · <a href="https://market.561.group/v1/catalog">Original typed operation catalog</a></p></main><footer><small>Shop presents existing seller declarations. Market controls x402 contracts and payment; Bazaar federates discovery. No purchase or wallet authority is granted here.</small></footer></body></html>`;
 }
 
 // Enforce the byte cap WHILE consuming a streamed upstream body. Calling
