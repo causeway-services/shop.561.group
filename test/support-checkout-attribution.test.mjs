@@ -103,3 +103,83 @@ test("a claimed paid Checkout requires a safe finite nonnegative USD amount",()=
  }
  assert.throws(()=>reconcile(snapshot([{...paid,currency:"eur"}])),TypeError);
 });
+
+const perLinkObservation=(dataById={}, unreadIds=[])=>{
+ const observation=snapshot([]);
+ delete observation.checkoutSessions;
+ observation.checkoutSessionsByLink=[
+  links.direct.id,links.github.id,links.fediverse.id,campaign.monthly.id
+ ].map(paymentLinkId=>({
+  paymentLinkId,
+  checkoutSessions:{object:"list",data:dataById[paymentLinkId]??[],
+   has_more:unreadIds.includes(paymentLinkId)}
+ }));
+ return observation;
+};
+
+test("four source-qualified terminal filtered provider pages preserve independent zero-sale evidence",()=>{
+ const evidence=perLinkObservation({
+  [links.direct.id]:[session("filteropen",links.direct.id)]
+ });
+ const report=reconcile(evidence);
+ assert.equal(report.inputQueryMode,"separate-caller-attested-payment-link-filtered-lists");
+ assert.equal(report.inputCoverage,"source-selected-terminal-link-pages");
+ assert.equal(report.inputRowsObserved,1);
+ assert.equal(report.unattributedSessionRows,0);
+ assert.equal(report.paymentLinks.length,4);
+ assert.equal(report.paymentLinks.find(row=>row.channel==="direct").openUnpaid,1);
+ assert.equal(report.recognizedCompletedPaidCheckoutCount,0);
+ assert.equal(report.recognizedCompletedPaidCheckoutGrossCents,0);
+ assert.equal(report.bankSettledNetCents,null);
+ assert.equal(report.buyerAcceptedDeliveryCount,null);
+ assert.ok(!JSON.stringify(report).includes("should-never-escape"));
+ assert.ok(!JSON.stringify(report).includes("PRIVATE BUYER"));
+});
+
+test("independent paid filtered pages count only qualified Checkout gross, never subscription renewal or cleared cash",()=>{
+ const report=reconcile(perLinkObservation({
+  [links.github.id]:[session("paidfiltered",links.github.id,"complete","paid",2500)],
+  [campaign.monthly.id]:[session("monthlyfirst",campaign.monthly.id,"complete","paid",1000)]
+ }));
+ assert.equal(report.inputRowsObserved,2);
+ assert.equal(report.recognizedCompletedPaidCheckoutCount,2);
+ assert.equal(report.recognizedCompletedPaidCheckoutGrossCents,3500);
+ assert.equal(report.paymentLinks.find(row=>row.kind==="recurring-start").completedPaid,1);
+ assert.equal(report.recurringCheckoutIsNotAnActiveOrRenewedSubscription,true);
+ assert.equal(report.groupTreasuryReceivedNetCents,null);
+});
+
+test("filtered page mode keeps incomplete payment-link pagination visible and forbids silent mixing",()=>{
+ const partial=reconcile(perLinkObservation({
+  [links.direct.id]:[session("pending",links.direct.id)]
+ },[links.github.id]));
+ assert.equal(partial.inputCoverage,"source-selected-link-pages-unread");
+ const mixed=perLinkObservation();
+ mixed.checkoutSessions={object:"list",data:[],has_more:false};
+ assert.throws(()=>reconcile(mixed),TypeError);
+});
+
+test("filtered page mode refuses missing, duplicate, foreign, malformed and mixed-mode provider evidence",()=>{
+ const original=perLinkObservation({[links.direct.id]:[session("source",links.direct.id)]});
+ const altered=fn=>{
+  const candidate=JSON.parse(JSON.stringify(original));
+  fn(candidate);
+  return candidate;
+ };
+ const wrong=[
+  v=>v.checkoutSessionsByLink.pop(),
+  v=>v.checkoutSessionsByLink[0].paymentLinkId=links.github.id,
+  v=>v.checkoutSessionsByLink[0].paymentLinkId="plink_UNREGISTERED",
+  v=>v.checkoutSessionsByLink[0].checkoutSessions.data[0].payment_link=links.github.id,
+  v=>{delete v.checkoutSessionsByLink[0].checkoutSessions.data[0].payment_link;},
+  v=>v.checkoutSessionsByLink[0].checkoutSessions.data[0].livemode=false,
+  v=>v.checkoutSessionsByLink[0].checkoutSessions.has_more="false",
+  v=>v.checkoutSessionsByLink[0].checkoutSessions.data=Array(101).fill(v.checkoutSessionsByLink[0].checkoutSessions.data[0]),
+  v=>v.checkoutSessionsByLink[0].checkoutSessions.object="wrong.list",
+  v=>v.checkoutSessionsByLink[0].checkoutSessions.data.push(v.checkoutSessionsByLink[0].checkoutSessions.data[0]),
+  v=>v.checkoutSessionsByLink.push(v.checkoutSessionsByLink[0])
+ ];
+ for(const mutate of wrong)
+  assert.throws(()=>reconcile(altered(mutate)),TypeError);
+ assert.equal(reconcile(original).inputRowsObserved,1);
+});
