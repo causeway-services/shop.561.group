@@ -112,3 +112,29 @@ test("oversize and malformed installed JSON are HTTP mismatches, not unobserved 
   assert.equal(receipt.paymentAuthorizationAttempted,false);
  }
 });
+
+test("original payment-link identities and channel ambiguity refuse before any buyer HTTP",async()=>{
+ let calls=0;
+ const fetcher=async()=>{calls++;return reply(campaign.canonicalUrl);};
+ const invalid=[
+  {...campaign,monthly:{...campaign.monthly,id:null}},
+  {...campaign,monthly:{...campaign.monthly,id:campaign.oneTime.links.direct.id}},
+  {...campaign,oneTime:{links:{...campaign.oneTime.links,
+   github:{...campaign.oneTime.links.github,id:""}}}},
+  {...campaign,oneTime:{links:{...campaign.oneTime.links,
+   github:{...campaign.oneTime.links.github,id:campaign.oneTime.links.direct.id}}}},
+  {...campaign,channels:[...campaign.channels,{id:"github",medium:"social"}]},
+  {...campaign,channels:[{id:"",medium:"email"}]},
+  {...campaign,channels:[{id:"email",medium:""}]},
+  {...campaign,channels:[{id:"email",medium:"email",unexpected:true},{id:"github",medium:"referral"}]}
+ ];
+ for(const variant of invalid.slice(0,-1))
+  await assert.rejects(probePublicSupport({campaign:variant,fetcher}),TypeError);
+ assert.equal(calls,0,"malformed merchant attribution must be rejected before fetching even a public route");
+ // Benign additional metadata on an otherwise complete source must not cause
+ // false refusal or silently create a payment, customer, or accepted delivery.
+ const ordinary={...campaign,channels:[...campaign.channels,{id:"docs",medium:"referral",unexpected:true}]};
+ const receipt=await probePublicSupport({campaign:ordinary,fetcher:async url=>reply(url)});
+ assert.equal(receipt.paymentAuthorizationAttempted,false);
+ assert.equal(receipt.customerAcceptedDelivery,null);
+});
