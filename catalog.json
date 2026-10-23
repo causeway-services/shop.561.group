@@ -174,6 +174,51 @@
         "path": "config.json",
         "blobSha": "e4fc13ccce67c2d07069825ab3e3b0dc93784aca"
       }
+    },
+    {
+      "type": "ExternalStripePaymentLinkReceiver",
+      "schemaVersion": 1,
+      "stripePaymentLinkId": "plink_1UTYlBJ1vYnPQu2NMI05UJzD",
+      "stripeMerchantAccountId": "acct_18eDiqJ1vYnPQu2N",
+      "merchantDisplayName": "emsenn",
+      "supportedProgramName": "561 Group open work appreciation — direct one-time tip",
+      "sourceObservedOn": "2026-10-23",
+      "sourceRevision": {
+        "repository": "causeway-services/shop.561.group",
+        "commitSha": "2b518ed679852b27460c2658c8c882baff6dd2a7",
+        "path": "data/records/marketing/open-work-campaign.json",
+        "blobSha": "0e87974fe0808c389e0d2cc15ae182661c56a35f"
+      }
+    },
+    {
+      "type": "ExternalStripePaymentLinkReceiver",
+      "schemaVersion": 1,
+      "stripePaymentLinkId": "plink_1UTYn0J1vYnPQu2NCojQuuMY",
+      "stripeMerchantAccountId": "acct_18eDiqJ1vYnPQu2N",
+      "merchantDisplayName": "emsenn",
+      "supportedProgramName": "561 Group open work appreciation — github one-time tip",
+      "sourceObservedOn": "2026-10-23",
+      "sourceRevision": {
+        "repository": "causeway-services/shop.561.group",
+        "commitSha": "2b518ed679852b27460c2658c8c882baff6dd2a7",
+        "path": "data/records/marketing/open-work-campaign.json",
+        "blobSha": "0e87974fe0808c389e0d2cc15ae182661c56a35f"
+      }
+    },
+    {
+      "type": "ExternalStripePaymentLinkReceiver",
+      "schemaVersion": 1,
+      "stripePaymentLinkId": "plink_1UTYn2J1vYnPQu2NPN1weGJ6",
+      "stripeMerchantAccountId": "acct_18eDiqJ1vYnPQu2N",
+      "merchantDisplayName": "emsenn",
+      "supportedProgramName": "561 Group open work appreciation — fediverse one-time tip",
+      "sourceObservedOn": "2026-10-23",
+      "sourceRevision": {
+        "repository": "causeway-services/shop.561.group",
+        "commitSha": "2b518ed679852b27460c2658c8c882baff6dd2a7",
+        "path": "data/records/marketing/open-work-campaign.json",
+        "blobSha": "0e87974fe0808c389e0d2cc15ae182661c56a35f"
+      }
     }
   ]
 }
