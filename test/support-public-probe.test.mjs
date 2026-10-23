@@ -66,3 +66,49 @@ test("refuse substituted Shop origins, duplicate receiver destinations and unbou
  await assert.rejects(probePublicSupport({campaign,fetcher,timeoutMs:60000}),TypeError);
  assert.equal(count,0);
 });
+
+test("known original Worker robots handler narrows a failed support route without attesting installation",async()=>{
+ const seen=[];
+ const receipt=await probePublicSupport({campaign,fetcher:async(url,options)=>{
+  seen.push([url,options]);
+  if(url.endsWith("/robots.txt"))return new Response(
+   "User-agent: *\\nAllow: /\\nSitemap: https://shop.561.group/sitemap.xml\\n",
+   {status:200,headers:{"content-type":"text/plain; charset=utf-8"}});
+  if(url.includes("/support/share.json"))return new Response(null,{status:404});
+  return reply(url);
+ }});
+ assert.equal(receipt.publicRouteReceiving,"failed");
+ assert.deepEqual(receipt.workerSignature,
+  {requestPath:"/robots.txt",httpStatus:200,outcome:"matched"});
+ assert.equal(receipt.installationInvestigation,"known-worker-handler-seen-support-incomplete");
+ assert.equal(receipt.exactDeployedRevisionReceived,false);
+ assert.equal(receipt.customerAcceptedDelivery,null);
+ assert.ok(seen.every(([url,options])=>url.startsWith("https://shop.561.group/")&&options.method==="GET"
+  &&options.redirect==="manual"&&options.credentials==="omit"));
+ assert.ok(seen.every(([url])=>!url.startsWith("https://buy.stripe.com/")));
+});
+test("all-404 public origin does not invent a Cloudflare root cause",async()=>{
+ const receipt=await probePublicSupport({campaign,fetcher:async()=>new Response(null,{status:404})});
+ assert.equal(receipt.publicRouteReceiving,"failed");
+ assert.equal(receipt.checks.length,5);
+ assert.ok(receipt.checks.every(check=>check.httpStatus===404&&check.outcome==="mismatched"));
+ assert.deepEqual(receipt.workerSignature,
+  {requestPath:"/robots.txt",httpStatus:404,outcome:"mismatched"});
+ assert.equal(receipt.installationInvestigation,"known-worker-handler-not-seen");
+ assert.equal(receipt.exactDeployedRevisionReceived,false);
+});
+test("oversize and malformed installed JSON are HTTP mismatches, not unobserved network",async()=>{
+ for(const invalid of ["x".repeat(100001),"{malformed"]){
+  const receipt=await probePublicSupport({campaign,fetcher:async url=>
+   url.endsWith("/support/share.json")
+    ?new Response(invalid,{status:200,headers:{"content-type":"application/json"}})
+    :url.endsWith("/robots.txt")
+     ?new Response(null,{status:404})
+     :reply(url)});
+  const check=receipt.checks.find(x=>x.name==="share-pack");
+  assert.equal(check.outcome,"mismatched");
+  assert.equal(check.httpStatus,200);
+  assert.equal(receipt.publicRouteReceiving,"failed");
+  assert.equal(receipt.paymentAuthorizationAttempted,false);
+ }
+});
