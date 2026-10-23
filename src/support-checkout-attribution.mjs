@@ -43,40 +43,70 @@ export function reconcileSupportCheckouts({campaign, receivers, observation}) {
  if (!isObject(observation) || observation.stripeContext !== source.accountId ||
      observation.livemode !== true || !knownInstant(observation.observedAt))
   throw new TypeError("Dated live-merchant Stripe observation with exact account identity required");
- const pages = observation.checkoutSessions;
- if (!isObject(pages) || pages.object !== "list" || !Array.isArray(pages.data) ||
-     typeof pages.has_more !== "boolean" || pages.data.length > 100)
-  throw new TypeError("One bounded original Stripe Checkout Session list response required");
+ const oneList = Object.hasOwn(observation, "checkoutSessions");
+ const filteredLists = Object.hasOwn(observation, "checkoutSessionsByLink");
+ if (oneList === filteredLists)
+  throw new TypeError("Exactly one original Stripe list input mode required");
+ const batches = [];
+ if (oneList) batches.push({expectedLinkId: null, pages: observation.checkoutSessions});
+ else {
+  const entries = observation.checkoutSessionsByLink;
+  if (!Array.isArray(entries) || entries.length !== source.links.length)
+   throw new TypeError("One original filtered Stripe response required for each campaign Payment Link");
+  const expected = new Set(source.links.map(link => link.paymentLinkId));
+  const supplied = new Set();
+  for (const entry of entries) {
+   if (!isObject(entry) || !expected.has(entry.paymentLinkId) || supplied.has(entry.paymentLinkId))
+    throw new TypeError("Filtered Stripe response has unknown, duplicated or missing Payment Link");
+   supplied.add(entry.paymentLinkId);
+   batches.push({expectedLinkId: entry.paymentLinkId, pages: entry.checkoutSessions});
+  }
+ }
  const links = source.links.map(link => ({...link, rowsObserved: 0, openUnpaid: 0,
   completedPaid: 0, completedNoPaymentRequired: 0, expired: 0, otherStatus: 0,
   observedCompletedPaidGrossCents: 0}));
  const byId = new Map(links.map(link => [link.paymentLinkId, link]));
  const seenSessions = new Set();
  let unattributedSessionRows = 0;
- for (const session of pages.data) {
-  if (!isObject(session) || !validId(session.id, "cs_live_") ||
-      session.object !== "checkout.session" || session.livemode !== true ||
-      !["open","complete","expired"].includes(session.status) ||
-      !["paid","unpaid","no_payment_required"].includes(session.payment_status) ||
-      (session.payment_link !== null && session.payment_link !== undefined &&
-       !validId(session.payment_link, "plink_")) || seenSessions.has(session.id))
-   throw new TypeError("Invalid, duplicate or mixed-mode Checkout Session");
-  seenSessions.add(session.id);
-  const row = byId.get(session.payment_link);
-  if (!row) {unattributedSessionRows++; continue;}
-  row.rowsObserved++;
-  if (session.status === "complete" && session.payment_status === "paid") {
-   if (session.currency !== "usd" || !Number.isSafeInteger(session.amount_total) ||
-       session.amount_total < 0 || !Number.isSafeInteger(row.observedCompletedPaidGrossCents + session.amount_total))
-    throw new TypeError("Completed paid Checkout Session lacks qualified USD gross amount");
-   row.completedPaid++;
-   row.observedCompletedPaidGrossCents += session.amount_total;
-  } else if (session.status === "open" && session.payment_status === "unpaid") row.openUnpaid++;
-  else if (session.status === "complete" && session.payment_status === "no_payment_required")
-   row.completedNoPaymentRequired++;
-  else if (session.status === "expired") row.expired++;
-  else row.otherStatus++;
+ let inputRowsObserved = 0;
+ let anyUnreadPages = false;
+ for (const {expectedLinkId, pages} of batches) {
+  if (!isObject(pages) || pages.object !== "list" || !Array.isArray(pages.data) ||
+      typeof pages.has_more !== "boolean" || pages.data.length > 100)
+   throw new TypeError("Bounded original Stripe Checkout Session list response required");
+  anyUnreadPages ||= pages.has_more;
+  inputRowsObserved += pages.data.length;
+  for (const session of pages.data) {
+   if (!isObject(session) || !validId(session.id, "cs_live_") ||
+       session.object !== "checkout.session" || session.livemode !== true ||
+       !["open","complete","expired"].includes(session.status) ||
+       !["paid","unpaid","no_payment_required"].includes(session.payment_status) ||
+       (session.payment_link !== null && session.payment_link !== undefined &&
+        !validId(session.payment_link, "plink_")) || seenSessions.has(session.id))
+    throw new TypeError("Invalid, duplicate or mixed-mode Checkout Session");
+   if (expectedLinkId !== null && session.payment_link !== expectedLinkId)
+    throw new TypeError("Stripe payment_link-filtered response contains a different or missing Payment Link");
+   seenSessions.add(session.id);
+   const row = byId.get(session.payment_link);
+   if (!row) {unattributedSessionRows++; continue;}
+   row.rowsObserved++;
+   if (session.status === "complete" && session.payment_status === "paid") {
+    if (session.currency !== "usd" || !Number.isSafeInteger(session.amount_total) ||
+        session.amount_total < 0 || !Number.isSafeInteger(row.observedCompletedPaidGrossCents + session.amount_total))
+     throw new TypeError("Completed paid Checkout Session lacks qualified USD gross amount");
+    row.completedPaid++;
+    row.observedCompletedPaidGrossCents += session.amount_total;
+   } else if (session.status === "open" && session.payment_status === "unpaid") row.openUnpaid++;
+   else if (session.status === "complete" && session.payment_status === "no_payment_required")
+    row.completedNoPaymentRequired++;
+   else if (session.status === "expired") row.expired++;
+   else row.otherStatus++;
+  }
  }
+ const inputCoverage = oneList
+  ? (anyUnreadPages ? "additional-pages-unread" : "supplied-terminal-page-only")
+  : (anyUnreadPages ? "source-selected-link-pages-unread" : "source-selected-terminal-link-pages");
+ const inputQueryMode = oneList ? "single-caller-supplied-list" : "separate-caller-attested-payment-link-filtered-lists";
  const observedPaid = links.reduce((sum, link) => sum + link.completedPaid, 0);
  const observedGross = links.reduce((sum, link) => sum + link.observedCompletedPaidGrossCents, 0);
  if (!Number.isSafeInteger(observedGross)) throw new TypeError("Unsafe Checkout gross accumulator");
@@ -84,8 +114,8 @@ export function reconcileSupportCheckouts({campaign, receivers, observation}) {
   type: "ShopStripeCheckoutAttributionObservation", schemaVersion: 1,
   sourceCampaignId: campaign.campaignId, sourceMerchant: campaign.merchantDisplayName,
   sourceStripeAccountId: source.accountId, observedAt: observation.observedAt,
-  inputCoverage: pages.has_more ? "additional-pages-unread" : "supplied-terminal-page-only",
-  inputRowsObserved: pages.data.length, unattributedSessionRows,
+  inputCoverage, inputQueryMode,
+  inputRowsObserved, unattributedSessionRows,
   recognizedCompletedPaidCheckoutCount: observedPaid,
   recognizedCompletedPaidCheckoutGrossCents: observedGross,
   paymentLinks: links,
