@@ -108,6 +108,24 @@ regressions live in `test/support-checkout-attribution.test.mjs`; this is a
 candidate **source** capability, not proof that `shop.561.group` is running
 it or that any new merchant payment occurred.
 
+For **four separately filtered Stripe Checkout list responses**, preserve the
+actual provider pagination and do not fabricate a combined all-account list.
+Pass `checkoutSessionsByLink` **instead of** `checkoutSessions` in the
+same dated merchant observation wrapper. It is an array of four records,
+each `{paymentLinkId, checkoutSessions}`, with the exact source-pinned
+Payment Link ID and that ID's original
+`GET /v1/checkout/sessions?payment_link=<id>` response. Every original
+source link must occur exactly once, and each returned session must carry
+the exact link queried. Wrong/missing links, mixed input modes, duplicate
+sessions, malformed list envelopes, and invalid paid amounts refuse.
+`inputQueryMode` distinguishes the input shape;
+`source-selected-terminal-link-pages` means all **four supplied filtered
+lists** said `has_more=false`, **not** that the caller proved exhaustive
+account history. `source-selected-link-pages-unread` explicitly identifies
+a still-paginated response. This privacy-minimal offline parser cannot
+authenticate a caller's query URL or reclassify Stripe gross as delivered
+customer value, personal bank clearance, or Group revenue.
+
 Original commercial Work and acceptance remain
 [Causeway Public Services #17](https://github.com/causeway-services/public-services-section/issues/17).
 The live-data confirmation and Source→Install→Buyer→Finance separation are
