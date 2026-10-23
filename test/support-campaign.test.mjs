@@ -28,6 +28,29 @@ test("landing is public, indexable, accessible and transparent about merchant an
  assert.match(html,/name="viewport"/u);
  assert.match(html,/share.json/u);
 });
+test("support link href attributes use HTML-safe query delimiters without changing fixed Checkout receivers",async()=>{
+ const html=await get("/support?utm_source=github").text();
+ assert.match(html,/href="\\/support\\/go\\?kind=one-time&amp;source=github"/u);
+ assert.match(html,/href="\\/support\\/go\\?kind=monthly&amp;source=github"/u);
+ assert.doesNotMatch(html,/href="\\/support\\/go\\?kind=(?:one-time|monthly)&source=/u);
+ const redirect=get("/support/go?kind=one-time&source=github");
+ assert.equal(redirect.status,303);
+ assert.equal(redirect.headers.get("location"),campaign.oneTime.links.github.url);
+});
+
+test("monthly supporter can locate the merchant's real private cancellation, billing and refund intake",async()=>{
+ const html=await get("/support").text();
+ assert.match(html,/Billing, cancellations and refunds/u);
+ assert.match(html,/Monthly support is \\$10\\/month until canceled/u);
+ assert.match(html,/https:\\/\\/561\\.group\\/contact\\//u);
+ assert.match(html,/mailto:emsenn@561\\.group\\?subject=/u);
+ assert.match(html,/refund/u);
+ assert.match(html,/any applicable tax or fees/u);
+ assert.match(html,/not a payment-card number or credential/u);
+ assert.match(html,/not a completed cancellation or refund until/u);
+ assert.match(html,/do not purchase books, services, exclusive rights/u);
+});
+
 test("source-specific click routes are fixed verified payment links, never open redirects",()=>{
  const cases=[["github",campaign.oneTime.links.github.url],["fediverse",campaign.oneTime.links.fediverse.url],["direct",campaign.oneTime.links.direct.url],["https://evil.example",campaign.oneTime.links.direct.url],["unknown",campaign.oneTime.links.direct.url]];
  for(const [source,link] of cases){
