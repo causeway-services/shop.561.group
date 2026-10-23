@@ -4,8 +4,9 @@ import { externalStripePaymentLinkIds } from "./external-stripe-payment-link-rec
 const {createDigitalGoodsStorefrontWorker}=storefrontRuntime;
 import catalog from "./compiled-catalog.mjs";
 import { createShopFulfillment, createShopStripeAudit } from "./fulfillment.mjs";
-import { serviceBrowseResponse } from "./service-discovery.mjs";
+import { marketCatalogTransport, serviceBrowseResponse } from "./service-discovery.mjs";
 import { supportResponse } from "./support-campaign.mjs";
+import { bookAtomFeed } from "./book-feed.mjs";
 
 export const CATALOG = catalog;
 export const CATALOG_VALIDATION = validateCatalog(catalog);
@@ -20,7 +21,7 @@ const runtime = createDigitalGoodsStorefrontWorker({
   storefront: {
     title: "561 Group Books and Services",
     description: "Books from the 561 Group, with accepted EPUB and PDF edition digests, plus read-only discovery of the original x402 seller’s services. Source listings are not proof of available payment or delivery.",
-    footerHtml: "561 Group. <a href=\"https://market.561.group\">Market</a> · <a href=\"https://bazaar.561.group\">Bazaar</a> · <a href=\"https://shop.561.group\">Shop</a> · <a href=\"/services\">Services</a>. Browse books and source-listed services, or inspect original terms in the Bazaar. Agents: <a href=\"/services.json\">Source-service catalog JSON (GET)</a>, <a href=\"/catalog.json\">Shop catalog JSON (GET)</a>, <a href=\"/mcp\">Shop MCP (POST)</a> for list_products, search_products and get_product, <a href=\"https://bazaar.561.group/discovery.json\">Bazaar discovery JSON (GET)</a>, <a href=\"https://market.561.group/markets/discovery.json\">Market discovery JSON (GET)</a>. Discovery documents identify the existing Bazaar and Market MCP POST endpoints. Live payment and delivery require the current seller’s confirmation.",
+    footerHtml: "561 Group. <a href=\"https://market.561.group\">Market</a> · <a href=\"https://bazaar.561.group\">Bazaar</a> · <a href=\"https://shop.561.group\">Shop</a> · <a href=\"/services\">Services</a> · <a href=\"/support\">Support open work</a> · <a href=\"/books.atom\">Book updates (Atom)</a>. Browse books and source-listed services, or inspect original terms in the Bazaar. Agents: <a href=\"/services.json\">Source-service catalog JSON (GET)</a>, <a href=\"/catalog.json\">Shop catalog JSON (GET)</a>, <a href=\"/mcp\">Shop MCP (POST)</a> for list_products, search_products and get_product, <a href=\"https://bazaar.561.group/discovery.json\">Bazaar discovery JSON (GET)</a>, <a href=\"https://market.561.group/markets/discovery.json\">Market discovery JSON (GET)</a>. Discovery documents identify the existing Bazaar and Market MCP POST endpoints. Live payment and delivery require the current seller’s confirmation.",
   },
 });
 
@@ -39,8 +40,21 @@ export default {
     }
     if (request.method === "GET" && pathname === "/sitemap.xml") return new Response(sitemap(), { headers: { "content-type": "application/xml; charset=utf-8" } });
     if (["/support", "/support/", "/support/go", "/support/share.json"].includes(pathname)) return supportResponse(request);
+    if (pathname === "/books.atom") {
+      if (request.method !== "GET" && request.method !== "HEAD")
+        return new Response(null, { status: 405, headers: { allow: "GET, HEAD" } });
+      const feed = bookAtomFeed(catalog);
+      if (feed === null) return new Response(null, { status: 503, headers: { "cache-control": "no-store" } });
+      return new Response(request.method === "HEAD" ? null : feed, {
+        headers: {
+          "content-type": "application/atom+xml; charset=utf-8",
+          "cache-control": "public, max-age=300",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
     if (pathname === "/services" || pathname === "/services.json") {
-      return serviceBrowseResponse(request, { fetchSource: env.MARKET_SERVICE_CATALOG_FETCH ?? fetch });
+      return serviceBrowseResponse(request, { fetchSource: marketCatalogTransport(env.MARKET_SERVICE_CATALOG_FETCH, fetch) });
     }
     return runtime.fetch(request, {
       ...env,

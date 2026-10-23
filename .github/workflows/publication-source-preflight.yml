@@ -39,3 +39,11 @@ jobs:
           node --test test/support-campaign.test.mjs
           node scripts/export-support-campaign.mjs --json >/tmp/open-work-campaign.json
           node scripts/export-support-campaign.mjs --csv >/tmp/open-work-attribution.csv
+      - name: Verify source-only accepted-books Atom discovery
+        run: |
+          node --check src/book-feed.mjs
+          node --test test/book-feed.test.mjs
+      - name: Verify cross-feature Shop source integration
+        run: |
+          node --check test/shop-commerce-integration.test.mjs
+          node --test test/shop-commerce-integration.test.mjs

@@ -183,6 +183,24 @@ test('source-owned Shop offers public read-only product discovery over the origi
   assert.equal((await worker.fetch(new Request(origin + '/mcp'), env())).status, 405);
 });
 
+test("original Shop serves accepted-only Atom and advertises its reader entrance", async () => {
+  const feed = await worker.fetch(new Request("https://shop.561.group/books.atom"), env());
+  assert.equal(feed.status, 200);
+  assert.match(feed.headers.get("content-type"), /application\/atom\+xml/u);
+  assert.equal(feed.headers.get("x-content-type-options"), "nosniff");
+  const xml = await feed.text();
+  assert.match(xml, /\/goods\/the-x402-economy/u);
+  assert.doesNotMatch(xml, /\/goods\/the-agent-operators-handbook/u);
+  const head = await worker.fetch(new Request("https://shop.561.group/books.atom", {method:"HEAD"}), env());
+  assert.equal(head.status, 200);
+  assert.equal(await head.text(), "");
+  const post = await worker.fetch(new Request("https://shop.561.group/books.atom", {method:"POST"}), env());
+  assert.equal(post.status, 405);
+  assert.equal(post.headers.get("allow"), "GET, HEAD");
+  const home = await (await worker.fetch(new Request("https://shop.561.group/"), env())).text();
+  assert.match(home, /books\.atom/u);
+});
+
 test("Shop routes original market services without mutating book checkout", async () => {
   const sku = "ni:///sha-256;" + "G".repeat(43);
   const source = { recordType: "561-group.x402-market-catalog",
@@ -210,6 +228,17 @@ test("Shop routes original market services without mutating book checkout", asyn
   assert.equal(html.status, 200);
   assert.match(await html.text(), /Verification service/u);
   assert.equal(reads, 2);
+  const fromMarketBinding = env({ MARKET_SERVICE_CATALOG_FETCH: {
+    async fetch(request) {
+      assert.equal(request.url, "https://market.561.group/v1/catalog");
+      assert.equal(request.method, "GET");
+      assert.equal(request.credentials, "omit");
+      return Response.json(source);
+    },
+  } });
+  const viaBinding = await worker.fetch(new Request("https://shop.561.group/services.json"), fromMarketBinding);
+  assert.equal(viaBinding.status, 200);
+  assert.equal((await viaBinding.json()).services[0].sku, sku);
   assert.match(await (await worker.fetch(new Request("https://shop.561.group/sitemap.xml"), testEnv)).text(),
     /shop\.561\.group\/services/u);
   const originalGoods = await (await worker.fetch(new Request("https://shop.561.group/catalog.json"), testEnv)).json();
