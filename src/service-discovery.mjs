@@ -1,6 +1,14 @@
 // Read-only human and machine storefront projection of the ORIGINAL x402 seller.
 // Shop does not become another merchant, invent prices or accept agent payment here.
 export const MARKET_CATALOG_URL = "https://market.561.group/v1/catalog";
+export function marketCatalogTransport(binding, publicFetch = fetch) {
+  if (binding == null) return publicFetch;
+  if (typeof binding === "function") return binding;
+  if (typeof binding.fetch !== "function") {
+    return async () => { throw new TypeError("Market binding unavailable"); };
+  }
+  return (url, options) => binding.fetch(new Request(url, { ...options, credentials: "omit" }));
+}
 const MARKET_ORIGIN = "https://market.561.group";
 // The Bazaar source declaration names this original seller as house-x402.
 // A source-qualified inspection link neither reissues its offer nor pays for it.
