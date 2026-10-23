@@ -210,6 +210,17 @@ test("Shop routes original market services without mutating book checkout", asyn
   assert.equal(html.status, 200);
   assert.match(await html.text(), /Verification service/u);
   assert.equal(reads, 2);
+  const fromMarketBinding = env({ MARKET_SERVICE_CATALOG_FETCH: {
+    async fetch(request) {
+      assert.equal(request.url, "https://market.561.group/v1/catalog");
+      assert.equal(request.method, "GET");
+      assert.equal(request.credentials, "omit");
+      return Response.json(source);
+    },
+  } });
+  const viaBinding = await worker.fetch(new Request("https://shop.561.group/services.json"), fromMarketBinding);
+  assert.equal(viaBinding.status, 200);
+  assert.equal((await viaBinding.json()).services[0].sku, sku);
   assert.match(await (await worker.fetch(new Request("https://shop.561.group/sitemap.xml"), testEnv)).text(),
     /shop\.561\.group\/services/u);
   const originalGoods = await (await worker.fetch(new Request("https://shop.561.group/catalog.json"), testEnv)).json();
