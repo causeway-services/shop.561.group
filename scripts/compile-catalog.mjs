@@ -18,6 +18,8 @@ import { fileURLToPath } from "node:url";
 
 import { coverFileName, listChapters, sha256File } from "@red-cup-engineering/ebook-engineering-services-section";
 import { validateCatalog } from "@red-cup-engineering/digital-goods-storefront-services-section";
+import { generatedIllustrationsFrom } from "./edition-illustration-provenance.mjs";
+export { generatedIllustrationsFrom } from "./edition-illustration-provenance.mjs";
 
 const site = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 // The Group's services directory under the checkout, read from this site's own path rather than named here.
@@ -72,11 +74,7 @@ function coverIllustrationOf({ model, modelName, provider, references }) {
   return { model, ...(modelName ? { modelName } : {}), ...(provider ? { provider } : {}), ...(references ? { references } : {}) };
 }
 
-export function generatedIllustrationsFrom(manifest) {
-  return (manifest.assets ?? [])
-    .filter((asset) => typeof asset.provenance?.model === "string")
-    .map((asset) => ({ path: asset.path, role: asset.role, model: asset.provenance.model, ...(asset.provenance.provider ? { provider: asset.provenance.provider } : {}) }));
-}
+// Original generated-illustration admission lives in the shared pure source rule.
 
 // A book's built files, where its manifest builds them: <book>/<distDir>/<slug>.{epub,pdf}
 // and its cover (coverFileName), read from the main worktree (they are untracked state).
