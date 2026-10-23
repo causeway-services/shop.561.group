@@ -31,3 +31,7 @@ jobs:
         run: |
           node --check src/service-discovery.mjs
           node --test test/service-discovery.test.mjs
+      - name: Verify source-only accepted-books Atom discovery
+        run: |
+          node --check src/book-feed.mjs
+          node --test test/book-feed.test.mjs
