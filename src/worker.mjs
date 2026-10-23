@@ -4,7 +4,7 @@ import { externalStripePaymentLinkIds } from "./external-stripe-payment-link-rec
 const {createDigitalGoodsStorefrontWorker}=storefrontRuntime;
 import catalog from "./compiled-catalog.mjs";
 import { createShopFulfillment, createShopStripeAudit } from "./fulfillment.mjs";
-import { serviceBrowseResponse } from "./service-discovery.mjs";
+import { marketCatalogTransport, serviceBrowseResponse } from "./service-discovery.mjs";
 
 export const CATALOG = catalog;
 export const CATALOG_VALIDATION = validateCatalog(catalog);
@@ -38,7 +38,7 @@ export default {
     }
     if (request.method === "GET" && pathname === "/sitemap.xml") return new Response(sitemap(), { headers: { "content-type": "application/xml; charset=utf-8" } });
     if (pathname === "/services" || pathname === "/services.json") {
-      return serviceBrowseResponse(request, { fetchSource: env.MARKET_SERVICE_CATALOG_FETCH ?? fetch });
+      return serviceBrowseResponse(request, { fetchSource: marketCatalogTransport(env.MARKET_SERVICE_CATALOG_FETCH, fetch) });
     }
     return runtime.fetch(request, {
       ...env,
