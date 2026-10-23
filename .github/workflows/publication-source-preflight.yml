@@ -65,4 +65,12 @@ jobs:
           npx --yes pnpm@10.21.0 install --frozen-lockfile --ignore-scripts --reporter=append-only
           npm run check
           npm test
+          # This standalone GitHub checkout does NOT hold the original ten
+          # publisher-owned, untracked accepted cover assets. The empty
+          # ephemeral directory tests ONLY Worker bundling. It is NOT a
+          # releasable static-assets receipt or installation qualification.
+          if [ ! -d public ]; then
+            echo 'Worker-only dry-run: accepted book covers unavailable in isolated source checkout'
+            mkdir -p public
+          fi
           ./node_modules/.bin/wrangler deploy --dry-run --outdir /tmp/shop-561-receiving
