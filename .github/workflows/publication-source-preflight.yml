@@ -51,6 +51,13 @@ jobs:
       # This one PR is the release-receiving integration of existing source work.
       # No secrets, payments, deployments, new recurring tasks or billed runners.
       # Standard ubuntu-24.04 runners in this public repository are free.
+      - name: Receive original author-only links without changing editions
+        run: |
+          node --check scripts/reconcile-authored-offer-links.mjs
+          node --check scripts/edition-illustration-provenance.mjs
+          node scripts/reconcile-authored-offer-links.mjs --check
+          node --test test/reconcile-authored-offer-links.test.mjs test/compile-catalog.test.mjs
+
       - name: Qualify full pinned Shop Worker and non-deploying Wrangler bundle
         if: github.event_name == 'pull_request' && github.head_ref == 'integration/commerce-shop-original-three-20261022'
         run: |
