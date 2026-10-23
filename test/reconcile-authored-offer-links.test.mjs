@@ -11,6 +11,20 @@ const source = () => copy(originalAuthored);
 const compiled = () => copy(originalCompiled);
 const identities = () => copy(originalEvidence);
 
+// Always run this merchant boundary under the original dependency-free source preflight;
+// a pinned Worker qualification on another branch is not proof of THIS checkout seller.
+test("author-owned publisher brand and legal payee remain independent in both live inputs", () => {
+  const authored = source();
+  const runtime = compiled();
+  assert.equal(authored.merchant.name, "561 Group");
+  assert.equal(runtime.merchant.name, "561 Group");
+  assert.equal(authored.merchant.legalBody, "emsenn");
+  assert.equal(runtime.merchant.legalBody, "emsenn");
+  assert.deepEqual(authored.merchant, runtime.merchant);
+  assert.equal(runtime.offerings.length, 13);
+  assert.equal(runtime.externalStripePaymentLinkReceivers.length, 4);
+});
+
 test("original author, compiled runtime and independent old NI evidence admit the same seven URLs", () => {
   const result = reconcileAuthoredOfferLinks(source(), compiled(), identities());
   assert.equal(result.updated.length, 0);

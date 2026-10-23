@@ -39,6 +39,9 @@ test("the Shop's public catalog uses the shared Bazaar-readable seller projectio
     "the first eight Shop tiles are the existing source-live books");
   assert.equal(publicReadout.offerings[0].id, "the-x402-economy");
   assert.equal(publicReadout.merchant.name, CATALOG.merchant.name);
+  assert.equal(publicReadout.merchant.name, "561 Group", "publisher brand must remain the original source");
+  assert.equal(publicReadout.merchant.legalBody, "emsenn", "a proposed LLC must not be projected as the legal seller");
+  assert.equal(CATALOG.merchant.legalBody, "emsenn", "the compiled merchant must agree with the buyer-facing receiver");
   assert.equal(Object.hasOwn(publicReadout.merchant, "privateKey"), false);
   for (const offered of publicReadout.offerings) {
     // Release approval and the runtime's card checkout admission are distinct:
