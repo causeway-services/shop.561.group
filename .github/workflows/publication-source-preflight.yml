@@ -31,3 +31,11 @@ jobs:
         run: |
           node --check src/service-discovery.mjs
           node --test test/service-discovery.test.mjs
+
+      - name: Verify original open-work campaign, safe checkout routes, and share pack
+        run: |
+          node --check src/support-campaign.mjs
+          node --check scripts/export-support-campaign.mjs
+          node --test test/support-campaign.test.mjs
+          node scripts/export-support-campaign.mjs --json >/tmp/open-work-campaign.json
+          node scripts/export-support-campaign.mjs --csv >/tmp/open-work-attribution.csv
