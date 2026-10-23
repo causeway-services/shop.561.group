@@ -43,6 +43,6 @@ test("direct Wrangler deploys require original source-qualified support and attr
   ]) {
     assert.ok(command.includes(originalGuard), `missing direct deploy guard: ${originalGuard}`);
   }
-  assert.ok(!command.includes("scripts/probe-public-support.mjs &&"),
+  assert.ok(!command.includes("node scripts/probe-public-support.mjs"),
     "predeploy must syntax-check the public observer, not perform live network calls");
 });
