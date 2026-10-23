@@ -45,6 +45,19 @@ jobs:
           node --check scripts/reconcile-support-checkouts.mjs
           node --test test/support-checkout-attribution.test.mjs
 
+      - name: Test safe, source-qualified public buyer-route receiving
+        run: |
+          node --check src/support-public-probe.mjs
+          node --check scripts/probe-public-support.mjs
+          node --test test/support-public-probe.test.mjs
+      # A remote HTTP observation is neither package/deployment qualification nor
+      # payment authority. Network denial is UNOBSERVED, not proof of no host.
+      # Keep this independent from the pinned Worker/source qualification gate.
+      - name: Observe installed support landing and static redirect routes (advisory)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: node scripts/probe-public-support.mjs
+
       - name: Verify source-only accepted-books Atom discovery
         run: |
           node --check src/book-feed.mjs
