@@ -49,7 +49,10 @@ test("source-owned seller readout stays one seller, one SKU and no Shop payment 
   assert.equal(projected.services[0].shopCheckoutAvailable, false);
   assert.equal(projected.services[0].externalPaidDeliveryVerified, false);
   assert.equal(projected.services[0].inspectUrl,
-    "https://market.561.group/?offer=" + encodeURIComponent(a));
+    "https://bazaar.561.group/offers?source=house-x402&id=" + encodeURIComponent(a));
+  assert.equal(projected.services[1].inspectUrl,
+    "https://bazaar.561.group/offers?source=house-x402&id=" + encodeURIComponent(b));
+  assert.equal(JSON.stringify(projected).includes("https://market.561.group/?offer="), false);
   assert.equal(JSON.stringify(projected).includes("secretNeverProject"), false);
   assert.equal(JSON.stringify(projected).includes(hidden), false);
 });
@@ -97,6 +100,9 @@ test("service cards HTML-escape seller descriptions and do not make a fake buy b
   assert.doesNotMatch(html, /<script>/u);
   assert.match(html, /original 561 Group x402 merchant/u);
   assert.doesNotMatch(html, /<form[^>]*checkout/u);
+  assert.match(html, /bazaar\.561\.group\/offers\?source=house-x402&amp;id=/u);
+  assert.match(html, /Inspect source-qualified offer in Bazaar/u);
+  assert.doesNotMatch(html, /market\.561\.group\/\?offer=/u);
 });
 
 test("HTTP routes serve source-described machine data and semantic human browse", async () => {
