@@ -125,16 +125,17 @@ test("original payment-link identities and channel ambiguity refuse before any b
    github:{...campaign.oneTime.links.github,id:campaign.oneTime.links.direct.id}}}},
   {...campaign,channels:[...campaign.channels,{id:"github",medium:"social"}]},
   {...campaign,channels:[{id:"",medium:"email"}]},
-  {...campaign,channels:[{id:"email",medium:""}]},
-  {...campaign,channels:[{id:"email",medium:"email",unexpected:true},{id:"github",medium:"referral"}]}
+  {...campaign,channels:[{id:"email",medium:""}]}
  ];
- for(const variant of invalid.slice(0,-1))
+ for(const variant of invalid)
   await assert.rejects(probePublicSupport({campaign:variant,fetcher}),TypeError);
  assert.equal(calls,0,"malformed merchant attribution must be rejected before fetching even a public route");
  // Benign additional metadata on an otherwise complete source must not cause
  // false refusal or silently create a payment, customer, or accepted delivery.
- const ordinary={...campaign,channels:[...campaign.channels,{id:"docs",medium:"referral",unexpected:true}]};
+ const ordinary={...campaign,channels:campaign.channels.map((channel,i)=>
+  i===0?{...channel,unrelatedMetadata:"allowed"}:channel)};
  const receipt=await probePublicSupport({campaign:ordinary,fetcher:async url=>reply(url)});
+ assert.equal(receipt.publicRouteReceiving,"passed","irrelevant channel metadata is not a source identity defect");
  assert.equal(receipt.paymentAuthorizationAttempted,false);
  assert.equal(receipt.customerAcceptedDelivery,null);
 });
