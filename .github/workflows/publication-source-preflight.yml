@@ -54,9 +54,9 @@ jobs:
           node --check test/shop-commerce-integration.test.mjs
           node --test test/shop-commerce-integration.test.mjs
 
-      # This one PR is the release-receiving integration of existing source work.
+      # Every public Shop PR must qualify its full native Worker/checkout source.
       # No secrets, payments, deployments, new recurring tasks or billed runners.
-      # Standard ubuntu-24.04 runners in this public repository are free.
+      # This source-only workflow does not deploy or access merchant payment keys.
       - name: Receive original author-only links without changing editions
         run: |
           node --check scripts/reconcile-authored-offer-links.mjs
@@ -65,7 +65,7 @@ jobs:
           node --test test/reconcile-authored-offer-links.test.mjs test/compile-catalog.test.mjs
 
       - name: Qualify full pinned Shop Worker and non-deploying Wrangler bundle
-        if: github.event_name == 'pull_request' && github.head_ref == 'integration/commerce-shop-original-three-20261022'
+        if: github.event_name == 'pull_request'
         run: |
           node --version
           npx --yes pnpm@10.21.0 install --frozen-lockfile --ignore-scripts --reporter=append-only
