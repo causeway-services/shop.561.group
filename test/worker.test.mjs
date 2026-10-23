@@ -3,6 +3,7 @@ import { createHmac } from "node:crypto";
 import test from "node:test";
 import worker, { CATALOG, CATALOG_VALIDATION, ShopFulfillment, ORIGINAL_EXTERNAL_STRIPE_PAYMENT_LINK_IDS, EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED } from "../src/worker.mjs";
 import originalPublications from "../data/records/commerce-navigation/2026-10-20-original-publication-identities.json" with { type: "json" };
+import {campaign} from "../src/support-campaign.mjs";
 
 function fulfillment() {
   const rows = new Map();
@@ -183,6 +184,24 @@ test('source-owned Shop offers public read-only product discovery over the origi
   assert.equal((await worker.fetch(new Request(origin + '/mcp'), env())).status, 405);
 });
 
+test("original Shop serves accepted-only Atom and advertises its reader entrance", async () => {
+  const feed = await worker.fetch(new Request("https://shop.561.group/books.atom"), env());
+  assert.equal(feed.status, 200);
+  assert.match(feed.headers.get("content-type"), /application\/atom\+xml/u);
+  assert.equal(feed.headers.get("x-content-type-options"), "nosniff");
+  const xml = await feed.text();
+  assert.match(xml, /\/goods\/the-x402-economy/u);
+  assert.doesNotMatch(xml, /\/goods\/the-agent-operators-handbook/u);
+  const head = await worker.fetch(new Request("https://shop.561.group/books.atom", {method:"HEAD"}), env());
+  assert.equal(head.status, 200);
+  assert.equal(await head.text(), "");
+  const post = await worker.fetch(new Request("https://shop.561.group/books.atom", {method:"POST"}), env());
+  assert.equal(post.status, 405);
+  assert.equal(post.headers.get("allow"), "GET, HEAD");
+  const home = await (await worker.fetch(new Request("https://shop.561.group/"), env())).text();
+  assert.match(home, /books\.atom/u);
+});
+
 test("Shop routes original market services without mutating book checkout", async () => {
   const sku = "ni:///sha-256;" + "G".repeat(43);
   const source = { recordType: "561-group.x402-market-catalog",
@@ -210,6 +229,17 @@ test("Shop routes original market services without mutating book checkout", asyn
   assert.equal(html.status, 200);
   assert.match(await html.text(), /Verification service/u);
   assert.equal(reads, 2);
+  const fromMarketBinding = env({ MARKET_SERVICE_CATALOG_FETCH: {
+    async fetch(request) {
+      assert.equal(request.url, "https://market.561.group/v1/catalog");
+      assert.equal(request.method, "GET");
+      assert.equal(request.credentials, "omit");
+      return Response.json(source);
+    },
+  } });
+  const viaBinding = await worker.fetch(new Request("https://shop.561.group/services.json"), fromMarketBinding);
+  assert.equal(viaBinding.status, 200);
+  assert.equal((await viaBinding.json()).services[0].sku, sku);
   assert.match(await (await worker.fetch(new Request("https://shop.561.group/sitemap.xml"), testEnv)).text(),
     /shop\.561\.group\/services/u);
   const originalGoods = await (await worker.fetch(new Request("https://shop.561.group/catalog.json"), testEnv)).json();
@@ -218,44 +248,50 @@ test("Shop routes original market services without mutating book checkout", asyn
 
 
 
-test('real Shop Worker receives source-qualified outside-catalog support only when the installed native Stripe adapter advertises the capability',async()=>{
- const f=fulfillment(),secret='offline-source-observation-test';
- const record={
-  id:'evt_external_support_shop_1',type:'checkout.session.completed',
-  livemode:false,created:1792670000,
-  data:{object:{
-   id:'cs_external_support_shop_1',
-   payment_link:'plink_1USMywJ1vYnPQu2NWHtcqx0b',
-   payment_status:'paid',status:'complete',amount_total:1000,currency:'usd',
-   customer_details:{email:'private-payment-buyer@example.invalid'}
-  }}
- };
- const text=JSON.stringify(record);
- const injected=env({SHOP_FULFILLMENT:f.namespace,STRIPE_WEBHOOK_SECRET:secret});
- const send=()=>worker.fetch(new Request('https://shop.561.group/webhooks/stripe',{
-  method:'POST',body:text,headers:{'stripe-signature':signature(text,secret)}
- }),injected);
- assert.deepEqual(ORIGINAL_EXTERNAL_STRIPE_PAYMENT_LINK_IDS,[record.data.object.payment_link]);
+test('real Shop Worker audits every source-qualified support checkout without creating Group book-sale entitlements',async()=>{
+ const known=[campaign.monthly.id,...Object.values(campaign.oneTime.links).map(link=>link.id)];
+ assert.deepEqual(ORIGINAL_EXTERNAL_STRIPE_PAYMENT_LINK_IDS,known);
+ assert.equal(new Set(known).size,4);
  assert.equal(typeof EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED,'boolean');
- const response=await send();
- assert.equal(response.status,EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED?200:409);
- if(EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED){
-  const body=await response.json();
-  assert.equal(body.externalCheckoutObserved,true);
-  assert.equal(body.settlement,'not-established');
-  const repeated=await send();
-  assert.deepEqual(await repeated.json(),{
-   accepted:true,externalCheckoutObserved:true,duplicate:true,
-   settlement:'not-established'
-  });
- }else{
-  assert.equal((await response.json()).error,'payment-does-not-match-checkout-intent',
-   'the old installed supplier must not pretend it observed a hosted-support link');
+ const f=fulfillment(),secret='offline-source-observation-test';
+ const injected=env({SHOP_FULFILLMENT:f.namespace,STRIPE_WEBHOOK_SECRET:secret});
+ for(const [index,linkId] of known.entries()){
+  // Synthetic test-only provider events: no Stripe mutation, actual buyer or money.
+  const record={
+   id:'evt_external_support_shop_'+index,type:'checkout.session.completed',
+   livemode:false,created:1792670000+index,
+   data:{object:{
+    id:'cs_external_support_shop_'+index,
+    payment_link:linkId,
+    payment_status:'paid',status:'complete',amount_total:1000,currency:'usd',
+    customer_details:{email:'private-payment-buyer@example.invalid'}
+   }}
+  };
+  const raw=JSON.stringify(record);
+  const send=()=>worker.fetch(new Request('https://shop.561.group/webhooks/stripe',{
+   method:'POST',body:raw,headers:{'stripe-signature':signature(raw,secret)}
+  }),injected);
+  const response=await send();
+  assert.equal(response.status,EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED?200:409,linkId);
+  if(EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED){
+   const body=await response.json();
+   assert.equal(body.externalCheckoutObserved,true);
+   assert.equal(body.settlement,'not-established');
+   const repeated=await send();
+   assert.deepEqual(await repeated.json(),{
+    accepted:true,externalCheckoutObserved:true,duplicate:true,
+    settlement:'not-established'
+   });
+  }else{
+   assert.equal((await response.json()).error,'payment-does-not-match-checkout-intent',
+    'the installed supplier must not pretend it observed a hosted-support link');
+  }
+  assert.equal(await f.entitlement(record.data.object.id),null,
+   'a personal tip never grants a corporate book entitlement');
  }
- assert.equal(await f.entitlement(record.data.object.id),null);
  const listing=await (await worker.fetch(new Request('https://shop.561.group/catalog.json'),injected)).json();
  assert.equal('externalStripePaymentLinkReceivers' in listing,false,
-  'merchant audit source configuration must not leak through Shop public merchandise discovery');
+  'merchant audit source configuration must not leak through public merchandise discovery');
  for(const offered of listing.offerings)
   assert.equal('stripePaymentLinkId' in offered,false);
 });

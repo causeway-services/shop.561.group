@@ -161,7 +161,7 @@ export default {
       "priceCents": 900,
       "currency": "usd",
       "release": "the-x402-economy",
-      "agentOfferUrl": "https://market.561.group/?q=the-x402-economy",
+      "agentOfferUrl": "https://bazaar.561.group/offers?source=house-x402&id=ni%3A%2F%2F%2Fsha-256%3B-2a0jEZ7cWENXeYPs3xdboD6wd_xuNqgL1wVbZqQDK4",
       "title": "The x402 Economy",
       "subtitle": "How the Web's Unused Payment Code Became a Way for Software to Pay, and What It Has Earned So Far",
       "blurb": "How the web’s unused payment code became a way for software to pay, and what it has earned so far: HTTP 402’s history, one paid request step by step, who governs x402, its rivals, the market measurements, security and US law.",
@@ -236,7 +236,7 @@ export default {
       "priceCents": 900,
       "currency": "usd",
       "release": "project-management-course-by-course",
-      "agentOfferUrl": "https://market.561.group/?q=project-management-course-by-course",
+      "agentOfferUrl": "https://bazaar.561.group/offers?source=house-x402&id=ni%3A%2F%2F%2Fsha-256%3BCZy4itE60Trpyf_oX_6e2Bd_zgspAi6YFT8zXuYruNA",
       "title": "Project Management, Course by Course",
       "subtitle": "An Independent Study Companion for Entry-Level Project Management Certificate Courses",
       "blurb": "A study companion to Google’s Project Management Certificate: one chapter per course, self-checks with answers, and a guide to the capstone. Independent of Google and Coursera.",
@@ -320,7 +320,7 @@ export default {
       "priceCents": 1200,
       "currency": "usd",
       "release": "the-capm-domain-by-domain",
-      "agentOfferUrl": "https://market.561.group/?q=the-capm-domain-by-domain",
+      "agentOfferUrl": "https://bazaar.561.group/offers?source=house-x402&id=ni%3A%2F%2F%2Fsha-256%3BCvLp1ukgCv1h9JS1ZTh1RJ1yDdwrNvIJf_WO9Iq-iEk",
       "title": "Project Management Fundamentals, Domain by Domain",
       "subtitle": "An Independent Study Companion for the Entry-Level Project Management Certification Exam",
       "blurb": "A study companion to PMI’s CAPM exam that follows the 2023 outline task by task and ends with a 40-question practice exam. Independent of PMI.",
@@ -405,7 +405,7 @@ export default {
       "priceCents": 900,
       "currency": "usd",
       "release": "data-analytics-course-by-course",
-      "agentOfferUrl": "https://market.561.group/?q=data-analytics-course-by-course",
+      "agentOfferUrl": "https://bazaar.561.group/offers?source=house-x402&id=ni%3A%2F%2F%2Fsha-256%3BItsDC1opfeUaN0K63RZXgjPxI0HV8RteGTIh_y2vqoo",
       "title": "Data Analytics, Course by Course",
       "subtitle": "An Independent Study Companion for Entry-Level Data Analytics Certificate Courses",
       "blurb": "A study companion to Google’s Data Analytics Certificate: spreadsheets, SQL, Tableau and Python, with tested code and answered self-checks. Independent of Google and Coursera.",
@@ -488,7 +488,7 @@ export default {
       "priceCents": 900,
       "currency": "usd",
       "release": "ux-design-course-by-course",
-      "agentOfferUrl": "https://market.561.group/?q=ux-design-course-by-course",
+      "agentOfferUrl": "https://bazaar.561.group/offers?source=house-x402&id=ni%3A%2F%2F%2Fsha-256%3BY_8aL-DaA1gWTjRBL08tgal_Eet-hUN4N9Ohvm4fuR8",
       "title": "UX Design, Course by Course",
       "subtitle": "An Independent Study Companion for Entry-Level UX Design Certificate Courses",
       "blurb": "A study companion to Google’s UX Design Certificate: the design process from its sources, accessibility throughout, and a portfolio guide. Independent of Google and Coursera.",
@@ -570,7 +570,7 @@ export default {
       "priceCents": 1200,
       "currency": "usd",
       "release": "business-management-course-by-course",
-      "agentOfferUrl": "https://market.561.group/?q=business-management-course-by-course",
+      "agentOfferUrl": "https://bazaar.561.group/offers?source=house-x402&id=ni%3A%2F%2F%2Fsha-256%3BymPydIkNHFvvHMYwhPnhZNml1PjGdapWpD7jo4CsPtY",
       "title": "Business Management, Course by Course",
       "subtitle": "An Independent Study Companion for Online Business Management Certificate Courses",
       "blurb": "A study companion to Cornell’s Business Management Essentials certificate: finance, marketing, strategy, organizing and leading. Independent of Cornell.",
@@ -650,7 +650,7 @@ export default {
       "priceCents": 1200,
       "currency": "usd",
       "release": "business-strategy-course-by-course",
-      "agentOfferUrl": "https://market.561.group/?q=business-strategy-course-by-course",
+      "agentOfferUrl": "https://bazaar.561.group/offers?source=house-x402&id=ni%3A%2F%2F%2Fsha-256%3B7m8XplNrrQPRkyuc6JYjoJixdaNLz4fiw7_FM7LgKLk",
       "title": "Business Strategy, Course by Course",
       "subtitle": "An Independent Study Companion for Online Business Strategy Certificate Courses",
       "blurb": "A study companion to Cornell’s Business Strategy certificate: value, disruption, alliances, game theory and platforms. Independent of Cornell.",
@@ -939,6 +939,51 @@ export default {
         "commitSha": "40dd6c9b9c2392f407fd0d22b1b587d80010ffd6",
         "path": "config.json",
         "blobSha": "e4fc13ccce67c2d07069825ab3e3b0dc93784aca"
+      }
+    },
+    {
+      "type": "ExternalStripePaymentLinkReceiver",
+      "schemaVersion": 1,
+      "stripePaymentLinkId": "plink_1UTYlBJ1vYnPQu2NMI05UJzD",
+      "stripeMerchantAccountId": "acct_18eDiqJ1vYnPQu2N",
+      "merchantDisplayName": "emsenn",
+      "supportedProgramName": "561 Group open work appreciation — direct one-time tip",
+      "sourceObservedOn": "2026-10-23",
+      "sourceRevision": {
+        "repository": "causeway-services/shop.561.group",
+        "commitSha": "2b518ed679852b27460c2658c8c882baff6dd2a7",
+        "path": "data/records/marketing/open-work-campaign.json",
+        "blobSha": "0e87974fe0808c389e0d2cc15ae182661c56a35f"
+      }
+    },
+    {
+      "type": "ExternalStripePaymentLinkReceiver",
+      "schemaVersion": 1,
+      "stripePaymentLinkId": "plink_1UTYn0J1vYnPQu2NCojQuuMY",
+      "stripeMerchantAccountId": "acct_18eDiqJ1vYnPQu2N",
+      "merchantDisplayName": "emsenn",
+      "supportedProgramName": "561 Group open work appreciation — github one-time tip",
+      "sourceObservedOn": "2026-10-23",
+      "sourceRevision": {
+        "repository": "causeway-services/shop.561.group",
+        "commitSha": "2b518ed679852b27460c2658c8c882baff6dd2a7",
+        "path": "data/records/marketing/open-work-campaign.json",
+        "blobSha": "0e87974fe0808c389e0d2cc15ae182661c56a35f"
+      }
+    },
+    {
+      "type": "ExternalStripePaymentLinkReceiver",
+      "schemaVersion": 1,
+      "stripePaymentLinkId": "plink_1UTYn2J1vYnPQu2NPN1weGJ6",
+      "stripeMerchantAccountId": "acct_18eDiqJ1vYnPQu2N",
+      "merchantDisplayName": "emsenn",
+      "supportedProgramName": "561 Group open work appreciation — fediverse one-time tip",
+      "sourceObservedOn": "2026-10-23",
+      "sourceRevision": {
+        "repository": "causeway-services/shop.561.group",
+        "commitSha": "2b518ed679852b27460c2658c8c882baff6dd2a7",
+        "path": "data/records/marketing/open-work-campaign.json",
+        "blobSha": "0e87974fe0808c389e0d2cc15ae182661c56a35f"
       }
     }
   ]

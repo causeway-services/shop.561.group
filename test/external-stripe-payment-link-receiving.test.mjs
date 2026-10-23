@@ -4,6 +4,7 @@ import {readFileSync} from 'node:fs';
 import {dirname,join,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import catalog from '../src/compiled-catalog.mjs';
+import {campaign} from '../src/support-campaign.mjs';
 import {externalStripePaymentLinkIds,EXTERNAL_STRIPE_RECEIVER_TYPE} from '../src/external-stripe-payment-link-receiving.mjs';
 import {ORIGINAL_EXTERNAL_STRIPE_PAYMENT_LINK_IDS,
  EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED} from '../src/worker.mjs';
@@ -13,11 +14,12 @@ const authored=JSON.parse(readFileSync(join(root,'catalog.json'),'utf8'));
 const schema=JSON.parse(readFileSync(join(root,'data/records/schema/external-stripe-payment-link-receiver.schema.json'),'utf8'));
 const sole=authored.externalStripePaymentLinkReceivers[0];
 
-test('real Shop source catalog and compiled Worker carry the SAME original emsenn external-payment receiver',()=>{
- assert.equal(authored.externalStripePaymentLinkReceivers.length,1);
+test('the original Shop source and compiled Worker audit ALL four existing emsenn support links',()=>{
+ const offeredIds=[campaign.monthly.id,...Object.values(campaign.oneTime.links).map(link=>link.id)];
+ assert.equal(authored.externalStripePaymentLinkReceivers.length,4);
  assert.deepEqual(catalog.externalStripePaymentLinkReceivers,authored.externalStripePaymentLinkReceivers);
- assert.deepEqual(externalStripePaymentLinkIds(catalog),[sole.stripePaymentLinkId]);
- assert.deepEqual(ORIGINAL_EXTERNAL_STRIPE_PAYMENT_LINK_IDS,[sole.stripePaymentLinkId]);
+ assert.deepEqual(externalStripePaymentLinkIds(catalog),offeredIds);
+ assert.deepEqual(ORIGINAL_EXTERNAL_STRIPE_PAYMENT_LINK_IDS,offeredIds);
  assert.equal(Object.isFrozen(ORIGINAL_EXTERNAL_STRIPE_PAYMENT_LINK_IDS),true);
  assert.equal(sole.type,EXTERNAL_STRIPE_RECEIVER_TYPE);
  assert.equal(sole.schemaVersion,1);
@@ -32,6 +34,29 @@ test('real Shop source catalog and compiled Worker carry the SAME original emsen
  });
  assert.equal(EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED,true===EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED,
   'installed supplier capability must be a stable boolean, never an inferred source merge');
+});
+
+test('one-time tip links have independent source provenance and remain outside Group book sales',()=>{
+ const oneTime=authored.externalStripePaymentLinkReceivers.slice(1);
+ assert.equal(oneTime.length,Object.keys(campaign.oneTime.links).length);
+ for(const [index,channel] of ['direct','github','fediverse'].entries()){
+  const receiver=oneTime[index];
+  assert.equal(receiver.stripePaymentLinkId,campaign.oneTime.links[channel].id);
+  assert.equal(receiver.stripeMerchantAccountId,sole.stripeMerchantAccountId);
+  assert.equal(receiver.merchantDisplayName,campaign.merchantDisplayName);
+  assert.equal(receiver.sourceObservedOn,'2026-10-23');
+  assert.deepEqual(receiver.sourceRevision,{
+   repository:'causeway-services/shop.561.group',
+   commitSha:'2b518ed679852b27460c2658c8c882baff6dd2a7',
+   path:'data/records/marketing/open-work-campaign.json',
+   blobSha:'0e87974fe0808c389e0d2cc15ae182661c56a35f'
+  });
+  assert.equal('bookOfferingId' in receiver,false);
+  assert.equal('cashReceived' in receiver,false);
+  assert.equal('customerEmail' in receiver,false);
+ }
+ assert.notEqual(catalog.merchant.name,campaign.merchantDisplayName,
+  'a paid personal support link does not establish 561 Group book-sale cash');
 });
 
 test('industry JSON Schema 2020-12 declares exact original source fields and no consumer/merchant conflation',()=>{

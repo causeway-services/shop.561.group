@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
-  MARKET_CATALOG_URL, projectOriginalMarketServices, renderServiceBrowse, serviceBrowseResponse
+  MARKET_CATALOG_URL, marketCatalogTransport, projectOriginalMarketServices, renderServiceBrowse, serviceBrowseResponse
 } from "../src/service-discovery.mjs";
 
 const a = "ni:///sha-256;" + "A".repeat(43);
@@ -49,7 +49,10 @@ test("source-owned seller readout stays one seller, one SKU and no Shop payment 
   assert.equal(projected.services[0].shopCheckoutAvailable, false);
   assert.equal(projected.services[0].externalPaidDeliveryVerified, false);
   assert.equal(projected.services[0].inspectUrl,
-    "https://market.561.group/?offer=" + encodeURIComponent(a));
+    "https://bazaar.561.group/offers?source=house-x402&id=" + encodeURIComponent(a));
+  assert.equal(projected.services[1].inspectUrl,
+    "https://bazaar.561.group/offers?source=house-x402&id=" + encodeURIComponent(b));
+  assert.equal(JSON.stringify(projected).includes("https://market.561.group/?offer="), false);
   assert.equal(JSON.stringify(projected).includes("secretNeverProject"), false);
   assert.equal(JSON.stringify(projected).includes(hidden), false);
 });
@@ -97,6 +100,9 @@ test("service cards HTML-escape seller descriptions and do not make a fake buy b
   assert.doesNotMatch(html, /<script>/u);
   assert.match(html, /original 561 Group x402 merchant/u);
   assert.doesNotMatch(html, /<form[^>]*checkout/u);
+  assert.match(html, /bazaar\.561\.group\/offers\?source=house-x402&amp;id=/u);
+  assert.match(html, /Inspect source-qualified offer in Bazaar/u);
+  assert.doesNotMatch(html, /market\.561\.group\/\?offer=/u);
 });
 
 test("HTTP routes serve source-described machine data and semantic human browse", async () => {
@@ -223,4 +229,38 @@ test("HTTP service browser keeps exact page parameters and returns a useful no-m
     { fetchSource: served() }
   );
   assert.match(await empty.text(), /<p role="status">No matching source-listed services\.<\/p>/u);
+});
+
+test("original Market service binding sends one fixed read request, without purchase rights", async () => {
+  const calls = [];
+  const transport = marketCatalogTransport({
+    async fetch(request) {
+      calls.push(request);
+      assert.equal(request.url, MARKET_CATALOG_URL);
+      assert.equal(request.method, "GET");
+      assert.equal(request.redirect, "manual");
+      assert.equal(request.credentials, "omit");
+      assert.equal(request.headers.get("accept"), "application/json");
+      return Response.json(source());
+    },
+  }, async () => { throw Error("service binding bypassed"); });
+  const response = await serviceBrowseResponse(
+    new Request("https://shop.561.group/services.json?q=alpha"), { fetchSource: transport }
+  );
+  assert.equal(response.status, 200);
+  assert.equal((await response.json()).total, 1);
+  assert.equal(calls.length, 1);
+  const malformed = marketCatalogTransport({ fetch: true },
+    async () => { throw Error("must not use fallback for a broken binding"); });
+  const refused = await serviceBrowseResponse(
+    new Request("https://shop.561.group/services.json"), { fetchSource: malformed }
+  );
+  assert.equal(refused.status, 503);
+  assert.equal((await refused.json()).error, "Source-qualified service catalog temporarily unavailable");
+});
+
+test("the original Shop Wrangler declaration selects the actual Market Worker", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const manifest = await readFile(new URL("../wrangler.jsonc", import.meta.url), "utf8");
+  assert.match(manifest, /"binding": "MARKET_SERVICE_CATALOG_FETCH", "service": "market-561-group"/u);
 });
