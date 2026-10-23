@@ -6,6 +6,47 @@ const isObject=value=>value!==null&&typeof value==="object"&&!Array.isArray(valu
 const knownURL=value=>typeof value==="string"&&/^https:\/\/buy\.stripe\.com\/[A-Za-z0-9]+$/.test(value);
 const sameOrigin=(left,right)=>new URL(left).origin===new URL(right).origin;
 
+// Bound HTTP receipt bytes before converting to text or JSON; inspecting length
+// after response.text()/json() would already have buffered an untrusted body.
+async function boundedBodyText(response,maxBytes){
+ const size=response.headers.get("content-length");
+ if(size!==null&&/^[0-9]+$/u.test(size)&&Number(size)>maxBytes)return null;
+ if(!response.body)return "";
+ const reader=response.body.getReader(),decoder=new TextDecoder();
+ let bytes=0,content="";
+ try{
+  for(;;){
+   const {done,value}=await reader.read();
+   if(done)break;
+   bytes+=value.byteLength;
+   if(bytes>maxBytes){void reader.cancel().catch(()=>{});return null;}
+   content+=decoder.decode(value,{stream:true});
+  }
+  return content+decoder.decode();
+ }finally{reader.releaseLock();}
+}
+
+// Diagnostic only: this same-origin source signature does NOT attest the exact
+// deployed revision, Cloudflare Worker binding, or any completed purchase.
+async function workerHandlerSignature(fetcher,origin,timeoutMs){
+ const requestPath="/robots.txt";
+ try{
+  const response=await fetcher(origin+requestPath,{
+   method:"GET",redirect:"manual",credentials:"omit",cache:"no-store",
+   headers:{accept:"text/plain"},signal:AbortSignal.timeout(timeoutMs)
+  });
+  if(!response||typeof response.status!=="number"||!response.headers)
+   return {requestPath,httpStatus:null,outcome:"unobserved"};
+  const text=response.status===200&&/text\/plain/iu.test(response.headers.get("content-type")??"")
+   ?await boundedBodyText(response,4096):null;
+  const matched=typeof text==="string"&&text.includes("User-agent: *")&&
+   text.includes("Sitemap: "+origin+"/sitemap.xml");
+  return {requestPath,httpStatus:response.status,outcome:matched?"matched":"mismatched"};
+ }catch{
+  return {requestPath,httpStatus:null,outcome:"unobserved"};
+ }
+}
+
 function checkCampaign(campaign){
  if(!isObject(campaign)||campaign.canonicalUrl!=="https://shop.561.group/support"||
     typeof campaign.campaignId!=="string"||typeof campaign.title!=="string"||
@@ -67,12 +108,14 @@ export async function probePublicSupport({campaign,fetcher=globalThis.fetch,time
       response.headers.get("referrer-policy")==="no-referrer";
    }else if(kind==="landing"&&response.status===200&&
      /text\/html/i.test(response.headers.get("content-type")??"")){
-    const html=await response.text();
-    matches=html.length<250000&&html.includes(campaign.title)&&
+    const html=await boundedBodyText(response,250000);
+    matches=html!==null&&html.includes(campaign.title)&&
      html.includes(campaign.merchantNotice)&&html.includes("/support/go?kind=one-time");
    }else if(kind==="share"&&response.status===200&&
      /application\/json/i.test(response.headers.get("content-type")??"")){
-    const payload=await response.json();
+    const raw=await boundedBodyText(response,100000);
+    let payload=null;
+    if(raw!==null)try{payload=JSON.parse(raw);}catch{/* Valid HTTP, invalid JSON: mismatch, not unknown network. */}
     const expected=expectedShareRows(campaign);
     matches=isObject(payload)&&payload.campaignId===campaign.campaignId&&
       payload.landingUrl===campaign.canonicalUrl&&Array.isArray(payload.items)&&
@@ -89,10 +132,18 @@ export async function probePublicSupport({campaign,fetcher=globalThis.fetch,time
  }));
  const publicRouteReceiving=checks.every(check=>check.outcome==="matched")?"passed":
   checks.some(check=>check.outcome==="mismatched")?"failed":"unknown";
+ // A known Worker source-handler signature narrows release investigation when
+ // support routes fail. Absence does not distinguish DNS, custom-domain, older
+ // code, static assets or a different Worker without provider-owned evidence.
+ const workerSignature=publicRouteReceiving==="passed"?null:
+  await workerHandlerSignature(fetcher,origin,timeoutMs);
+ const installationInvestigation=publicRouteReceiving==="passed"?"not-needed":
+  workerSignature.outcome==="matched"?"known-worker-handler-seen-support-incomplete":
+  workerSignature.outcome==="mismatched"?"known-worker-handler-not-seen":"network-or-host-unobserved";
  return {
   type:"ShopPublicSupportBuyerRouteObservation",schemaVersion:1,
   observedAt:now(),origin,sourceCampaignId:campaign.campaignId,
-  publicRouteReceiving,checks,
+  publicRouteReceiving,checks,workerSignature,installationInvestigation,
   exactDeployedRevisionReceived:false,
   paymentAuthorizationAttempted:false,
   stripeCheckoutFollowed:false,
