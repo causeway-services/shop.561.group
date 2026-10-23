@@ -47,3 +47,15 @@ jobs:
         run: |
           node --check test/shop-commerce-integration.test.mjs
           node --test test/shop-commerce-integration.test.mjs
+
+      # This one PR is the release-receiving integration of existing source work.
+      # No secrets, payments, deployments, new recurring tasks or billed runners.
+      # Standard ubuntu-24.04 runners in this public repository are free.
+      - name: Qualify full pinned Shop Worker and non-deploying Wrangler bundle
+        if: github.event_name == 'pull_request' && github.head_ref == 'integration/commerce-shop-original-three-20261022'
+        run: |
+          node --version
+          npx --yes pnpm@10.21.0 install --frozen-lockfile --ignore-scripts --reporter=append-only
+          npm run check
+          npm test
+          ./node_modules/.bin/wrangler deploy --dry-run --outdir /tmp/shop-561-receiving
