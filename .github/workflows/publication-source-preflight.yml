@@ -38,6 +38,13 @@ jobs:
           node --check src/service-discovery.mjs
           node --test test/service-discovery.test.mjs
 
+      # Real Node tests, isolated fixtures: never reach Fastmail or create a grant.
+      - name: Refuse duplicate, forged or unreceived promotional gift notice delivery
+        run: |
+          node --check src/promotion-email-gifts.mjs
+          node --check scripts/promotional-gift-mail.mjs
+          node --test test/promotion-email-gifts.test.mjs test/promotional-gift-mail.test.mjs
+
       - name: Verify original open-work campaign, safe checkout routes, and share pack
         run: |
           node --check src/support-campaign.mjs
