@@ -39,6 +39,13 @@ jobs:
           node --test test/support-campaign.test.mjs
           node scripts/export-support-campaign.mjs --json >/tmp/open-work-campaign.json
           node scripts/export-support-campaign.mjs --csv >/tmp/open-work-attribution.csv
+      - name: Receive Shop public buyer-path source and six refusal cases
+        run: |
+          node --check scripts/receive-public-shop.mjs
+          node --test test/receive-public-shop.test.mjs
+          # This tests the exact source reader and controls; no network payment,
+          # public deployment, cash or customer acceptance is inferred.
+
       - name: Verify source-only accepted-books Atom discovery
         run: |
           node --check src/book-feed.mjs
