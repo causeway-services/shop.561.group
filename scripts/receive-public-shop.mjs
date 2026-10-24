@@ -68,6 +68,10 @@ function cases(campaign, catalog) {
       check: body => body.includes('<loc>' + SHOP_ORIGIN + '/support</loc>') },
     { id: 'tip-redirect', method: 'HEAD', path: '/support/go?kind=one-time&source=direct', status: 303,
       redirect: campaign.oneTime.links.direct.url },
+    { id: 'github-tip-redirect', method: 'HEAD', path: '/support/go?kind=one-time&source=github', status: 303,
+      redirect: campaign.oneTime.links.github.url },
+    { id: 'fediverse-tip-redirect', method: 'HEAD', path: '/support/go?kind=one-time&source=fediverse', status: 303,
+      redirect: campaign.oneTime.links.fediverse.url },
     { id: 'monthly-redirect', method: 'HEAD', path: '/support/go?kind=monthly&source=direct', status: 303,
       redirect: campaign.monthly.url },
     { id: 'refuse-unsupported-method', method: 'POST', path: '/support', status: 405,
@@ -82,6 +86,8 @@ export async function receivePublicShop({ fetcher = fetch, campaign, catalog, or
   must(campaign?.canonicalUrl === SHOP_ORIGIN + '/support' && campaign?.merchantDisplayName === 'emsenn' &&
     typeof campaign?.campaignId === 'string' && Array.isArray(campaign?.channels) &&
     typeof campaign?.oneTime?.links?.direct?.url === 'string' &&
+    typeof campaign?.oneTime?.links?.github?.url === 'string' &&
+    typeof campaign?.oneTime?.links?.fediverse?.url === 'string' &&
     typeof campaign?.monthly?.url === 'string', 'Original campaign identity required');
   must(catalog?.merchant?.legalBody === 'emsenn' && typeof catalog?.merchant?.name === 'string' &&
     Array.isArray(catalog?.offerings) && catalog.offerings.length > 0 &&
