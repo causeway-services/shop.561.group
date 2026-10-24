@@ -6,13 +6,15 @@ import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { prepareJob, runJob, sendFastmail, deliverGiftNotice, confirmedGiftNotice } from "../scripts/promotional-gift-mail.mjs";
 import { grantReference } from "../src/promotion-email-gifts.mjs";
+const GIFT_ID = "gift-12345678-1234-1234-1234-123456789abc";
+const GIFT_URL = "https://shop.561.group/gifts/gift-12345678-1234-1234-1234-123456789abc";
 
 test("one accepted send grants and receipts, repeated run does not send twice", async () => {
   const dir = await mkdtemp(join(tmpdir(), "shop-promo-")); const file = join(dir, "job.json");
   await prepareJob(file, { from: "press@example.org", to: "reader@example.org", offering: "ice-out", subject: "An advance copy", body: "Here is the book." });
   let sends = 0, grants = 0;
   const send = async job => { sends++; return { accepted: true, status: "sent", provider: "fastmail-jmap", messageId: "sub123", to: [job.to] }; };
-  const grant = { shopGrant: async () => { grants++; return { id: "g1" }; }, shopRead: async () => ({ offering: "ice-out", email: "reader@example.org", status: "active" }) };
+  const grant = { shopGrant: async () => { grants++; return { id: GIFT_ID, offering: "ice-out", url: GIFT_URL }; }, shopRead: async () => ({ id: GIFT_ID, offering: "ice-out", status: "active" }) };
   const old = process.env.SHOP_GIFT_AGENT_KEY, oldMail = process.env.FASTMAIL_JMAP_TOKEN;
   try {
     process.env.SHOP_GIFT_AGENT_KEY = "test"; process.env.FASTMAIL_JMAP_TOKEN = "test";
@@ -29,7 +31,7 @@ test("send accepted then grant failure retries grant without another send", asyn
   try {
     process.env.SHOP_GIFT_AGENT_KEY = "test"; process.env.FASTMAIL_JMAP_TOKEN = "test";
     const send = async job => { sends++; return { accepted: true, status: "sent", provider: "fastmail-jmap", messageId: "submission2", to: [job.to] }; };
-    const grant = { shopGrant: async () => { if (++grants === 1) throw new Error("network failed"); return { id: "g1" }; }, shopRead: async () => ({ offering: "ice-out", email: "reader@example.org", status: "active" }) };
+    const grant = { shopGrant: async () => { if (++grants === 1) throw new Error("network failed"); return { id: GIFT_ID, offering: "ice-out", url: GIFT_URL }; }, shopRead: async () => ({ id: GIFT_ID, offering: "ice-out", status: "active" }) };
     await assert.rejects(runJob(file, { send, grant }), /network failed/);
     assert.equal(JSON.parse(await readFile(file, "utf8")).state, "grant-failed");
     assert.equal((await runJob(file, { send, grant })).state, "grant-verified");
@@ -137,7 +139,7 @@ async function noticeFixture() {
     accepted: true, status: "sent", provider: "fastmail-jmap",
     messageId: "original-submission", to: [prepared.to],
   };
-  const id = "gift-test_1";
+  const id = GIFT_ID;
   const gift = {
     verified: true, id, url: `https://shop.561.group/gifts/${id}`,
     reference: grantReference({ provider: receipt.provider, messageId: receipt.messageId,
@@ -163,7 +165,7 @@ test("confirmed original grant sends one explicitly requested private notice, no
     const { file, record } = await noticeFixture();
     const notice = confirmedGiftNotice(record);
     assert.equal(notice.to, record.to);
-    assert.match(notice.body, /https:\/\/shop\.561\.group\/gifts\/gift-test_1/u);
+    assert.ok(notice.body.includes(GIFT_URL));
     let sends = 0, reads = 0;
     const grant = { shopRead: async id => { reads++; return validGrant.shopRead(id); } };
     const send = async job => {
