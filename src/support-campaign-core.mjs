@@ -8,9 +8,12 @@ function validateSupportCampaign(c){
  const stripeId=v=>typeof v==="string"&&/^plink_[A-Za-z0-9]+$/.test(v);
  if(!c||c.schemaVersion!==1||!slug(c.campaignId)||c.canonicalUrl!=="https://shop.561.group/support"||c.merchantDisplayName!=="emsenn"||!Array.isArray(c.proof)||c.proof.length<1||c.proof.length>12||!Array.isArray(c.channels)||!c.channels.length||c.channels.length>12||!c.oneTime||!c.monthly||c.oneTime.minCents!==500||c.oneTime.maxCents!==1000000||!Number.isInteger(c.oneTime.presetCents)||c.oneTime.presetCents<c.oneTime.minCents||c.oneTime.presetCents>c.oneTime.maxCents)throw new TypeError("Campaign identity and verified pricing required");
  for(const k of ["title","description","merchantNotice"])if(typeof c[k]!=="string"||c[k].length<15||c[k].length>900)throw new TypeError("Campaign public copy invalid");
- const ids=new Set();
- for(const [source,link] of Object.entries(c.oneTime.links??{})){if(!slug(source)||!stripeId(link?.id)||!stripeUrl(link?.url)||ids.has(link.id))throw new TypeError("Stripe links must be distinct source-qualified receivers");ids.add(link.id);}
- if(!c.oneTime.links?.direct||!stripeId(c.monthly.id)||!stripeUrl(c.monthly.url)||c.monthly.priceCents!==1000||c.monthly.interval!=="month"||ids.has(c.monthly.id))throw new TypeError("Recurring receiver invalid");
+ // A different link ID pointing at the same hosted Checkout loses channel attribution
+ // and can silently convert a recurring buyer into a one-time supporter.
+ // Refuse both identifier and destination reuse before rendering or redirecting.
+ const ids=new Set(),urls=new Set();
+ for(const [source,link] of Object.entries(c.oneTime.links??{})){if(!slug(source)||!stripeId(link?.id)||!stripeUrl(link?.url)||ids.has(link.id)||urls.has(link.url))throw new TypeError("Stripe links must be distinct source-qualified receivers");ids.add(link.id);urls.add(link.url);}
+ if(!c.oneTime.links?.direct||!stripeId(c.monthly.id)||!stripeUrl(c.monthly.url)||c.monthly.priceCents!==1000||c.monthly.interval!=="month"||ids.has(c.monthly.id)||urls.has(c.monthly.url))throw new TypeError("Recurring receiver invalid");
  const sources=new Set();
  for(const channel of c.channels){if(!slug(channel.id)||sources.has(channel.id)||!["referral","social","email"].includes(channel.medium)||typeof channel.pitch!=="string"||channel.pitch.length<30||channel.pitch.length>600)throw new TypeError("Campaign channel invalid");sources.add(channel.id);}
  const proof=new Set();
