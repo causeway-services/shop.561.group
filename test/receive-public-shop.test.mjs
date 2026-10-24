@@ -186,6 +186,28 @@ test('reject forged campaign attribution, repeated channels and changed rail ass
   }
 });
 
+test('missing, duplicate, foreign and unsafe source payment URLs refuse before buyer network calls', async () => {
+  const corruptions = [
+    campaign => { campaign.monthly.url = ''; },
+    campaign => { campaign.oneTime.links.direct.url = ''; },
+    campaign => { campaign.monthly.url = campaign.oneTime.links.direct.url; },
+    campaign => { campaign.oneTime.links.github.url = 'http://buy.stripe.com/9B68wQ9HA50ub2Yen25EY04'; },
+    campaign => { campaign.oneTime.links.fediverse.url = 'https://foreign.example/checkout'; },
+    campaign => { campaign.oneTime.links.direct.url = 'https://buy.stripe.com/'; },
+    campaign => { campaign.monthly.url = 'https://buy.stripe.com@foreign.example/checkout'; },
+    campaign => { campaign.oneTime.links.github.url += '?redirect=foreign'; },
+  ];
+  let reads = 0;
+  const fetcher = async () => { reads++; throw new Error('network must not be consulted'); };
+  for (const corrupt of corruptions) {
+    const changed = structuredClone(campaign);
+    corrupt(changed);
+    await assert.rejects(() => receivePublicShop({fetcher, campaign:changed, catalog}),
+      /Unique original HTTPS Stripe-hosted destinations required/);
+  }
+  assert.equal(reads, 0);
+});
+
 test('original seller/source and fixed HTTPS origin validate before any network call', async () => {
   let reads = 0;
   const fetcher = async () => {reads++; throw new Error('should not fetch');};
