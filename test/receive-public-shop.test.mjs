@@ -6,7 +6,9 @@ const ORIGIN = 'https://shop.561.group';
 const campaign = {
   canonicalUrl: ORIGIN + '/support', merchantDisplayName: 'emsenn', campaignId: 'open-work-2026-10',
   channels: [{id: 'github'}, {id: 'fediverse'}, {id: 'email'}],
-  oneTime: {links: {direct: {url: 'https://buy.stripe.com/3cIfZi9HA2Smgni3Io5EY03'}}},
+  oneTime: {links: {direct: {url: 'https://buy.stripe.com/3cIfZi9HA2Smgni3Io5EY03'},
+    github: {url: 'https://buy.stripe.com/9B68wQ9HA50ub2Yen25EY04'},
+    fediverse: {url: 'https://buy.stripe.com/cNi8wQg5Y8cG8UQ2Ek5EY05'}}},
   monthly: {url: 'https://buy.stripe.com/28E28s1b4gJcb2Y3Io5EY02'},
 };
 const catalog = {merchant: {name: '561 Group', legalBody: 'emsenn'},
@@ -27,6 +29,10 @@ const routing = (rewrite = () => undefined) => async (raw, init) => {
   if (key === 'GET /sitemap.xml') return body('<loc>' + ORIGIN + '/support</loc>', 'application/xml');
   if (key === 'HEAD /support/go?kind=one-time&source=direct') return new Response(null, {status:303,
     headers:{location:campaign.oneTime.links.direct.url, 'cache-control':'no-store', 'referrer-policy':'no-referrer'}});
+  if (key === 'HEAD /support/go?kind=one-time&source=github') return new Response(null, {status:303,
+    headers:{location:campaign.oneTime.links.github.url, 'cache-control':'no-store', 'referrer-policy':'no-referrer'}});
+  if (key === 'HEAD /support/go?kind=one-time&source=fediverse') return new Response(null, {status:303,
+    headers:{location:campaign.oneTime.links.fediverse.url, 'cache-control':'no-store', 'referrer-policy':'no-referrer'}});
   if (key === 'HEAD /support/go?kind=monthly&source=direct') return new Response(null, {status:303,
     headers:{location:campaign.monthly.url, 'cache-control':'no-store', 'referrer-policy':'no-referrer'}});
   if (key === 'POST /support') return new Response(null, {status:405, headers:{allow:'GET, HEAD'}});
@@ -42,14 +48,14 @@ test('positive public buyer route, legal seller, and no implicit payments or red
   });
   assert.equal(report.kind, 'shop.public-unsigned-buyer-receiving/v1');
   assert.equal(report.acceptedPublicRoutes, true);
-  assert.equal(report.cases.length, 10);
+  assert.equal(report.cases.length, 12);
   assert.equal(report.cases.every(c => c.finding === 'received'), true);
   assert.equal(report.merchant, 'emsenn');
   assert.equal(report.installedSourceVersion, null);
   assert.equal(report.signedPayment, 'not-attempted');
   assert.equal(report.customerDelivery, 'not-observed');
   assert.equal(report.netSettledCash, 'not-observed');
-  assert.equal(inputs.length, 10);
+  assert.equal(inputs.length, 12);
   assert.equal(inputs.every(c => c.url.startsWith(ORIGIN) &&
     c.options.redirect === 'manual' && c.options.credentials === 'omit' &&
     c.options.cache === 'no-store'), true);
