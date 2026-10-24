@@ -43,13 +43,13 @@ const routing = (rewrite = () => undefined) => async (raw, init) => {
   if (key === 'HEAD /support') return new Response(null, {status:200, headers:{'content-type':'text/html'}});
   if (key === 'GET /support/share.json') return Response.json(sharePack());
   if (key === 'GET /sitemap.xml') return body('<loc>' + ORIGIN + '/support</loc>', 'application/xml');
-  if (key === 'HEAD /support/go?kind=one-time&source=direct') return new Response(null, {status:303,
+  if ((key === 'HEAD /support/go?kind=one-time&source=direct' || key === 'GET /support/go?kind=one-time&source=direct')) return new Response(null, {status:303,
     headers:{location:campaign.oneTime.links.direct.url, 'cache-control':'no-store', 'referrer-policy':'no-referrer'}});
-  if (key === 'HEAD /support/go?kind=one-time&source=github') return new Response(null, {status:303,
+  if ((key === 'HEAD /support/go?kind=one-time&source=github' || key === 'GET /support/go?kind=one-time&source=github')) return new Response(null, {status:303,
     headers:{location:campaign.oneTime.links.github.url, 'cache-control':'no-store', 'referrer-policy':'no-referrer'}});
-  if (key === 'HEAD /support/go?kind=one-time&source=fediverse') return new Response(null, {status:303,
+  if ((key === 'HEAD /support/go?kind=one-time&source=fediverse' || key === 'GET /support/go?kind=one-time&source=fediverse')) return new Response(null, {status:303,
     headers:{location:campaign.oneTime.links.fediverse.url, 'cache-control':'no-store', 'referrer-policy':'no-referrer'}});
-  if (key === 'HEAD /support/go?kind=monthly&source=direct') return new Response(null, {status:303,
+  if ((key === 'HEAD /support/go?kind=monthly&source=direct' || key === 'GET /support/go?kind=monthly&source=direct')) return new Response(null, {status:303,
     headers:{location:campaign.monthly.url, 'cache-control':'no-store', 'referrer-policy':'no-referrer'}});
   if (key === 'POST /support') return new Response(null, {status:405, headers:{allow:'GET, HEAD'}});
   if (key === 'GET /support/go?kind=invalid') return new Response('Offer not found', {status:404});
@@ -64,14 +64,14 @@ test('positive public buyer route, legal seller, and no implicit payments or red
   });
   assert.equal(report.kind, 'shop.public-unsigned-buyer-receiving/v1');
   assert.equal(report.acceptedPublicRoutes, true);
-  assert.equal(report.cases.length, 12);
+  assert.equal(report.cases.length, 16);
   assert.equal(report.cases.every(c => c.finding === 'received'), true);
   assert.equal(report.merchant, 'emsenn');
   assert.equal(report.installedSourceVersion, null);
   assert.equal(report.signedPayment, 'not-attempted');
   assert.equal(report.customerDelivery, 'not-observed');
   assert.equal(report.netSettledCash, 'not-observed');
-  assert.equal(inputs.length, 12);
+  assert.equal(inputs.length, 16);
   assert.equal(inputs.every(c => c.url.startsWith(ORIGIN) &&
     c.options.redirect === 'manual' && c.options.credentials === 'omit' &&
     c.options.cache === 'no-store'), true);
@@ -100,6 +100,27 @@ test('foreign-merchant redirects and broken privacy controls fail without follow
   assert.equal(report.cases.find(c => c.case === 'tip-redirect').finding, 'unqualified-merchant-redirect');
   assert.equal(report.cases.find(c => c.case === 'refuse-unsupported-method').finding, 'unexpected-http-status');
   assert.equal(called.every(url => url.startsWith(ORIGIN)), true);
+});
+
+test('a HEAD-only redirect cannot falsely accept a broken human GET buyer click', async () => {
+  const report = await call(routing(key =>
+    key === 'GET /support/go?kind=one-time&source=direct' ?
+      new Response('missing actual buyer route', {status:404}) : undefined));
+  assert.equal(report.cases.find(c => c.case === 'tip-redirect').finding, 'received');
+  assert.equal(report.cases.find(c => c.case === 'tip-buyer-click').finding, 'unexpected-http-status');
+  assert.equal(report.acceptedPublicRoutes, false);
+});
+
+test('a GET-only wrong-payee redirect refuses despite matching HEAD preflight', async () => {
+  const report = await call(routing(key =>
+    key === 'GET /support/go?kind=monthly&source=direct' ?
+      new Response(null, {status:303, headers:{
+        location:'https://buy.stripe.com/WRONGPAYEE',
+        'cache-control':'no-store', 'referrer-policy':'no-referrer'
+      }}) : undefined));
+  assert.equal(report.cases.find(c => c.case === 'monthly-redirect').finding, 'received');
+  assert.equal(report.cases.find(c => c.case === 'monthly-buyer-click').finding, 'unqualified-merchant-redirect');
+  assert.equal(report.acceptedPublicRoutes, false);
 });
 
 test('wrong legal seller and missing original products refuse as incomplete commerce', async () => {
