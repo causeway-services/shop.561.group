@@ -80,6 +80,9 @@ test("changed merchant, forged URLs and repeated receiver IDs fail before any ro
     c=>{c.merchantDisplayName="another-payee";},
     c=>{c.oneTime.links.github.url="https://evil.invalid/checkout";},
     c=>{c.oneTime.links.github.id=c.oneTime.links.direct.id;},
+    // Distinct opaque IDs do not make a reused hosted Checkout destination safe.
+    c=>{c.oneTime.links.github.url=c.oneTime.links.direct.url;},
+    c=>{c.monthly.url=c.oneTime.links.direct.url;},
     c=>{c.monthly.priceCents=900;},
     c=>{c.proof.push({...c.proof[0]});},
   ];
