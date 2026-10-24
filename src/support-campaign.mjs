@@ -1,4 +1,4 @@
-import campaign from "../data/records/marketing/open-work-campaign.json" with { type: "json" };
+import campaign from "#parameters/data/records/marketing/open-work-campaign.json" with { type: "json" };
 function esc(value){return String(value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
 
 function money(cents){return "$"+(cents/100).toLocaleString("en-US",{maximumFractionDigits:0});}

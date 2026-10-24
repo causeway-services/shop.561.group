@@ -19,6 +19,12 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
+          # parameters/ is the private causeway-services/public-shop-services-section
+          # (catalog.json, data/records, ops): the data that parameterizes this build.
+          # GITHUB_TOKEN cannot read another private repository; set the
+          # PARAMETERS_READ_TOKEN secret (read-only on public-*-services-section).
+          submodules: true
+          token: ${{ secrets.PARAMETERS_READ_TOKEN || github.token }}
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '24'

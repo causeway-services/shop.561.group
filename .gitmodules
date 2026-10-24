@@ -1,0 +1,4 @@
+[submodule "parameters"]
+	path = parameters
+	url = https://github.com/causeway-services/public-shop-services-section.git
+	branch = main

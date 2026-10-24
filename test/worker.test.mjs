@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { createHmac } from "node:crypto";
 import test from "node:test";
 import worker, { CATALOG, CATALOG_VALIDATION, ShopFulfillment, ORIGINAL_EXTERNAL_STRIPE_PAYMENT_LINK_IDS, EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED } from "../src/worker.mjs";
-import originalPublications from "../data/records/commerce-navigation/2026-10-20-original-publication-identities.json" with { type: "json" };
+import originalPublications from "#parameters/data/records/commerce-navigation/2026-10-20-original-publication-identities.json" with { type: "json" };
 import {campaign} from "../src/support-campaign.mjs";
 
 function fulfillment() {

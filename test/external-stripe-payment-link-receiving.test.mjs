@@ -10,8 +10,8 @@ import {ORIGINAL_EXTERNAL_STRIPE_PAYMENT_LINK_IDS,
  EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED} from '../src/worker.mjs';
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
-const authored=JSON.parse(readFileSync(join(root,'catalog.json'),'utf8'));
-const schema=JSON.parse(readFileSync(join(root,'data/records/schema/external-stripe-payment-link-receiver.schema.json'),'utf8'));
+const authored=JSON.parse(readFileSync(join(root,'parameters','catalog.json'),'utf8'));
+const schema=JSON.parse(readFileSync(join(root,'parameters/data/records/schema/external-stripe-payment-link-receiver.schema.json'),'utf8'));
 const sole=authored.externalStripePaymentLinkReceivers[0];
 
 test('the original Shop source and compiled Worker audit ALL four existing emsenn support links',()=>{
