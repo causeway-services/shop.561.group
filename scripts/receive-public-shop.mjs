@@ -58,11 +58,25 @@ function cases(campaign, catalog) {
     { id: 'share', method: 'GET', path: '/support/share.json', status: 200, type: 'application/json',
       check: body => {
         const parsed = JSON.parse(body);
-        const sourceChannels = campaign.channels.map(c => c.id);
+        const channels = new Map(campaign.channels.map(channel => [channel.id, channel]));
         return parsed?.campaignId === campaign.campaignId &&
-          Array.isArray(parsed.items) && parsed.items.length === sourceChannels.length &&
-          parsed.items.every(item => sourceChannels.includes(item.channel) &&
-            typeof item.shareUrl === 'string' && item.shareUrl.startsWith(campaign.canonicalUrl));
+          parsed.landingUrl === campaign.canonicalUrl &&
+          Array.isArray(parsed.items) && parsed.items.length === channels.size &&
+          new Set(parsed.items.map(item => item?.channel)).size === channels.size &&
+          parsed.items.every(item => {
+            const channel = channels.get(item?.channel);
+            const link = campaign.oneTime.links[item?.channel] ?? campaign.oneTime.links.direct;
+            if (!channel || !link) return false;
+            const expected = new URL(campaign.canonicalUrl);
+            expected.searchParams.set('utm_source', channel.id);
+            expected.searchParams.set('utm_medium', channel.medium);
+            expected.searchParams.set('utm_campaign', campaign.campaignId);
+            return item.medium === channel.medium &&
+              item.shareUrl === expected.toString() &&
+              item.paymentLinkId === link.id &&
+              item.paymentAttribution ===
+                (campaign.oneTime.links[item.channel] ? 'channel-specific' : 'direct-fallback');
+          });
       } },
     { id: 'sitemap', method: 'GET', path: '/sitemap.xml', status: 200, type: 'application/xml',
       check: body => body.includes('<loc>' + SHOP_ORIGIN + '/support</loc>') },
