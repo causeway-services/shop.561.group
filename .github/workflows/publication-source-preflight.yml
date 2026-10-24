@@ -47,11 +47,16 @@ jobs:
           # public deployment, cash or customer acceptance is inferred.
 
       - name: Observe currently deployed Shop buyer routes (not candidate acceptance)
-        # An independently hosted, unsigned observation. Failed live routes are
-        # a retained non-release finding, NOT a reason to claim source tests failed.
+        # An independently hosted, unsigned observation; the failing live
+        # release is not confused with the independently passing source tests.
         # No checkout, customer input, credentials, payments, or deployment.
-        continue-on-error: true
-        run: node scripts/receive-public-shop.mjs
+        run: |
+          if node scripts/receive-public-shop.mjs; then
+            echo 'Public Shop customer route is independently readable; no buyer payment or delivery is implied' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo '::warning title=Public Shop buyer route not received::Current installed public Shop failed source-qualified external receiving; inspect the per-case JSON and release custody before saying checkout works.'
+            echo 'Public Shop buyer path: **NOT RECEIVED**. This nonblocking observation does not certify the proposed source or permit a release.' >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Verify source-only accepted-books Atom discovery
         run: |
