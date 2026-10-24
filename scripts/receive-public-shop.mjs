@@ -97,6 +97,17 @@ function cases(campaign, catalog) {
       redirect: campaign.oneTime.links.fediverse.url },
     { id: 'monthly-redirect', method: 'HEAD', path: '/support/go?kind=monthly&source=direct', status: 303,
       redirect: campaign.monthly.url },
+    // Human browsers issue GET, not HEAD. Without these independent observations
+    // an installed site can pass every redirect probe while every actual click
+    // fails or sends the buyer to another recipient. Never follow the processor.
+    { id: 'tip-buyer-click', method: 'GET', path: '/support/go?kind=one-time&source=direct', status: 303,
+      redirect: campaign.oneTime.links.direct.url },
+    { id: 'github-tip-buyer-click', method: 'GET', path: '/support/go?kind=one-time&source=github', status: 303,
+      redirect: campaign.oneTime.links.github.url },
+    { id: 'fediverse-tip-buyer-click', method: 'GET', path: '/support/go?kind=one-time&source=fediverse', status: 303,
+      redirect: campaign.oneTime.links.fediverse.url },
+    { id: 'monthly-buyer-click', method: 'GET', path: '/support/go?kind=monthly&source=direct', status: 303,
+      redirect: campaign.monthly.url },
     { id: 'refuse-unsupported-method', method: 'POST', path: '/support', status: 405,
       allow: 'GET, HEAD' },
     { id: 'refuse-unknown-offer', method: 'GET', path: '/support/go?kind=invalid', status: 404 },
