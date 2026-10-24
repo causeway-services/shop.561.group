@@ -78,7 +78,7 @@ jobs:
           node --test test/reconcile-authored-offer-links.test.mjs test/compile-catalog.test.mjs
 
       - name: Qualify full pinned Shop Worker and non-deploying Wrangler bundle
-        if: github.event_name == 'pull_request' && github.head_ref == 'integration/commerce-shop-original-three-20261022'
+        if: github.event_name == 'pull_request' && (github.head_ref == 'integration/commerce-shop-original-three-20261022' || github.head_ref == 'fix/shop-public-buyer-receiving-20261023')
         run: |
           node --version
           npx --yes pnpm@10.21.0 install --frozen-lockfile --ignore-scripts --reporter=append-only
