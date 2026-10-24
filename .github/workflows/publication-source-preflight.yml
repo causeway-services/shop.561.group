@@ -46,6 +46,13 @@ jobs:
         run: |
           node --check scripts/receive-public-shop.mjs
           node --test test/receive-public-shop.test.mjs
+      # Real support route/validation implementation under synthetic inputs;
+      # unlike the data-bound merchant fixture this code has no private Gitlink.
+      - name: Qualify parameter-independent merchant routes and attribution
+        run: |
+          node --check src/support-campaign-core.mjs
+          node --check src/support-campaign.mjs
+          node --test test/support-campaign-core.test.mjs
       - name: Qualify accepted-book publication feed without private catalog
         run: |
           node --check src/book-feed.mjs
