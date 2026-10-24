@@ -12,7 +12,11 @@ const campaign = {
   monthly: {url: 'https://buy.stripe.com/28E28s1b4gJcb2Y3Io5EY02'},
 };
 const catalog = {merchant: {name: '561 Group', legalBody: 'emsenn'},
-  offerings: [{id: 'the-x402-economy'}, {id: 'something-else'}]};
+  offerings: [
+    {id: 'the-x402-economy', status: 'live', priceCents: 900, currency: 'usd',
+      release: 'the-x402-economy', agentOfferUrl: 'https://bazaar.561.group/offers?id=original'},
+    {id: 'something-else', status: 'coming-soon', priceCents: 1200, currency: 'usd'},
+  ]};
 const call = fetcher => receivePublicShop({fetcher, campaign, catalog});
 const body = (value, type) => new Response(value, {status: 200, headers: {'content-type': type}});
 const sharePack = () => ({
@@ -103,6 +107,25 @@ test('wrong legal seller and missing original products refuse as incomplete comm
     Response.json({merchant: {name:'561 Group',legalBody:'unformed-llc'}, offerings:[{id:'invented'}]}) : undefined));
   assert.equal(report.cases.find(c => c.case === 'catalog').finding, 'original-source-consumer-mismatch');
   assert.equal(report.acceptedPublicRoutes, false);
+});
+
+test('price and rail drift cannot pass merely by keeping seller and SKU identifiers', async () => {
+  const changes = [
+    item => {item.status = 'coming-soon';},
+    item => {item.priceCents = 1;},
+    item => {item.currency = 'eur';},
+    item => {item.release = 'older-unaccepted-edition';},
+    item => {item.agentOfferUrl = 'https://example.invalid/checkout';},
+  ];
+  for (const corrupt of changes) {
+    const changed = structuredClone(catalog);
+    corrupt(changed.offerings[0]);
+    const report = await call(routing(key => key === 'GET /catalog.json' ?
+      Response.json(changed) : undefined));
+    assert.equal(report.acceptedPublicRoutes, false);
+    assert.equal(report.cases.find(c => c.case === 'catalog').finding,
+      'original-source-consumer-mismatch');
+  }
 });
 
 test('oversized body, bad content type, and denied transport return finite, private failures', async () => {
