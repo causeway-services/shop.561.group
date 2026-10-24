@@ -181,7 +181,9 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
       console.log("Prepared private promotional gift job");
     } else if (mode === "run") {
       const result = await runJob(file);
-      console.log(JSON.stringify({ state: result.state, giftId: result.gift?.id, giftUrl: result.gift?.url }));
+      // The grant ID itself reconstructs the bearer link; keep both in
+      // the operator's mode-0600 job, never generic process logs.
+      console.log(JSON.stringify({ state: result.state, recipientReceived: false }));
     } else {
       const result = await deliverGiftNotice(file);
       // JMAP submission acceptance is not a recipient read or download.
