@@ -46,6 +46,13 @@ jobs:
           # This tests the exact source reader and controls; no network payment,
           # public deployment, cash or customer acceptance is inferred.
 
+      - name: Observe currently deployed Shop buyer routes (not candidate acceptance)
+        # An independently hosted, unsigned observation. Failed live routes are
+        # a retained non-release finding, NOT a reason to claim source tests failed.
+        # No checkout, customer input, credentials, payments, or deployment.
+        continue-on-error: true
+        run: node scripts/receive-public-shop.mjs
+
       - name: Verify source-only accepted-books Atom discovery
         run: |
           node --check src/book-feed.mjs
