@@ -3,6 +3,7 @@ import test from "node:test";
 import { mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { spawnSync } from "node:child_process";
 import { prepareJob, runJob, sendFastmail, deliverGiftNotice, confirmedGiftNotice } from "../scripts/promotional-gift-mail.mjs";
 import { grantReference } from "../src/promotion-email-gifts.mjs";
 
@@ -227,3 +228,18 @@ test("a mismatched Fastmail notice receipt cannot become accepted delivery", asy
     assert.equal(record.state, "notice-uncertain");
     assert.equal(record.noticeReceipt, undefined);
   }));
+
+test("operator command keeps gift bearer ID and URL out of generic process output", async () => {
+  const { file, record } = await noticeFixture();
+  const child = spawnSync(process.execPath,
+    ["scripts/promotional-gift-mail.mjs", "run", file],
+    { cwd: process.cwd(), encoding: "utf8", timeout: 10000 });
+  assert.equal(child.status, 0, child.stderr);
+  const result = JSON.parse(child.stdout);
+  assert.equal(result.state, "grant-verified");
+  assert.equal(result.recipientReceived, false);
+  assert.equal(result.giftId, undefined);
+  assert.equal(result.giftUrl, undefined);
+  assert.ok(!child.stdout.includes(record.gift.id));
+  assert.ok(!child.stdout.includes(record.gift.url));
+});
