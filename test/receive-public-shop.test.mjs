@@ -5,16 +5,29 @@ import { receivePublicShop } from '../scripts/receive-public-shop.mjs';
 const ORIGIN = 'https://shop.561.group';
 const campaign = {
   canonicalUrl: ORIGIN + '/support', merchantDisplayName: 'emsenn', campaignId: 'open-work-2026-10',
-  channels: [{id: 'github'}, {id: 'fediverse'}, {id: 'email'}],
-  oneTime: {links: {direct: {url: 'https://buy.stripe.com/3cIfZi9HA2Smgni3Io5EY03'},
-    github: {url: 'https://buy.stripe.com/9B68wQ9HA50ub2Yen25EY04'},
-    fediverse: {url: 'https://buy.stripe.com/cNi8wQg5Y8cG8UQ2Ek5EY05'}}},
+  channels: [{id: 'github', medium: 'referral'}, {id: 'fediverse', medium: 'social'}, {id: 'email', medium: 'email'}],
+  oneTime: {links: {direct: {id: 'plink_direct', url: 'https://buy.stripe.com/3cIfZi9HA2Smgni3Io5EY03'},
+    github: {id: 'plink_github', url: 'https://buy.stripe.com/9B68wQ9HA50ub2Yen25EY04'},
+    fediverse: {id: 'plink_fediverse', url: 'https://buy.stripe.com/cNi8wQg5Y8cG8UQ2Ek5EY05'}}},
   monthly: {url: 'https://buy.stripe.com/28E28s1b4gJcb2Y3Io5EY02'},
 };
 const catalog = {merchant: {name: '561 Group', legalBody: 'emsenn'},
   offerings: [{id: 'the-x402-economy'}, {id: 'something-else'}]};
 const call = fetcher => receivePublicShop({fetcher, campaign, catalog});
 const body = (value, type) => new Response(value, {status: 200, headers: {'content-type': type}});
+const sharePack = () => ({
+  campaignId: campaign.campaignId, landingUrl: campaign.canonicalUrl,
+  items: campaign.channels.map(channel => {
+    const url = new URL(campaign.canonicalUrl);
+    url.searchParams.set('utm_source', channel.id);
+    url.searchParams.set('utm_medium', channel.medium);
+    url.searchParams.set('utm_campaign', campaign.campaignId);
+    const link = campaign.oneTime.links[channel.id] ?? campaign.oneTime.links.direct;
+    return {channel: channel.id, medium: channel.medium, shareUrl: url.toString(),
+      paymentLinkId: link.id,
+      paymentAttribution: campaign.oneTime.links[channel.id] ? 'channel-specific' : 'direct-fallback'};
+  }),
+});
 const routing = (rewrite = () => undefined) => async (raw, init) => {
   const url = new URL(raw);
   const key = init.method + ' ' + url.pathname + url.search;
@@ -24,8 +37,7 @@ const routing = (rewrite = () => undefined) => async (raw, init) => {
   if (key === 'GET /catalog.json') return Response.json(catalog);
   if (key === 'GET /support') return body('<div id="billing-support">emsenn <a href="/support/go?kind=one-time&amp;source=direct"></a><a href="/support/go?kind=monthly&amp;source=direct"></a></div>', 'text/html');
   if (key === 'HEAD /support') return new Response(null, {status:200, headers:{'content-type':'text/html'}});
-  if (key === 'GET /support/share.json') return Response.json({campaignId: campaign.campaignId,
-    items: campaign.channels.map(ch => ({channel: ch.id, shareUrl: campaign.canonicalUrl + '?utm_source=' + ch.id}))});
+  if (key === 'GET /support/share.json') return Response.json(sharePack());
   if (key === 'GET /sitemap.xml') return body('<loc>' + ORIGIN + '/support</loc>', 'application/xml');
   if (key === 'HEAD /support/go?kind=one-time&source=direct') return new Response(null, {status:303,
     headers:{location:campaign.oneTime.links.direct.url, 'cache-control':'no-store', 'referrer-policy':'no-referrer'}});
@@ -108,6 +120,26 @@ test('oversized body, bad content type, and denied transport return finite, priv
   assert.equal(failed.acceptedPublicRoutes, false);
   assert.equal(failed.cases.every(c => c.finding === 'transport-or-bounded-body-refused'), true);
   assert.equal(JSON.stringify(failed).includes('PRIVATE TOKEN'), false);
+});
+
+test('reject forged campaign attribution, repeated channels and changed rail assignments', async () => {
+  const corruptions = [
+    pack => { pack.items[1] = {...pack.items[0]}; },
+    pack => { pack.items[0].shareUrl = ORIGIN + '/support?utm_source=unknown'; },
+    pack => { pack.items[0].paymentLinkId = 'plink_foreign'; },
+    pack => { pack.items[1].paymentAttribution = 'direct-fallback'; },
+    pack => { pack.items[2].medium = 'social'; },
+    pack => { pack.landingUrl = 'https://example.invalid/support'; },
+  ];
+  for (const corrupt of corruptions) {
+    const pack = sharePack();
+    corrupt(pack);
+    const report = await call(routing(key => key === 'GET /support/share.json' ?
+      Response.json(pack) : undefined));
+    assert.equal(report.acceptedPublicRoutes, false);
+    assert.equal(report.cases.find(c => c.case === 'share').finding,
+      'original-source-consumer-mismatch');
+  }
 });
 
 test('original seller/source and fixed HTTPS origin validate before any network call', async () => {
