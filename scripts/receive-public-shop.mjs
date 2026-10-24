@@ -37,6 +37,12 @@ async function boundedBody(response) {
 
 function cases(campaign, catalog) {
   const idSet = new Set(catalog.offerings.map(o => o.id));
+  const originalOffers = new Map(catalog.offerings.map(o => [o.id, o]));
+  // A correct merchant and SKU list is not enough: a stale installation can
+  // silently change which items can be bought, for how much, or from which rail.
+  // Compare only source-owned public commercial fields; private edition paths
+  // and payment/provider records are deliberately not collected over HTTP.
+  const saleFields = ['status', 'priceCents', 'currency', 'release', 'agentOfferUrl'];
   return [
     { id: 'home', method: 'GET', path: '/', status: 200, type: 'text/html',
       check: body => body.includes('/support') && body.includes(catalog.merchant.name) },
@@ -46,7 +52,10 @@ function cases(campaign, catalog) {
         return parsed?.merchant?.legalBody === catalog.merchant.legalBody &&
           parsed.merchant.name === catalog.merchant.name &&
           Array.isArray(parsed.offerings) && parsed.offerings.length === idSet.size &&
-          parsed.offerings.every(item => idSet.has(item?.id)) &&
+          parsed.offerings.every(item => {
+            const original = originalOffers.get(item?.id);
+            return original && saleFields.every(field => item[field] === original[field]);
+          }) &&
           new Set(parsed.offerings.map(item => item.id)).size === idSet.size;
       } },
     { id: 'support', method: 'GET', path: '/support', status: 200, type: 'text/html',
