@@ -126,6 +126,19 @@ export async function receivePublicShop({ fetcher = fetch, campaign, catalog, or
   must(catalog?.merchant?.legalBody === 'emsenn' && typeof catalog?.merchant?.name === 'string' &&
     Array.isArray(catalog?.offerings) && catalog.offerings.length > 0 &&
     catalog.offerings.every(o => typeof o.id === 'string'), 'Original legal seller and compiled catalog required');
+  // Source-side null/empty/malformed checkout URLs must never silently skip
+  // the redirect comparison (a missing expected URL is otherwise falsy).
+  // This is host/uniqueness qualification, NOT proof of the Stripe account.
+  const hostedDestinations = [
+    campaign.oneTime.links.direct.url,
+    campaign.oneTime.links.github.url,
+    campaign.oneTime.links.fediverse.url,
+    campaign.monthly.url,
+  ];
+  must(hostedDestinations.every(url =>
+    typeof url === 'string' && /^https:\/\/buy\.stripe\.com\/[A-Za-z0-9]+$/u.test(url)) &&
+    new Set(hostedDestinations).size === hostedDestinations.length,
+  'Unique original HTTPS Stripe-hosted destinations required');
   const observations = await Promise.all(cases(campaign, catalog).map(async spec => {
     const started = performance.now();
     let status = null;
