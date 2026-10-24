@@ -93,8 +93,8 @@ if (import.meta.main) {
   const readJson = path => JSON.parse(readFileSync(resolve(root, path), "utf8"));
   const compiled = await import("../src/compiled-catalog.mjs");
   const {catalog, updated} = reconcileAuthoredOfferLinks(
-    readJson("catalog.json"), compiled.default,
-    readJson("data/records/commerce-navigation/2026-10-20-original-publication-identities.json")
+    readJson("parameters/catalog.json"), compiled.default,
+    readJson("parameters/data/records/commerce-navigation/2026-10-20-original-publication-identities.json")
   );
   const path = resolve(root, "src/compiled-catalog.mjs");
   const generated = generatedModule(catalog);

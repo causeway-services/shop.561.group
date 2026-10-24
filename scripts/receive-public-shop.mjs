@@ -152,7 +152,7 @@ export async function receivePublicShop({ fetcher = fetch, campaign, catalog, or
 
 if (process.argv[1] && pathToFileURL(resolve(process.argv[1])).href === import.meta.url) {
   const here = fileURLToPath(new URL('.', import.meta.url));
-  const campaign = JSON.parse(await readFile(resolve(here, '../data/records/marketing/open-work-campaign.json'), 'utf8'));
+  const campaign = JSON.parse(await readFile(resolve(here, '../parameters/data/records/marketing/open-work-campaign.json'), 'utf8'));
   const catalog = (await import('../src/compiled-catalog.mjs')).default;
   const report = await receivePublicShop({ campaign, catalog });
   process.stdout.write(JSON.stringify(report, null, 2) + '\n');
