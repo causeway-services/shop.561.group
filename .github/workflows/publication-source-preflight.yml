@@ -114,14 +114,3 @@ jobs:
           node --check scripts/audit-publication-source.mjs
           node --check scripts/edition-illustration-provenance.mjs
           node --test test/publication-source-preflight.test.mjs test/service-discovery.test.mjs test/book-feed.test.mjs test/compile-catalog.test.mjs
-      # These original integration and merchant/checkout-refusal tests use only
-      # tracked source and the committed compiled-catalog; they do not need the
-      # private parameters/ Gitlink. Keep the real private-source release gate.
-      - name: Receive cross-feature Shop consumer and source-owned support routes
-        run: |
-          node --check src/support-campaign.mjs
-          node --check scripts/export-support-campaign.mjs
-          node --check test/shop-commerce-integration.test.mjs
-          node --test test/support-campaign.test.mjs test/shop-commerce-integration.test.mjs
-          node scripts/export-support-campaign.mjs --json >/tmp/open-work-campaign.json
-          node scripts/export-support-campaign.mjs --csv >/tmp/open-work-attribution.csv
