@@ -67,6 +67,73 @@ The original Red Cup digital-goods storefront supplier [source commit ba156ab](h
 
 **Receiving stage:** the supplier source and unit/integration tests are committed, and [Causeway's original consumer test](https://github.com/causeway-services/shop.561.group/commit/e0b5044f3585000997b5f9d867d696c0d9f315ec) now exercises its advertised shop product. The exact supplier version has not been independently published/selected in an installed Cloudflare Worker; these lines **do not assert** a deployed MCP endpoint or accepted external customer. The existing source-only `workspace:*` dependency must be resolved by original Code/Operations release machinery, with native test/Worker execution and real buyer HTTP readback before making a production availability claim.
 
+## Qualifying the sovereign Storefront-as-a-Service and Shop (October 18, 2026)
+
+**Product contract rather than a new marketplace implementation.** This hostname is **one shop** operated by 561 Group, not all shops or the operator of other enterprises' goods. The incumbent book catalog, Stripe Checkout, gifts, entitlement and edition/reader semantics stay operationally distinct. Its future human-and-agent offerings include rights-cleared digital goods, physical goods, subscriptions/memberships, tipped/pay-what-you-want goods, microservices, commissioned work and qualified bundled artifacts. A Shop can include multiple independent suppliers only under their own accepted seller/merchant-of-record, payout, fulfillment, revision and rights agreement; discovering *other Shops* is Bazaar's job.
+
+**Storefronts are themselves sellable services.** One Computer Code/Web service Section is an independently accounted provider whose own Shop offers source-qualified storefront capabilities: tenant Shop provisioning, branded page rendering, catalog/API reads, accepted customization, checkout adapter, entitlements and optional maintenance. An Actor/Enterprise can be a paying consumer of this storefront provider while being the seller/operator of the goods in its rented Shop. They retain separate actor identity, domain, source catalog and product prices, rights, branding, grant delegation, bookkeeping/export and preferred allowed payment recipient. Neither an API call nor a code Section's provision of a page gives it ownership of the tenant's goods or the right to divert payment.
+
+**End-to-end metered page example (requirement, not deployed):** Enterprise E with an authorized store-operation grant discovers a Storefront Page Render offer authored by Code Section C. E quotes and agrees to a bounded number or budget of *accepted delivered dynamic page renders* (or another explicitly declared unit). A customer visits E's Shop; an admitted render can consume C's capability and produce C→E usage/settlement evidence tied to a specific request, version, output and tariff. E separately sells its own product P directly to the authorized consumer, retaining P's offer, payment, delivery, royalty and refund obligations. If E chooses Bazaar listing, Market analytics or ASSIST management, those are **optional independent** services from possibly different actors with their own selected prices. A CDN cache hit, failure, suppressed bot abuse, replay, denied grant, ordinary free catalog page or unrelated consumer purchase cannot silently create another render charge. Tiny calls may settle from prepaid budgets/aggregated exact receipts when network fees exceed the microprice; no inferred zero-fee x402 economics.
+
+**Bazaar hosting modes:** This Shop may remain on its original site while listed by Bazaar, or choose a separately contracted *full* tenant Shop hosting/page-render service under a Bazaar-managed route or its own domain. The provider of hosting and the Shop's selling enterprise keep separate identity, payment keys, customer promises and books; hosted does **not** mean Bazaar owns the Shop or that external sellers must migrate to our payment account. An outside Shop can leave the Bazaar and preserve the original purchased entitlements. No such tenant domain or hosting account is provisioned by these requirements.
+
+**Human and agent parity.** A human can browse, inspect full delivery terms, buy, receive, access a library, seek support/refund and export data without needing an LLM. An authorized agent can perform the *same eligible jobs* through machine-readable catalog, typed checkout/purchase quote, order/status, entitlements and original MCP/A2A/HTTP capabilities. Chat or read-only MCP tools confer **no** seller, payment, refund or delegation authority. Shop grants are tenant- and action-scoped, expiring, revocable, audited at the native owner, and deny cross-tenant modification. Agent assistance and expensive rendering are add-ons, never a mandatory fee for free/direct use.
+
+**Meet-then-beat controls — compare paired actual workflows, not brand breadth:**
+
+| Incumbent / source | Exact Shop job to MEET before claiming BEAT | Distinct possible improvement to measure |
+| --- | --- | --- |
+| [Shopify online store](https://help.shopify.com/en/manual/online-store) | Responsive custom-domain shop, product search/filters, accelerated checkout and order experience | Lower *real* tenant cost for low traffic or pay-as-used merchants, with equally successful purchases |
+| [WooCommerce REST + Store APIs](https://developer.woocommerce.com/docs/apis/) | Merchant product/order/customer operations separate from public cart/checkout/product APIs | Portable sovereign seller/agent capability and fewer mandatory hosting/extension components |
+| [BigCommerce headless carts](https://docs.bigcommerce.com/developer/docs/admin/checkout-and-cart/custom-checkouts/graphql-storefront) | Cart, delivery/shipping, checkout, payment and original customer order | Metered storefront without surrendering tenant authority or checkout completeness |
+| [Fourthwall creator shops](https://fourthwall.com/shops) | Creator-branded digital/physical products, fulfillment and membership | Source-portable goods and transparent independent service fees, preserving actual delivery quality |
+| [Gumroad](https://gumroad.com/features) | Digital download editions, license keys, subscriptions, pay-what-you-want, export and analytics | Independently owned and deployable Shop, API/agent purchase parity and verifiable per-use economics |
+| [Ko-fi Shop](https://help.ko-fi.com/hc/en-us/articles/360009712917-Ko-fi-Shop-Sell-digital-physical-products), [itch.io](https://itch.io/docs/general/about) | Low-friction creator product/patronage/commission, direct payment, pay-what-you-want, bundles and buyer delivery | Better autonomous-but-authorized merchant controls at comparable total buyer/seller cost |
+
+**First valid/alternate/refusal receiving.** (A) Original 561 Shop retains a completed book purchase, reader library and gifts after provider separation; (B) an **actually entitled independent** shopkeeper buys one storefront render service from a real Section provider, publishes a distinct good and sells/delivers it without adopting the Group's legal body; (C) expired grants, stale tariffs, rights refusal, wrong payee, unpaid/suppressed renders, duplicate usage, cross-tenant edit and denied refund never become paid/fulfilled activity. Record elapsed time to publish, usable commerce jobs, true network/provider fees, independently accepted delivery and after-cost contribution, not predicted revenue. Until then all broader sovereignty/competitive clauses remain requirements, not an installed multi-tenant Shop.
+
+**Reconciliation needed before implementation:** The operational catalog currently says agents buy the books through market.561.group and the current Worker is people/book-focused. Retain those real historical URLs, settlement, edition and recovery identifiers until a true migration is received; do **not** edit generated merchandise, reassign wallets or redirect customers as a shortcut. Destination cross-links: [Bazaar federation owner](https://github.com/coesite-operations/capability-market-services-section/issues/5), [Market-of-markets owner](https://github.com/causeway-services/market.561.group/issues/19), [ASSIST consumer](https://github.com/red-cup-engineering/assist/issues/2), [source-owned Group requirement](https://github.com/561-group/561-group-services-section/blob/main/lib/agency/requirements/market-bazaar-shop-agentic-composable-enterprise.json).
+
+## What this is
+
+A Cloudflare Worker (`src/worker.mjs`) that composes
+`@red-cup-engineering/digital-goods-storefront-services-section`, which
+owns everything below. This site owns its catalog, its branding, its
+bindings and the `ShopFulfillment` Durable Object registration.
+
+- The storefront, rendered by TUFTE: search, facets, book pages with
+  covers, contents, formats and sizes, and each edition's verification
+  record. Search engines and link previews get Open Graph and schema.org
+  data.
+- Card checkout through Stripe, and delivery of each book's paid release:
+  the pointer at `goods/<release>/release.json` in `shop-561-group-goods`,
+  the same one the market reads.
+- Reader accounts through Google sign-in (any verified Google account; an
+  account is its email).
+- A library per reader. It always serves the newest accepted edition.
+- Gifts. A gifter named in `SHOP_GIFTERS` gives a book to an email address
+  from `/gifts` and gets a link to send. The link delivers the book at once,
+  and the recipient keeps it by signing in with that address. A gift can be
+  withdrawn.
+- A gift API for the house's agents, with the gift-agent key; every such
+  gift is recorded as given by `press@561.group`.
+- Review copies. A review copy is not a gift of the retail release: it is
+  the advance-reader rendition stamped for one reader, staged under its
+  grant at `goods/<offering>/review-copies/<grant>/` in
+  `shop-561-group-goods`. The publisher records it through
+  `/api/review-copies` with the same key once it is staged. It can be given
+  while a book is coming soon, its link states the review terms, it stops
+  downloading when the reading window closes, and it can be withdrawn.
+
+## Recurring product and Newswire access boundary
+
+The selected storefront provides the host-only `runtime.readSubscriptionOrder(request, selection, env)` operation. It joins the original authenticated Google account, signed subscription event, immutable Checkout order and exact authored contract. It returns billing input and contract identity; it does not grant a permanent book download or create a data-delivery right. Stripe's `resolveSubscriptionAccess` separately observes current paid-period evidence. The Shop account and the fixed `urn:ame:shop-561-group-buyer` provider actor remain distinct identities.
+
+The current selected `parameters/catalog.json` contains no recurring product with `mode: "subscription"`, `recurring`, `contractRef` and `contractRevision`. Its `health-education-newsletter` remains explicitly `coming-soon`; the outside-catalog monthly support link buys no books, services or exclusive rights. This supplier update therefore adds no recurring offer, subscription endpoint or entitlement store.
+
+To connect an originally authored Newswire product, the original parameter owner must supply that immutable offering and its resource, query profiles, delivery channels and bounds. The trusted host must then supply the existing Paid Data `authenticateSubscriber` and `resolveSubscription` ports from the same authenticated account/order join, current Stripe billing evidence and the original product rights. Shop's `createShopFulfillmentBindings` supplies the **same** original `fulfillment.audit` object for both custody ports; an internal subscription consumer must preserve that identity. Newsletter and social delivery additionally require the original renderer and independent editorial verifier. The existing Paid Data [`NEWSWIRE-SUBSCRIPTION-ACCESS.md`](https://github.com/red-cup-engineering/paid-data-endpoint-service/blob/d97c3c75eb728a75074694c5db7036d8f2f11978/docs/NEWSWIRE-SUBSCRIPTION-ACCESS.md) owns that contract, including its final authority and source-rights rechecks. Neither an outside-catalog support payment nor notification consent supplies those rights.
+
+
 ## Private Stripe Checkout observation, not revenue recognition (October 23, 2026)
 
 The existing `/support` campaign has four **outside-catalog** live emsenn Payment
@@ -132,6 +199,8 @@ Original commercial Work and acceptance remain
 [Causeway Public Services #17](https://github.com/causeway-services/public-services-section/issues/17).
 The live-data confirmation and Source→Install→Buyer→Finance separation are
 independent receiving jobs.
+
+
 
 ## Qualifying the sovereign Storefront-as-a-Service and Shop (October 18, 2026)
 
@@ -490,6 +559,8 @@ From a clean worktree of the commit:
 ```sh
 pnpm --filter "@causeway-services/shop..." install --offline --frozen-lockfile
 pnpm --filter "@causeway-services/shop..." run deploy
+
+
 
 pnpm compile
 wrangler deploy
