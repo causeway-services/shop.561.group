@@ -8,6 +8,7 @@ import { marketCatalogTransport, routeServiceDiscovery } from "./service-discove
 import { serviceMarketX402RelayResponse } from "./service-market-x402-relay.mjs";
 import { supportResponse } from "./support-campaign.mjs";
 import { bookAtomFeed } from "./book-feed.mjs";
+import { surface } from "./standards.mjs";
 
 export const CATALOG = catalog;
 export const CATALOG_VALIDATION = validateCatalog(catalog);
@@ -33,7 +34,8 @@ function sitemap() {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${paths.map((path) => `  <url><loc>${ORIGIN}${path}</loc></url>`).join("\n")}\n</urlset>\n`;
 }
 
-export default {
+// The storefront: main's routes (brand, support, books feed, service discovery, x402 relay) around the runtime.
+const storefront = {
   fetch(request, env) {
     const { pathname } = new URL(request.url);
     if (request.method === "GET" && pathname === "/robots.txt") {
@@ -95,6 +97,11 @@ export default {
       giftAgent: { key: env.SHOP_GIFT_AGENT_KEY, as: "press@561.group" },
     });
   },
+};
+
+// The standards surface adds crawler documents, brand assets, head metadata and response headers around the storefront.
+export default {
+  fetch: (request, env) => surface.fetch(request, (inner) => storefront.fetch(inner, env)),
 };
 
 export { ShopFulfillment } from "./fulfillment.mjs";
