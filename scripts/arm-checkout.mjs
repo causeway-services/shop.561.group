@@ -28,7 +28,7 @@ if (args.some((arg) => !["--test", "--replace"].includes(arg))) {
 }
 try {
   const present = JSON.parse(wrangler(["secret", "list", "--format", "json"])).map(({ name }) => name);
-  const { merchant } = JSON.parse(readFileSync(join(SITE, "catalog.json"), "utf8"));
+  const { merchant } = JSON.parse(readFileSync(join(SITE, "parameters", "catalog.json"), "utf8"));
   const receipt = await armCheckout({
     surface: SURFACE,
     webhookUrl: `https://${SURFACE}/webhooks/stripe`,

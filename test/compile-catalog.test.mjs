@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { generatedIllustrationsFrom } from "../scripts/compile-catalog.mjs";
+import { generatedIllustrationsFrom } from "../scripts/edition-illustration-provenance.mjs";
 
 test("compile-catalog carries generated illustration model provenance and ignores code-drawn assets", () => {
   assert.deepEqual(generatedIllustrationsFrom({ assets: [
