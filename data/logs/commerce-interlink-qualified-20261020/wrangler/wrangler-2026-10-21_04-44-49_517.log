@@ -1,0 +1,106 @@
+
+--- 2026-10-21T04:44:50.240Z debug
+🪵  Writing logs to "/home/emsenn/info/lib/emsenn/services/561-group/services/public-services-section/services/public-resources-services-section/services/public-consumer-resources-services-section/sites/shop.561.group/data/logs/commerce-interlink-qualified-20261020/wrangler/wrangler-2026-10-21_04-44-49_517.log"
+---
+
+--- 2026-10-21T04:44:50.240Z debug
+.env file not found at "/home/emsenn/info/.env.local". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+---
+
+--- 2026-10-21T04:44:50.295Z log
+
+ ⛅️ wrangler 4.127.1 (update available 4.151.3)
+───────────────────────────────────────────────
+---
+
+--- 2026-10-21T04:44:50.676Z info
+✨ Read 11 files from the assets directory /home/emsenn/info/lib/emsenn/services/561-group/services/public-services-section/services/public-resources-services-section/services/public-consumer-resources-services-section/sites/shop.561.group/data/logs/commerce-interlink-qualified-20261020/public
+---
+
+--- 2026-10-21T04:44:50.676Z debug
+/covers
+---
+
+--- 2026-10-21T04:44:50.676Z debug
+/covers/business-management-course-by-course.png
+---
+
+--- 2026-10-21T04:44:50.676Z debug
+/covers/business-strategy-course-by-course.png
+---
+
+--- 2026-10-21T04:44:50.676Z debug
+/covers/data-analytics-course-by-course.png
+---
+
+--- 2026-10-21T04:44:50.676Z debug
+/covers/ice-out.jpg
+---
+
+--- 2026-10-21T04:44:50.676Z debug
+/covers/project-management-course-by-course.png
+---
+
+--- 2026-10-21T04:44:50.676Z debug
+/covers/the-agent-operators-handbook.png
+---
+
+--- 2026-10-21T04:44:50.676Z debug
+/covers/the-capm-domain-by-domain.png
+---
+
+--- 2026-10-21T04:44:50.676Z debug
+/covers/the-x402-economy.png
+---
+
+--- 2026-10-21T04:44:50.676Z debug
+/covers/understanding-infection-associated-chronic-illness.png
+---
+
+--- 2026-10-21T04:44:50.676Z debug
+/covers/ux-design-course-by-course.png
+---
+
+--- 2026-10-21T04:44:50.769Z log
+Total Upload: 612.60 KiB / gzip: 146.05 KiB
+---
+
+--- 2026-10-21T04:44:50.775Z log
+Your Worker has access to the following bindings:
+---
+
+--- 2026-10-21T04:44:50.775Z log
+Binding                                                       Resource            
+---
+
+--- 2026-10-21T04:44:50.776Z log
+env.SHOP_FULFILLMENT (ShopFulfillment)                        Durable Object      
+---
+
+--- 2026-10-21T04:44:50.776Z log
+env.SHOP_ENTITLEMENTS (9372634aa5ca4c87937c6d3dd457bef6)      KV Namespace        
+---
+
+--- 2026-10-21T04:44:50.776Z log
+env.SHOP_GOODS (shop-561-group-goods)                         R2 Bucket           
+---
+
+--- 2026-10-21T04:44:50.777Z log
+
+---
+
+--- 2026-10-21T04:44:50.777Z log
+--dry-run: exiting now.
+---
+
+--- 2026-10-21T04:44:50.996Z debug
+Metrics dispatcher: Dispatching disabled - would have sent {"deviceId":"5919eda8-0168-41fb-8204-db8ae1f2fd44","event":"wrangler command started","timestamp":1792557890996,"properties":{"amplitude_session_id":1792557890319,"amplitude_event_id":0,"wranglerVersion":"4.127.1","wranglerMajorVersion":4,"wranglerMinorVersion":127,"wranglerPatchVersion":1,"osPlatform":"Linux","osVersion":"#1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026","nodeVersion":24,"isFirstUsage":true,"configFileType":"jsonc","isCI":true,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":true,"agent":"codex","argsUsed":["assets","config","dryRun","keepVars","noBundle"],"argsCombination":"assets, config, dryRun, keepVars, noBundle","sanitizedCommand":"deploy","sanitizedArgs":{"dryRun":true,"keepVars":true,"noBundle":false},"currentAgentSkillsInstalled":false}}.
+---
+
+--- 2026-10-21T04:44:50.997Z debug
+Metrics dispatcher: Dispatching disabled - would have sent {"deviceId":"5919eda8-0168-41fb-8204-db8ae1f2fd44","event":"deploy worker script","timestamp":1792557890996,"properties":{"amplitude_session_id":1792557890777,"amplitude_event_id":0,"wranglerVersion":"4.127.1","wranglerMajorVersion":4,"wranglerMinorVersion":127,"wranglerPatchVersion":1,"osPlatform":"Linux","osVersion":"#1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026","nodeVersion":24,"isFirstUsage":true,"configFileType":"none","isCI":true,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"codex","category":"Workers","os":"linux:x64","usesTypeScript":false,"durationMs":142,"currentAgentSkillsInstalled":false}}.
+---
+
+--- 2026-10-21T04:44:50.997Z debug
+Metrics dispatcher: Dispatching disabled - would have sent {"deviceId":"5919eda8-0168-41fb-8204-db8ae1f2fd44","event":"wrangler command completed","timestamp":1792557890997,"properties":{"amplitude_session_id":1792557890319,"amplitude_event_id":1,"wranglerVersion":"4.127.1","wranglerMajorVersion":4,"wranglerMinorVersion":127,"wranglerPatchVersion":1,"osPlatform":"Linux","osVersion":"#1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026","nodeVersion":24,"isFirstUsage":true,"configFileType":"jsonc","isCI":true,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":true,"agent":"codex","argsUsed":["assets","config","dryRun","keepVars","noBundle"],"argsCombination":"assets, config, dryRun, keepVars, noBundle","sanitizedCommand":"deploy","sanitizedArgs":{"dryRun":true,"keepVars":true,"noBundle":false},"durationMs":520,"currentAgentSkillsInstalled":false}}.
+---

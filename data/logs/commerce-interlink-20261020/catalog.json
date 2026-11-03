@@ -1,7 +1,11 @@
 {
   "$comment": "The human storefront's catalog: books and publications a person buys, reads or subscribes to. Market-listed editions are discoverable at market.561.group; payment and delivery require the Market's own current availability; APIs, agent briefings and games remain on their own sites. Book facts (title, description, contents, edition, verification) are compiled from each book's manifest, built files and acceptance record by scripts/compile-catalog.mjs; paths are relative to the Group's services directory. A book without an EbookEditionAcceptance remains coming-soon even when historical rendition files survive.",
   "merchant": {
-    "name": "561 Group",
+    "brandSource": {
+      "repository": "561-group/561-group-services-section",
+      "recordPath": "561-group-services-section/data/records/brand-records/561-group.jsonld",
+      "brandId": "https://561.group/#brand"
+    },
     "legalBody": "emsenn"
   },
   "offerings": [
@@ -157,68 +161,6 @@
       "line": "merch",
       "status": "coming-soon",
       "blurb": "Print-on-demand goods. Not open yet."
-    }
-  ],
-  "externalStripePaymentLinkReceivers": [
-    {
-      "type": "ExternalStripePaymentLinkReceiver",
-      "schemaVersion": 1,
-      "stripePaymentLinkId": "plink_1USMywJ1vYnPQu2NWHtcqx0b",
-      "stripeMerchantAccountId": "acct_18eDiqJ1vYnPQu2N",
-      "merchantDisplayName": "emsenn",
-      "supportedProgramName": "561 Group public education and technical infrastructure",
-      "sourceObservedOn": "2026-10-22",
-      "sourceRevision": {
-        "repository": "causeway-services/emsenn-youtube-services-section",
-        "commitSha": "40dd6c9b9c2392f407fd0d22b1b587d80010ffd6",
-        "path": "config.json",
-        "blobSha": "e4fc13ccce67c2d07069825ab3e3b0dc93784aca"
-      }
-    },
-    {
-      "type": "ExternalStripePaymentLinkReceiver",
-      "schemaVersion": 1,
-      "stripePaymentLinkId": "plink_1UTYlBJ1vYnPQu2NMI05UJzD",
-      "stripeMerchantAccountId": "acct_18eDiqJ1vYnPQu2N",
-      "merchantDisplayName": "emsenn",
-      "supportedProgramName": "561 Group open work appreciation — direct one-time tip",
-      "sourceObservedOn": "2026-10-23",
-      "sourceRevision": {
-        "repository": "causeway-services/shop.561.group",
-        "commitSha": "2b518ed679852b27460c2658c8c882baff6dd2a7",
-        "path": "data/records/marketing/open-work-campaign.json",
-        "blobSha": "0e87974fe0808c389e0d2cc15ae182661c56a35f"
-      }
-    },
-    {
-      "type": "ExternalStripePaymentLinkReceiver",
-      "schemaVersion": 1,
-      "stripePaymentLinkId": "plink_1UTYn0J1vYnPQu2NCojQuuMY",
-      "stripeMerchantAccountId": "acct_18eDiqJ1vYnPQu2N",
-      "merchantDisplayName": "emsenn",
-      "supportedProgramName": "561 Group open work appreciation — github one-time tip",
-      "sourceObservedOn": "2026-10-23",
-      "sourceRevision": {
-        "repository": "causeway-services/shop.561.group",
-        "commitSha": "2b518ed679852b27460c2658c8c882baff6dd2a7",
-        "path": "data/records/marketing/open-work-campaign.json",
-        "blobSha": "0e87974fe0808c389e0d2cc15ae182661c56a35f"
-      }
-    },
-    {
-      "type": "ExternalStripePaymentLinkReceiver",
-      "schemaVersion": 1,
-      "stripePaymentLinkId": "plink_1UTYn2J1vYnPQu2NPN1weGJ6",
-      "stripeMerchantAccountId": "acct_18eDiqJ1vYnPQu2N",
-      "merchantDisplayName": "emsenn",
-      "supportedProgramName": "561 Group open work appreciation — fediverse one-time tip",
-      "sourceObservedOn": "2026-10-23",
-      "sourceRevision": {
-        "repository": "causeway-services/shop.561.group",
-        "commitSha": "2b518ed679852b27460c2658c8c882baff6dd2a7",
-        "path": "data/records/marketing/open-work-campaign.json",
-        "blobSha": "0e87974fe0808c389e0d2cc15ae182661c56a35f"
-      }
     }
   ]
 }

@@ -1,0 +1,12 @@
+node:internal/modules/cjs/loader:1520
+  throw err;
+  ^
+
+Error: Cannot find module '/home/emsenn/info/lib/emsenn/services/561-group/services/public-services-section/services/public-resources-services-section/services/public-consumer-resources-services-section/sites/shop.561.group/data/logs/commerce-interlink-20261020/scripts/arm-checkout.mjs'
+    at node:internal/modules/cjs/loader:1517:15
+    at node:internal/main/check_syntax:33:20 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v24.18.0

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { createHmac } from "node:crypto";
 import test from "node:test";
 import worker, { CATALOG, CATALOG_VALIDATION, ShopFulfillment, ORIGINAL_EXTERNAL_STRIPE_PAYMENT_LINK_IDS, EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED } from "../src/worker.mjs";
-import originalPublications from "../data/records/commerce-navigation/2026-10-20-original-publication-identities.json" with { type: "json" };
+import originalPublications from "#parameters/data/records/commerce-navigation/2026-10-20-original-publication-identities.json" with { type: "json" };
 import {campaign} from "../src/support-campaign.mjs";
 
 function fulfillment() {
@@ -23,6 +23,23 @@ function signature(body, secret) { const now = Math.floor(Date.now() / 1000); re
 function paidEvent({ eventId = "evt_test", sessionId = "cs_test", offeringId = "the-x402-economy", amount = 900, currency = "usd", paymentStatus = "paid" } = {}) {
   return { id: eventId, type: "checkout.session.completed", livemode: false, data: { object: { id: sessionId, amount_total: amount, currency, payment_status: paymentStatus, status: "complete", metadata: { offering_id: offeringId, request_digest: "digest" } } } };
 }
+
+test("the public Shop serves the original Group Brand as JSON-LD, not a new legal entity",async()=>{
+  const response=await worker.fetch(new Request("https://shop.561.group/brand.jsonld"),env());
+  assert.equal(response.status,200);
+  assert.match(response.headers.get("content-type"),/application\/ld\+json/u);
+  const original=await response.json();
+  assert.deepEqual(original,CATALOG.merchant.brand);
+  assert.equal(original["@context"],"https://schema.org");
+  assert.equal(original["@type"],"Brand");
+  assert.equal(original["@id"],"https://561.group/#brand");
+  assert.equal(original.name,CATALOG.merchant.name);
+  assert.equal(CATALOG.merchant.legalBody,"emsenn");
+  assert.equal("legalBody" in original,false);
+  assert.equal("legalName" in original,false);
+  const map=await worker.fetch(new Request("https://shop.561.group/sitemap.xml"),env());
+  assert.ok((await map.text()).includes("/brand.jsonld"));
+});
 
 test("the Shop's public catalog uses the shared Bazaar-readable seller projection", async () => {
   const url = "https://shop.561.group/catalog.json";
@@ -218,7 +235,7 @@ test("Shop routes original market services without mutating book checkout", asyn
   let reads = 0;
   const testEnv = env({ MARKET_SERVICE_CATALOG_FETCH: async (url, options) => {
     reads++;
-    assert.equal(url, "https://market.561.group/v1/catalog");
+    assert.equal(url, "https://market.561.group/v1/catalog?offset=0&limit=20");
     assert.equal(options.redirect, "manual");
     return Response.json(source);
   } });
@@ -234,7 +251,7 @@ test("Shop routes original market services without mutating book checkout", asyn
   assert.equal(reads, 2);
   const fromMarketBinding = env({ MARKET_SERVICE_CATALOG_FETCH: {
     async fetch(request) {
-      assert.equal(request.url, "https://market.561.group/v1/catalog");
+      assert.equal(request.url, "https://market.561.group/v1/catalog?offset=0&limit=20");
       assert.equal(request.method, "GET");
       assert.equal(request.credentials, "omit");
       return Response.json(source);

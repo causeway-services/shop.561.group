@@ -3,8 +3,8 @@ import test from "node:test";
 import { readFileSync } from "node:fs";
 import { reconcileAuthoredOfferLinks, generatedModule } from "../scripts/reconcile-authored-offer-links.mjs";
 import originalCompiled from "../src/compiled-catalog.mjs";
-import originalAuthored from "../catalog.json" with {type:"json"};
-import originalEvidence from "../data/records/commerce-navigation/2026-10-20-original-publication-identities.json" with {type:"json"};
+import originalAuthored from "#parameters/catalog.json" with {type:"json"};
+import originalEvidence from "#parameters/data/records/commerce-navigation/2026-10-20-original-publication-identities.json" with {type:"json"};
 
 const copy = value => structuredClone(value);
 const source = () => copy(originalAuthored);
