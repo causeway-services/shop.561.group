@@ -1,0 +1,160 @@
+TAP version 13
+# Subtest: compile-catalog carries generated illustration model provenance and ignores code-drawn assets
+ok 1 - compile-catalog carries generated illustration model provenance and ignores code-drawn assets
+  ---
+  duration_ms: 3.06003
+  type: 'test'
+  ...
+# Subtest: drafts, failures, and recipient substitution grant nothing
+ok 2 - drafts, failures, and recipient substitution grant nothing
+  ---
+  duration_ms: 2.284628
+  type: 'test'
+  ...
+# Subtest: accepted send grants once by stable reference and receives exact reader
+ok 3 - accepted send grants once by stable reference and receives exact reader
+  ---
+  duration_ms: 2.823811
+  type: 'test'
+  ...
+# Subtest: wrong readback fails and never claims recipient success
+ok 4 - wrong readback fails and never claims recipient success
+  ---
+  duration_ms: 0.92889
+  type: 'test'
+  ...
+# Subtest: shop API uses authenticated calls, never browser parameters
+ok 5 - shop API uses authenticated calls, never browser parameters
+  ---
+  duration_ms: 3.322208
+  type: 'test'
+  ...
+# Subtest: one accepted send grants and receipts, repeated run does not send twice
+ok 6 - one accepted send grants and receipts, repeated run does not send twice
+  ---
+  duration_ms: 92.792674
+  type: 'test'
+  ...
+# Subtest: send accepted then grant failure retries grant without another send
+ok 7 - send accepted then grant failure retries grant without another send
+  ---
+  duration_ms: 46.226677
+  type: 'test'
+  ...
+# Subtest: uncertain send is never automatically repeated
+ok 8 - uncertain send is never automatically repeated
+  ---
+  duration_ms: 12.635901
+  type: 'test'
+  ...
+# Subtest: Fastmail submission creates the email in the actual Drafts mailbox
+ok 9 - Fastmail submission creates the email in the actual Drafts mailbox
+  ---
+  duration_ms: 2.601808
+  type: 'test'
+  ...
+# Subtest: JMAP failed EmailSubmission cannot produce an accepted send receipt
+ok 10 - JMAP failed EmailSubmission cannot produce an accepted send receipt
+  ---
+  duration_ms: 0.995716
+  type: 'test'
+  ...
+# Subtest: historical grant-readback records do not falsely claim reader receipt or resend
+ok 11 - historical grant-readback records do not falsely claim reader receipt or resend
+  ---
+  duration_ms: 21.67131
+  type: 'test'
+  ...
+# Subtest: accepted source is not misrepresented as a verified public release
+ok 12 - accepted source is not misrepresented as a verified public release
+  ---
+  duration_ms: 18.73542
+  type: 'test'
+  ...
+# Subtest: a coming-soon book may have an accepted edition without becoming live
+ok 13 - a coming-soon book may have an accepted edition without becoming live
+  ---
+  duration_ms: 13.312506
+  type: 'test'
+  ...
+# Subtest: live without acceptance and forged acceptance digests fail closed
+ok 14 - live without acceptance and forged acceptance digests fail closed
+  ---
+  duration_ms: 23.380021
+  type: 'test'
+  ...
+# Subtest: manuscript and acceptance cannot traverse outside services root
+ok 15 - manuscript and acceptance cannot traverse outside services root
+  ---
+  duration_ms: 24.97953
+  type: 'test'
+  ...
+# Subtest: edition specifications with historical digests give a warning, not false failure
+ok 16 - edition specifications with historical digests give a warning, not false failure
+  ---
+  duration_ms: 18.801435
+  type: 'test'
+  ...
+# Subtest: a missing source under a proven but unmounted Gitlink is explicitly unverified
+ok 17 - a missing source under a proven but unmounted Gitlink is explicitly unverified
+  ---
+  duration_ms: 15.59944
+  type: 'test'
+  ...
+# Subtest: edition acceptance does not imply publication-channel availability
+ok 18 - edition acceptance does not imply publication-channel availability
+  ---
+  duration_ms: 1.979107
+  type: 'test'
+  ...
+# Subtest: the Shop's public catalog uses the shared Bazaar-readable seller projection
+ok 19 - the Shop's public catalog uses the shared Bazaar-readable seller projection
+  ---
+  duration_ms: 67.937462
+  type: 'test'
+  ...
+# Subtest: the shop lists human publications and merch without presenting unaccepted books as live
+ok 20 - the shop lists human publications and merch without presenting unaccepted books as live
+  ---
+  duration_ms: 2.786935
+  type: 'test'
+  ...
+# Subtest: the catalog and a book page render through TUFTE with the verification record
+ok 21 - the catalog and a book page render through TUFTE with the verification record
+  ---
+  duration_ms: 94.721351
+  type: 'test'
+  ...
+# Subtest: checkout remains unavailable without all payment capabilities
+ok 22 - checkout remains unavailable without all payment capabilities
+  ---
+  duration_ms: 10.559599
+  type: 'test'
+  ...
+# Subtest: webhook requires a paid event joined to the issued checkout
+ok 23 - webhook requires a paid event joined to the issued checkout
+  ---
+  duration_ms: 18.185747
+  type: 'test'
+  ...
+# Subtest: sign-in and gifts stay closed until the shop's Google client and session secret are set
+ok 24 - sign-in and gifts stay closed until the shop's Google client and session secret are set
+  ---
+  duration_ms: 27.118418
+  type: 'test'
+  ...
+# Subtest: source-owned Shop offers public read-only product discovery over the original MCP transport
+ok 25 - source-owned Shop offers public read-only product discovery over the original MCP transport
+  ---
+  duration_ms: 29.704671
+  type: 'test'
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 25
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1404.715763

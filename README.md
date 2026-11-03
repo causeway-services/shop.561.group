@@ -1,4 +1,13 @@
+Received 2026-10-24 from causeway-services/shop.561.group@8612cc5179ca8e6dc1c8652dc17546a2cbd6c12d
+
 # shop.561.group
+
+<!-- 561-group-standards:badges:start -->
+[![Causeway Services](https://img.shields.io/badge/561%20Group-Causeway%20Services-115e69)](https://github.com/causeway-services)
+[![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-115e69)](LICENSE)
+[![Indigenous data: CARE](https://img.shields.io/badge/Indigenous%20data-CARE-4b6f44)](https://github.com/causeway-services/.github/blob/main/GOVERNANCE.md)
+[![Tips welcome](https://img.shields.io/badge/tips-welcome-d4a017)](https://github.com/561-group/.github/blob/main/TIPS.md)
+<!-- 561-group-standards:badges:end -->
 
 **Intended product, from the Leader's October 18 requirement:** a sovereign,
 human-and-agent **Shop** serving the Group's own offerings and reusable
@@ -52,7 +61,7 @@ domain redirect. Historic shop design:
 
 ## Read-only product MCP supplied upstream (October 19, 2026)
 
-The original Red Cup digital-goods storefront supplier [source commit ba156ab](https://github.com/red-cup-engineering/digital-goods-storefront-services-section/commit/ba156ab74edc8b964c599def88d317764614ba54), version `0.4.4-dev.1`, now serves `POST /mcp` through the **existing** MCP Networking transport. It exposes `list_products`, `search_products` and `get_product` over the **same** privacy-filtered `/catalog.json` readout and TUFTE text-matching producer. Results preserve the original merchant, URLs, prices, edition digests, release status and runtime `buyable` field. They never convey a payment authorization, customer account, purchase, order, refund, payout or settlement. Invalid cross-origin clients and unsafe requests are refused by the existing MCP transport; unknown SKUs are not invented.
+The original Red Cup digital-goods storefront supplier [source commit ba156ab](https://github.com/red-cup-engineering/digital-goods-storefront-engineering-services-section/commit/ba156ab74edc8b964c599def88d317764614ba54), version `0.4.4-dev.1`, now serves `POST /mcp` through the **existing** MCP Networking transport. It exposes `list_products`, `search_products` and `get_product` over the **same** privacy-filtered `/catalog.json` readout and TUFTE text-matching producer. Results preserve the original merchant, URLs, prices, edition digests, release status and runtime `buyable` field. They never convey a payment authorization, customer account, purchase, order, refund, payout or settlement. Invalid cross-origin clients and unsafe requests are refused by the existing MCP transport; unknown SKUs are not invented.
 
 `POST /mcp` can be called with normal MCP JSON-RPC: `{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"get_product","arguments":{"id":"the-x402-economy"}}}`. To discover available tools, use `tools/list`; for filtering, `search_products` takes a bounded `query`, with optional `status`, `purchasableOnly`, `offset` and `limit`. The associated generic human storefront remains the same runtime. Distinct shops with separately accepted permissions remain in the original Coesite Bazaar, never hidden inside these tools.
 
@@ -108,6 +117,35 @@ bindings and the `ShopFulfillment` Durable Object registration.
   withdrawn.
 - A gift API for the house's agents, with the gift-agent key; every such
   gift is recorded as given by `press@561.group`.
+
+### Promotional book gift receiving (source candidate, not installed)
+
+The existing Shop operator source `scripts/promotional-gift-mail.mjs` has three
+separate **explicit** commands: `prepare JOB.json SPEC.json` records one private
+0600 one-recipient job, `run JOB.json` submits the approved **initial**
+Fastmail message and receives an idempotent Shop grant, and `deliver JOB.json`
+submits a **second** email carrying the confirmed private gift link only after
+a fresh authenticated Shop gift readback. The first message must not claim the
+gift already exists. This is original [Causeway Public Services #53](https://github.com/causeway-services/public-services-section/issues/53),
+not an independent mailer or entitlement store.
+
+Use an already authorized operator, the selected `FASTMAIL_JMAP_TOKEN` and
+`SHOP_GIFT_AGENT_KEY` in private custody. No credentials belong in JSON specs,
+issue comments, PRs, shell history or logs. The job file contains the recipient
+and bearer grant link: protect it as private customer data and do not print,
+publish or send it to anyone other than the intended recipient. `run` and
+`deliver` print **only coarse state**, never a gift ID or link. A job halted at
+`send-uncertain` or `notice-uncertain` may already have sent mail and **must
+not be retried** until the original Fastmail provider receipt is reconciled.
+A failed grant can be retried idempotently under its original stable reference
+without resending the first mail. A revoked/changed grant refuses the second.
+
+`notice-accepted` means Fastmail acknowledged submission, **not** that the
+recipient opened the link, signed in, reached their library or downloaded the
+correct edition. Real completion still requires distinct authorized provider
+and recipient receipts, accepted edition digest, and independent Causeway
+receiving. No live customer, campaign or entitlement is created by this source
+review or its isolated native tests.
 - Review copies. A review copy is not a gift of the retail release: it is
   the advance-reader rendition stamped for one reader, staged under its
   grant at `goods/<offering>/review-copies/<grant>/` in
@@ -116,9 +154,94 @@ bindings and the `ShopFulfillment` Durable Object registration.
   while a book is coming soon, its link states the review terms, it stops
   downloading when the reading window closes, and it can be withdrawn.
 
+## Recurring product and Newswire access boundary
+
+The selected storefront provides the host-only `runtime.readSubscriptionOrder(request, selection, env)` operation. It joins the original authenticated Google account, signed subscription event, immutable Checkout order and exact authored contract. It returns billing input and contract identity; it does not grant a permanent book download or create a data-delivery right. Stripe's `resolveSubscriptionAccess` separately observes current paid-period evidence. The Shop account and the fixed `urn:ame:shop-561-group-buyer` provider actor remain distinct identities.
+
+The current selected `parameters/catalog.json` contains no recurring product with `mode: "subscription"`, `recurring`, `contractRef` and `contractRevision`. Its `health-education-newsletter` remains explicitly `coming-soon`; the outside-catalog monthly support link buys no books, services or exclusive rights. This supplier update therefore adds no recurring offer, subscription endpoint or entitlement store.
+
+To connect an originally authored Newswire product, the original parameter owner must supply that immutable offering and its resource, query profiles, delivery channels and bounds. The trusted host must then supply the existing Paid Data `authenticateSubscriber` and `resolveSubscription` ports from the same authenticated account/order join, current Stripe billing evidence and the original product rights. Shop's `createShopFulfillmentBindings` supplies the **same** original `fulfillment.audit` object for both custody ports; an internal subscription consumer must preserve that identity. Newsletter and social delivery additionally require the original renderer and independent editorial verifier. The existing Paid Data [`NEWSWIRE-SUBSCRIPTION-ACCESS.md`](https://github.com/red-cup-engineering/paid-data-endpoint-service/blob/d97c3c75eb728a75074694c5db7036d8f2f11978/docs/NEWSWIRE-SUBSCRIPTION-ACCESS.md) owns that contract, including its final authority and source-rights rechecks. Neither an outside-catalog support payment nor notification consent supplies those rights.
+
+
+## Private Stripe Checkout observation, not revenue recognition (October 23, 2026)
+
+The existing `/support` campaign has four **outside-catalog** live emsenn Payment
+Links. The original `scripts/export-support-campaign.mjs` produces the fixed
+channel share/attribution pack; **new read-only** `npm run
+marketing:reconcile -- <private-observation.json>` consumes a captured Stripe
+`GET /v1/checkout/sessions` response without any API key. The private input
+wrapper must contain exactly these fields:
+
+```json
+{
+  "stripeContext": "acct_18eDiqJ1vYnPQu2N",
+  "livemode": true,
+  "observedAt": "2026-10-23T18:30:00Z",
+  "checkoutSessions": {"object": "list", "data": [], "has_more": false}
+}
+```
+
+Use the exact real GET response under `checkoutSessions`; an empty array in
+this illustration is **not a provider observation**. Import only from the
+authenticated matching Stripe merchant and maintain its access separately.
+**Do not commit a real response:** it may contain customer personal information
+or transaction references. The local consumer projects counts by the four
+original source-pinned Payment Link IDs, rejects wrong-account/mixed-test data,
+duplicate session IDs, malformed paid amounts and bad pagination shapes, and
+never echoes customer fields. An unknown Payment Link is reported only as an
+unattributed observed row. An open unpaid Checkout is not qualified buyer demand,
+a completed paid Checkout is not accepted delivery, a recurring **first**
+Checkout is not a renewed subscription, and provider gross is not revenue
+cleared to the 561 Group.
+
+`inputCoverage` is explicitly either `additional-pages-unread` or
+`supplied-terminal-page-only`. Even a terminal page does not prove that the
+caller supplied an unfiltered, exhaustive account history; the script itself
+cannot authenticate the import. Fees, refunds, customer acceptance, actual
+subscription invoices, bank deposits and **Group** after-cost contribution
+remain `null` until independently source-received by the original provider,
+merchant and Finance operations. No attribution result authorizes outreach,
+Stripe mutation, book entitlement, deployment or a new contract. Native
+regressions live in `test/support-checkout-attribution.test.mjs`; this is a
+candidate **source** capability, not proof that `shop.561.group` is running
+it or that any new merchant payment occurred.
+
+For **four separately filtered Stripe Checkout list responses**, preserve the
+actual provider pagination and do not fabricate a combined all-account list.
+Pass `checkoutSessionsByLink` **instead of** `checkoutSessions` in the
+same dated merchant observation wrapper. It is an array of four records,
+each `{paymentLinkId, checkoutSessions}`, with the exact source-pinned
+Payment Link ID and that ID's original
+`GET /v1/checkout/sessions?payment_link=<id>` response. Every original
+source link must occur exactly once, and each returned session must carry
+the exact link queried. Wrong/missing links, mixed input modes, duplicate
+sessions, malformed list envelopes, and invalid paid amounts refuse.
+`inputQueryMode` distinguishes the input shape;
+`source-selected-terminal-link-pages` means all **four supplied filtered
+lists** said `has_more=false`, **not** that the caller proved exhaustive
+account history. `source-selected-link-pages-unread` explicitly identifies
+a still-paginated response. This privacy-minimal offline parser cannot
+authenticate a caller's query URL or reclassify Stripe gross as delivered
+customer value, personal bank clearance, or Group revenue.
+
+Original commercial Work and acceptance remain
+[Causeway Public Services #17](https://github.com/causeway-services/public-services-section/issues/17).
+The live-data confirmation and Source→Install→Buyer→Finance separation are
+independent receiving jobs.
+
+## Receiving voluntary emsenn video-support checkouts into the original Shop economic audit
+
+An externally hosted payment link is **not** a Shop book checkout. The live emsenn channel's source-owned `config.json` identifies an active $10 USD/month Stripe Payment Link operated by checkout merchant **emsenn** for a 561 Group public education purpose. The current Shop seller catalog still names 561 Group for its separate books. These merchant/program identities must not be collapsed into one legal beneficiary or a sale of books.
+
+The existing `parameters/catalog.json` carries four private, typed `externalStripePaymentLinkReceivers[]` source records: the monthly support link pinned to the original emsenn channel `config.json` Git commit/blob, and the direct, GitHub and Fediverse one-time tip links pinned to the original Shop `data/records/marketing/open-work-campaign.json` Git commit/blob. Each record retains its exact original Payment Link ID, source-observed merchant and support program. **These are source-selected outside-catalog webhook receivers, NOT additional offerings.** The original `scripts/compile-catalog.mjs` carries the records unmodified into `src/compiled-catalog.mjs`; `src/external-stripe-payment-link-receiving.mjs` admits its exact field schema and returns only the verified IDs to the existing `src/worker.mjs` → Red Cup signed Stripe webhook. Industry JSON Schema Draft 2020-12 lives at `data/records/schema/external-stripe-payment-link-receiver.schema.json`. The Shop's public `/catalog.json`, buyer storefront and MCP product search continue exposing only original merchant/offering projections, **not** its internal webhook receiver inventory. The original 13 goods are unchanged.
+
+The source selects `@red-cup-engineering/digital-goods-storefront-services-section@0.5.0` and `@red-cup-engineering/stripe-services-section@0.2.1`. The original storefront supplies `SUPPORTS_EXTERNAL_STRIPE_PAYMENT_LINK_AUDIT`, requires an explicit committed audit acknowledgement, and consumes the Stripe owner's complete native-event validator. Shop still enables the external ID list only when the installed original provider declares that capability. The `wrangler.jsonc` build guard checks the native original source/test and Worker routes. Source selection and native fixture receiving do not establish that the production Worker has been promoted or that a customer payment has been delivered.
+
+The destination currently configured in the live Stripe account is `https://shop.561.group/webhooks/stripe` and subscribes to `checkout.session.completed` only. Its signed event can establish an observed Checkout completion and the actual provider payment status, but not the long-lived subscription history, invoice settlement, Stripe fees, payout, tax classification, legal ownership transfer or cleared Group treasury cash. Those require separately entitled Stripe subscription/invoice/balance and Group treasury receiving. Nothing in this source change purchases anything, registers a new webhook, edits customer accounts, spends on Notebook video generation or modifies public YouTube descriptions.
+
 ## The catalog
 
-`catalog.json` lists the offerings. A book row names:
+`parameters/catalog.json` (see Custody) lists the offerings. A book row names:
 
 - its manuscript;
 - its acceptance record, or the directory of its files for an edition
@@ -136,6 +259,46 @@ sizes, SHA-256s, edition digest and the proof's counts. It also copies the
 covers into `public/covers/` (untracked), which the Worker serves as
 static assets. Edition state is untracked and is read from the main
 worktree, so a deploy from a clean worktree compiles the same catalog.
+
+## Retailer submission drafts (publisher-side; not retailer accounts)
+
+The real Shop compiler is now also the **only selected source** for the original
+Red Cup retailer form projection. Running `pnpm compile` or `pnpm deploy`
+first compiles the original book manuscripts, `EbookEditionAcceptance` and
+`PrintEditionAcceptance` into `src/compiled-catalog.mjs`, then calls the
+original `@red-cup-engineering/digital-goods-storefront-services-section/retail-submission-drafts`
+producer. This replaces the stale unselected Group-generated copy at
+`561-group/561-group-services-section/data/records/listings/book-retail-listings.json`.
+Do not treat that historical source as the current book authority.
+
+The producer writes `generated/retail-submission-drafts/book-retailer-submission-drafts.json`
+and `generated/retail-submission-drafts/book-retailer-submission-guide.md`.
+The first is a typed **v2 draft collection**, with `bookOfferingId`,
+`retailerCode`, `proposedSubmissionFields`, `submissionBlockers`, and
+`operatorReviewNotes` rather than opaque nested `id`, `fields`,
+`blocks`, and `attention`; its `sourceCatalog` names this exact repo,
+module, and the source byte digest (`ni:///sha-256`). The second is the
+operator-readable renderer of those same forms. Both live in ignored generated
+state, **not in a second authoritative JSON register**.
+
+The Shop already exposes `schema.org/Book` and conditional `schema.org/Offer`
+structured data through the native storefront presentation. Retailer-specific
+form packets are not an ONIX feed: ONIX exchange would need separate qualified
+product identifiers, edition/rights and retailer data. Do not pretend the
+presence of BISAC subject codes, a currency, or a generated PDF establishes
+retailer acceptance. The draft generator never logs into, uploads to,
+submits to, or accepts terms for any retailer. `candidate-needs-publisher-review`
+is not approval, and the lack of an accepted source edition is a submission
+blocker. Any external retailer submission requires its actual authorized
+publishing owner, retailer-specific rules, received metadata, and separate
+provider receipt. A book can be `coming-soon` at Shop while other retailers
+have independent distribution decisions; Shop status alone is not a grant or
+a universal prohibition.
+
+To inspect the present source without deploying the Worker: `pnpm retail:derive`.
+On a clean source checkout the first compilation still needs the original
+book/release inputs; a tracked `src/compiled-catalog.mjs` by itself is not
+proof that those releases are installed on a running node.
 
 ## Source-qualified brand identity and separate seller
 
@@ -260,9 +423,15 @@ From a clean worktree of the commit:
 
 ```sh
 pnpm --filter "@causeway-services/shop..." install --offline --frozen-lockfile
-node scripts/compile-catalog.mjs
+pnpm --filter "@causeway-services/shop..." run deploy
+
+pnpm compile
 wrangler deploy
 ```
+
+The normal Shop `deploy` script first compiles the original catalog, uses the existing Wrangler prebundle guards and deploys through the existing configured Worker. **It then runs `node scripts/receive-public-shop.mjs` against the public origin**, using the original campaign and compiled catalog as its independently selected expected sources. Twelve bounded, unsigned public cases receive the actual root, merchant catalog, support/billing page, static share and sitemap, fixed Stripe tip/monthly redirect identities (without following them), and required refusal statuses. DNS/TLS failures, 404s, wrong legal seller, wrong redirects, missing disclosure or invalid public responses make the command fail, with finite JSON findings and no customer data, charge or checkout session.
+
+A deploy command's exit failure after Wrangler succeeds means the candidate **may be installed but was not publicly received**. Preserve source, original Cloudflare revision, rollback and incident evidence; do not infer successful consumer delivery or issue a blind repeat deploy. Inspect the source-owned Coesite release/rollback operator before changing the selected live version. This public receiving checks only what an unsigned buyer can inspect; it does not qualify an actual book purchase, signed webhook, active subscription, independently accepted entitlement, fees, refunds, payout or seller-level net cash. `npm run receive:public` repeats the same read-only buyer receiving without redeploying. The original full Worker dependency and materialized goods releases remain separately qualified.
 
 ## Testing
 
@@ -274,6 +443,118 @@ node --test test/*.test.mjs
 
 The **original** Causeway x402 seller owns `https://market.561.group/v1/catalog`, not this book Shop or a recreated merchant registry. This Shop's proposed `GET/HEAD /services` human page and `GET/HEAD /services.json` machine reader **fetch that existing original public catalog** at request time (GET, redirect refused), verify its record type, market origin, x402 protocol, source SKU uniqueness and exact original seller URL, then project only `listed:true` services. A malformed/stale/unreachable source **fails closed with 503** rather than inventing an empty Shop inventory or creating a new static 131-row mirror. Both routes keep a bounded search/page size and no write or payment method.
 
-The Shop service page is a browse-and-inspect entrance for one seller's offered APIs, separate from the unchanged 13 authored goods and their upstream Stripe/digital-goods checkout. Service prices are **original seller previews**, never an instant quote or live availability assertion: selecting an NI-backed service opens the existing Market `/?offer=<original SKU>` detail, whose unsigned request/402 tells the caller the current terms. The Shop does not obtain wallet authority, settle x402, issue entitlements or claim that a catalog declaration is externally buyable. Its original `/catalog.json`, `/mcp` tools and book route remain owned by the installed digital-goods storefront supplier. Bazaar continues federated third-party discovery; Shop reading one original seller is not Bazaar membership/custody.
+The Shop service page is a browse-and-inspect entrance for one seller's offered APIs, separate from the unchanged 13 authored goods and their upstream Stripe/digital-goods checkout. Service prices are **original seller previews**, never instant quotes or live availability assertions. Selecting an NI-backed service opens **the Shop's own `GET/HEAD /services/offer?sku=<exact NI>` reader**, with source-qualified publisher/price preview, input-field guidance, request/output JSON schemas, explicit non-payability and original seller/Bazaar links. `GET/HEAD /services/offer.json?sku=<exact NI>` exposes the same admitted one-offer readout for agents. Both routes use exactly one bounded original Market catalog read, with a full-coverage identity guard and 503 on incomplete upstream evidence. The existing Bazaar `https://bazaar.561.group/offers?source=house-x402&id=<encoded original SKU>` remains the separate source-owned offer listing. The current x402 quote and any authorized payment remain with the original Market seller; the Bazaar inspection link neither reissues the offer nor authorizes a purchase. The Shop does not obtain wallet authority, settle x402, issue entitlements or claim that a catalog declaration is externally buyable. Its original `/catalog.json`, `/mcp` tools and book route remain owned by the installed digital-goods storefront supplier. Bazaar continues federated third-party discovery; Shop reading one original seller is not Bazaar membership/custody.
 
-**Source-only receiving and promotion:** `test/service-discovery.test.mjs` exercises the projection, pagination, masked status, absolute seller origin, duplicate identities, held/unlisted omission, current origin fetch, HEAD, human escaping, input bounds and failure cases without needing private checkout, wallet or external funds. Existing `test/worker.test.mjs` includes the original Worker route and unchanged book catalog contract. Native installed-suite run, real Cloudflare Worker deployment, public cross-host origin fetch, independent payer, settled transfer and delivered/accepted customer outcome are separate, not claimed by this change. The common governing acceptance criteria are owned by the Group requirement `market-bazaar-shop-agentic-composable-enterprise`, with practical follow-through under Public Services issue 17, Coesite Bazaar issue 5, and Causeway Market issue 4.
+The original `src/worker.mjs` mounts the service-product family through one `routeServiceDiscovery` that returns `null` for every non-service route, retaining the original book, Stripe webhook, MCP and fulfillment runtime. The shared `original-market-reader.mjs` owns strict streaming-byte admission and UTF-8 JSON decoding for all Shop public original-Market reads, rather than allowing each consumer its own unbounded or permissive network logic.
+
+### Same original seller, multiple buyer modalities
+
+The new **service comparison** routes `GET/HEAD /services/compare` and `/services/compare.json` consume the original Market's free `/v1/market/compare` operation, with **2–8 distinct exact original SKUs**. The Shop checks source order, identity coverage, held/missing offers and source-example link provenance, then renders an accessible responsive side-by-side HTML table or a bounded structured JSON reading. Market remains the one source of preview prices, contracts, original sample-to-schema admission and source rights statements. Sample admission never proves universal compatibility or grants execution. A zero/one-SKU human request shows a first-party source-free form instead of manufacturing a catalog result.
+
+The **API call budget** routes `GET/HEAD /services/basket` and `/services/basket.json` consume the original Market's free `/v1/market/basket` operation. For up to eight original SKUs and a total of at most 100 calls, the buyer supplies a canonical `maxTotalAtomic` ceiling in the seller's declared EVM settlement asset, **not a USD amount or an exchange rate**. Market calculates fixed-price atomic-unit subtotals and complete/incomplete or under-ceiling judgments. Shop checks line identity and numeric representation, displays missing/request-dependent prices as unknown, and provides the original source calculation for agents. It never signs a transfer, accepts a wallet credential, issues an x402 challenge, reserves inventory, settles payment, fulfills work or treats delivered evidence as accepted revenue.
+
+From the directory, people can enter Compare or Budget; from one offer, they can read its input/output contract, compare another SKU or budget calls without a wallet. From comparison, they can plan a basket over the exact publicly listed offers. All query inputs are bounded and credentialless; error, malformed, redirected or oversized provider responses fail closed. This provides genuine additional buyer-preparation capability before a separately authorized original-seller `402 → payment → receipt → delivery` workflow. It does **not** complete that latter paid journey or mark Shop #26 and offer generation #27 as accepted.
+
+The focused, dependency-free public GitHub Actions suite now enrolls original directory tests, offer details, **15 Market-comparison tests**, **13 atomic-budget tests**, and one joined HTTP buyer path. Original browsing, detail, comparison and budgeting also share `src/shop-service-styles.mjs` for keyboard-visible focus, high-contrast forced-colors, reduced-motion behavior, narrow layouts and light/dark appearance without introducing browser state or JavaScript. [Native source run #40463465492](https://github.com/red-cup-engineering/shop.561.group/actions/runs/40463465492) executed **59 named tests: 59 passed, 0 failed/skipped/cancelled**, after the shared-style revision. This is source/projection receiving only. A dependency-resolved, privately parameterized complete Worker, deployed buyer journey, assistive-technology receiving and paid original-service delivery remain separate gates.
+
+**Source-only receiving and promotion:** `test/service-offer.test.mjs` adds thirteen buyer/agent detail and native-route cases (exact source address, 400/404/405/503 denial, complete source paging, input/output contract, HTML escaping, HEAD, JSON parity and payment non-assertion). The pinned `.github/workflows/source-qualified-service-offers.yml` enrolls this with existing directory tests. `test/service-discovery.test.mjs` exercises the projection, pagination, masked status, absolute seller origin, duplicate identities, held/unlisted omission, current origin fetch, HEAD, human escaping, input bounds and failure cases without needing private checkout, wallet or external funds. Existing `test/worker.test.mjs` includes the original Worker route and unchanged book catalog contract. Native installed-suite run, real Cloudflare Worker deployment, public cross-host origin fetch, independent payer, settled transfer and delivered/accepted customer outcome are separate, not claimed by this change. The common governing acceptance criteria are owned by the Group requirement `market-bazaar-shop-agentic-composable-enterprise`, with practical follow-through under Public Services issue 17, Coesite Bazaar issue 5, and Causeway Market issue 4.
+
+## Custody and parameters
+
+This repository is Red Cup Engineering's deployable application for shop.561.group (transferred 2026-10-24 from `causeway-services`; history, redirects and public visibility preserved). The content the Shop publishes is data and lives in `causeway-services/public-shop-services-section`: `catalog.json`, `data/records/**` and `ops/*.md`. It is bound here as the `parameters/` git submodule, and `package.json` `imports` maps `#parameters/*` to `./parameters/*`, so the import path is the parameter: scripts read `parameters/catalog.json`, source and tests import `#parameters/...`, and the Worker bundle includes the bound records exactly as before.
+
+- Clone with `git clone --recurse-submodules`, or run `git submodule update --init` (the section is private).
+- To change the catalog, change `public-business-shop-services-section`, then advance the submodule pin here; `npm run compile` regenerates `src/compiled-catalog.mjs` from it.
+- The `publication-source-preflight` workflow checks the submodule out with the `PARAMETERS_READ_TOKEN` secret (read-only on the section); without it CI cannot read the private section.
+
+## From shop.561.group
+
+The one page that lists everything the 561 Group sells: ebooks today,
+newsletters, briefings, merch, and links out to the metered APIs
+(`market.561.group`) and the games catalog (`play.561.group`) that are
+sold elsewhere.
+
+## What this is
+
+A Cloudflare Worker (`src/worker.mjs`) composing two published packages
+rather than re-implementing either:
+
+- `@red-cup-engineering/digital-goods-storefront-services-section` --
+  catalog validation, buyer-facing view-model shaping, static HTML
+  rendering, and signed/expiring download tokens (Web Crypto only).
+- `@red-cup-engineering/stripe-services-section` -- the card rail:
+  Checkout Session creation and verified-webhook ingestion over an
+  ActivityStreams `Offer`/`Accept` envelope.
+
+`catalog.json` in this site is the catalog -- the one source of truth
+for what's listed, its price, its status, and its goods (name,
+content-type, byte length, sha256).
+
+This site owns only what both packages' own READMEs name as
+"not built here": the Worker routing, the `SHOP_ENTITLEMENTS` KV
+namespace and `SHOP_GOODS` R2 bucket bindings, and the honest
+unarmed/no-entitlement states.
+
+## Routes
+
+| Route | Behavior |
+|---|---|
+| `GET /` | Renders the catalog from the engine. |
+| `GET /goods/:id` | Renders one offering's product page from the engine. |
+| `GET /catalog.json` | Serves `catalog.json` verbatim. |
+| `GET` or `POST /checkout/:id` | Solicits + invokes a Stripe Checkout Session for a `live`/`test-only` offering; 303s to the Checkout URL. Returns an honest 409 page when no `STRIPE_SECRET_KEY` is bound. `GET` is accepted too so the engine's own rendered "Buy" anchor works as a plain link. |
+| `POST /webhooks/stripe` | Verifies the Stripe signature and ingests the event; on a fresh `checkout.session.completed` it writes one KV entitlement keyed by the Checkout Session id. |
+| `GET /thanks?session_id=...` | Issues one signed, one-hour download token per good, gated on the KV entitlement (and, when a Stripe key is bound, an independent confirmation against the Stripe API). |
+| `GET /download/:token` | Verifies the token and streams the good from R2. |
+
+## Bindings and hands items
+
+Provisioned this deploy:
+
+- KV namespace `SHOP_ENTITLEMENTS` (`9372634aa5ca4c87937c6d3dd457bef6`).
+- R2 bucket `shop-561-group-goods`, binding `SHOP_GOODS`, holding the
+  four ebook files under `goods/<offering-id>/<filename>`.
+- Secret `SHOP_TOKEN_SECRET` (`wrangler secret put`, random, not in
+  source).
+
+**Hands items -- the founder's own account actions, not set here:**
+`STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` (`wrangler secret put`
+from a Stripe dashboard). Until they're set, every buy affordance on
+the site honestly reads "checkout not yet armed" / 409 -- this is the
+storefront engine's own `checkoutArmed` state, read from
+`stripe-services-section`'s `readiness()`, never re-decided locally.
+
+## Deploying
+
+```sh
+npm install
+npm test
+npx wrangler deploy
+```
+
+## A stripe-services-section fix this site's deploy required
+
+`@red-cup-engineering/stripe-services-section@0.1.7`'s `src/service.mjs`
+computed `createRequire(import.meta.url)` and
+`fileURLToPath(import.meta.url)` at module top level. That crashed this
+Worker's deploy (`workerd` validation: "must be a file URL object... Received
+'undefined'") even though the only code path that needs either --
+`loadCatalog`'s on-disk fallback -- is never reached when a caller (this
+Worker, always) supplies `options.catalog` and `options.store`, exactly
+as the module's own doc comment already promised. Fixed upstream, in
+place, as `@red-cup-engineering/stripe-services-section@0.1.8` (deferred
+both into a lazy `packageRoot()` helper and a call-time `createRequire()`
+inside `loadCatalog`; no exported symbol changed) -- this site pins that
+version. Publish receipt:
+`web2-platform-services-section/data/logs/` via
+`semantic-record-journal-service` (`red-cup-engineering.package-publish-service-record`,
+`ni:///sha-256;W9FN0aCkeP-AObLLbz0TixyRxyS8wepIm_08V6-I-FA`).
+
+## Testing
+
+```sh
+npm test
+```
+
+Plain `node --test`, fake KV/R2/`fetch` doubles -- no live Stripe or
+Cloudflare calls.

@@ -1,11 +1,19 @@
 import { validateCatalog } from "@red-cup-engineering/digital-goods-storefront-services-section";
-import { createDigitalGoodsStorefrontWorker } from "@red-cup-engineering/digital-goods-storefront-services-section/worker-runtime";
+import * as storefrontRuntime from "@red-cup-engineering/digital-goods-storefront-services-section/worker-runtime";
+import { externalStripePaymentLinkIds } from "./external-stripe-payment-link-receiving.mjs";
+const {createDigitalGoodsStorefrontWorker}=storefrontRuntime;
 import catalog from "./compiled-catalog.mjs";
-import { createShopFulfillment, createShopStripeAudit } from "./fulfillment.mjs";
-import { serviceBrowseResponse } from "./service-discovery.mjs";
+import { createShopFulfillmentBindings } from "./fulfillment.mjs";
+import { marketCatalogTransport, routeServiceDiscovery } from "./service-discovery.mjs";
+import { serviceMarketX402RelayResponse } from "./service-market-x402-relay.mjs";
+import { supportResponse } from "./support-campaign.mjs";
+import { bookAtomFeed } from "./book-feed.mjs";
 
 export const CATALOG = catalog;
 export const CATALOG_VALIDATION = validateCatalog(catalog);
+export const ORIGINAL_EXTERNAL_STRIPE_PAYMENT_LINK_IDS=externalStripePaymentLinkIds(catalog);
+export const EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED=
+ storefrontRuntime.SUPPORTS_EXTERNAL_STRIPE_PAYMENT_LINK_AUDIT===true;
 
 const runtime = createDigitalGoodsStorefrontWorker({
   catalog,
@@ -13,15 +21,15 @@ const runtime = createDigitalGoodsStorefrontWorker({
   buyerActor: "urn:ame:shop-561-group-buyer",
   storefront: {
     title: "561 Group Books and Services",
-    description: "Books from the 561 Group, with accepted EPUB and PDF edition digests, plus read-only discovery of the original x402 seller’s services. Source listings are not proof of available payment or delivery.",
-    footerHtml: "561 Group. <a href=\"https://market.561.group\">Market</a> · <a href=\"https://bazaar.561.group\">Bazaar</a> · <a href=\"https://shop.561.group\">Shop</a> · <a href=\"/services\">Services</a>. Browse books and source-listed services, or inspect original terms in the Bazaar. Agents: <a href=\"/services.json\">Source-service catalog JSON (GET)</a>, <a href=\"/catalog.json\">Shop catalog JSON (GET)</a>, <a href=\"/mcp\">Shop MCP (POST)</a> for list_products, search_products and get_product, <a href=\"https://bazaar.561.group/discovery.json\">Bazaar discovery JSON (GET)</a>, <a href=\"https://market.561.group/markets/discovery.json\">Market discovery JSON (GET)</a>. Discovery documents identify the existing Bazaar and Market MCP POST endpoints. Live payment and delivery require the current seller’s confirmation.",
+    description: "Books, data, analysis and software services from the 561 Group. Find a service by task or owning service section.",
+    footerHtml: "561 Group. <a href=\"https://market.561.group\">Market</a> · <a href=\"https://bazaar.561.group\">Bazaar</a> · <a href=\"https://shop.561.group\">Shop</a> · <a href=\"/services\">Services</a> · <a href=\"/support\">Support open work</a> · <a href=\"/books.atom\">Book updates (Atom)</a>. Browse books and services, and explore service details in the Bazaar. Agents: <a href=\"/services.json\">Service catalog JSON (GET)</a>, <a href=\"/catalog.json\">Shop catalog JSON (GET)</a>, <a href=\"/mcp\">Shop MCP (POST)</a> for list_products, search_products and get_product, <a href=\"https://bazaar.561.group/discovery.json\">Bazaar discovery JSON (GET)</a>, <a href=\"https://market.561.group/markets/discovery.json\">Market discovery JSON (GET)</a>. Discovery documents identify the existing Bazaar and Market MCP POST endpoints.",
   },
 });
 
 // Crawler documents are the catalog's own view: the storefront and one page per offering.
 const ORIGIN = "https://shop.561.group";
 function sitemap() {
-  const paths = ["/", "/services", "/brand.jsonld", ...catalog.offerings.map((offering) => `/goods/${offering.id}`)];
+  const paths = ["/", "/services", "/services/compare", "/services/basket", "/support", "/brand.jsonld", ...catalog.offerings.map((offering) => `/goods/${offering.id}`)];
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${paths.map((path) => `  <url><loc>${ORIGIN}${path}</loc></url>`).join("\n")}\n</urlset>\n`;
 }
 
@@ -45,15 +53,40 @@ export default {
         },
       });
     }
-    if (pathname === "/services" || pathname === "/services.json") {
-      return serviceBrowseResponse(request, { fetchSource: env.MARKET_SERVICE_CATALOG_FETCH ?? fetch });
+    if (["/support", "/support/", "/support/go", "/support/share.json"].includes(pathname)) return supportResponse(request);
+    if (pathname === "/books.atom") {
+      if (request.method !== "GET" && request.method !== "HEAD")
+        return new Response(null, { status: 405, headers: { allow: "GET, HEAD" } });
+      const feed = bookAtomFeed(catalog);
+      if (feed === null) return new Response(null, { status: 503, headers: { "cache-control": "no-store" } });
+      return new Response(request.method === "HEAD" ? null : feed, {
+        headers: {
+          "content-type": "application/atom+xml; charset=utf-8",
+          "cache-control": "public, max-age=300",
+          "x-content-type-options": "nosniff",
+        },
+      });
     }
+    // Only the original Market is the x402 seller. Shop transports exact
+    // source-qualified buyer requests; it neither signs nor settles payment.
+    if (pathname === "/services/execute")
+      return serviceMarketX402RelayResponse(request, {
+        fetchSource: marketCatalogTransport(env?.MARKET_SERVICE_CATALOG_FETCH, fetch),
+      });
+    const serviceRoute = routeServiceDiscovery(request, {
+      fetchSource: marketCatalogTransport(env?.MARKET_SERVICE_CATALOG_FETCH, fetch),
+    });
+    if (serviceRoute !== null) return serviceRoute;
     return runtime.fetch(request, {
       ...env,
-      fulfillment: createShopFulfillment(env.SHOP_FULFILLMENT),
+      ...createShopFulfillmentBindings(env.SHOP_FULFILLMENT),
       goods: env.SHOP_GOODS,
       tokenSecret: env.SHOP_TOKEN_SECRET,
-      audit: createShopStripeAudit(env.SHOP_FULFILLMENT),
+      // Source-qualified emsenn merchant event observations are distinct from
+      // this Shop's book checkout and entitlement custody. Older installed
+      // suppliers must NOT receive an unimplemented capability assertion.
+      externalPaymentLinks:EXTERNAL_STRIPE_PAYMENT_LINK_RECEIVER_INSTALLED
+       ?ORIGINAL_EXTERNAL_STRIPE_PAYMENT_LINK_IDS:[],
       // Google sign-in opens when all three are set (wrangler secret put).
       accounts: { clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET, sessionSecret: env.SHOP_SESSION_SECRET },
       // The comma-separated emails that may give books.
@@ -65,3 +98,4 @@ export default {
 };
 
 export { ShopFulfillment } from "./fulfillment.mjs";
+
