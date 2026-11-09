@@ -388,6 +388,9 @@ as `coming-soon`. Its surviving files make the work inspectable but do not
 turn fabrication into editorial proof or an accepted edition. A cover is
 optional until the publication is accepted.
 
+Agent checkout is per offering. The storefront projects an x402 link only
+from that offering's authored `agentOfferUrl`.
+
 `scripts/compile-catalog.mjs` reads those records into
 `src/compiled-catalog.mjs`: title, series, contents, page count, file
 sizes, SHA-256s, edition digest and the proof's counts. It also copies the

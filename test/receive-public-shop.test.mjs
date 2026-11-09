@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { receivePublicShop } from '../scripts/receive-public-shop.mjs';
+import compiledCatalog from '../src/compiled-catalog.mjs';
 
 const ORIGIN = 'https://shop.561.group';
 const campaign = {
@@ -147,6 +148,24 @@ test('price and rail drift cannot pass merely by keeping seller and SKU identifi
     assert.equal(report.cases.find(c => c.case === 'catalog').finding,
       'original-source-consumer-mismatch');
   }
+});
+
+test('public receiving preserves x402 availability per offering', async () => {
+  const offerings = new Map(compiledCatalog.offerings.map(item => [item.id, item]));
+  const iceOut = offerings.get('ice-out');
+  const x402Economy = offerings.get('the-x402-economy');
+  assert.equal(iceOut.agentOfferUrl, undefined);
+  assert.equal(typeof x402Economy.agentOfferUrl, 'string');
+
+  const received = structuredClone(compiledCatalog);
+  const fetcher = routing(key => key === 'GET /catalog.json' ? Response.json(received) : undefined);
+  const receive = () => receivePublicShop({fetcher, campaign, catalog: compiledCatalog});
+  assert.equal((await receive()).acceptedPublicRoutes, true);
+
+  received.offerings.find(item => item.id === 'ice-out').agentOfferUrl = x402Economy.agentOfferUrl;
+  const report = await receive();
+  assert.equal(report.acceptedPublicRoutes, false);
+  assert.equal(report.cases.find(item => item.case === 'catalog').finding, 'original-source-consumer-mismatch');
 });
 
 test('oversized body, bad content type, and denied transport return finite, private failures', async () => {
