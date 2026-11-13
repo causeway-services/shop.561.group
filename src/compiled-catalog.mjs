@@ -20,7 +20,7 @@ export default {
   "offerings": [
     {
       "id": "understanding-infection-associated-chronic-illness",
-      "line": "@561-group/health-education-curriculum-services-section",
+      "line": "@561-group/public-health-education-curriculum-services-section",
       "status": "coming-soon",
       "priceCents": 900,
       "currency": "usd",
