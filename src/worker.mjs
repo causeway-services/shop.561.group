@@ -1,5 +1,5 @@
-import { validateCatalog } from "@red-cup-engineering/digital-goods-storefront-services-section";
-import * as storefrontRuntime from "@red-cup-engineering/digital-goods-storefront-services-section/worker-runtime";
+import { validateCatalog } from "@red-cup-engineering/digital-goods-storefront-engineering-services-section";
+import * as storefrontRuntime from "@red-cup-engineering/digital-goods-storefront-engineering-services-section/worker-runtime";
 import { externalStripePaymentLinkIds } from "./external-stripe-payment-link-receiving.mjs";
 const {createDigitalGoodsStorefrontWorker}=storefrontRuntime;
 import catalog from "./compiled-catalog.mjs";

@@ -97,7 +97,7 @@ The original Red Cup digital-goods storefront supplier [source commit ba156ab](h
 ## What this is
 
 A Cloudflare Worker (`src/worker.mjs`) that composes
-`@red-cup-engineering/digital-goods-storefront-services-section`, which
+`@red-cup-engineering/digital-goods-storefront-engineering-services-section`, which
 owns everything below. This site owns its catalog, its branding, its
 bindings and the `ShopFulfillment` Durable Object registration.
 
@@ -232,7 +232,7 @@ independent receiving jobs.
 ## What this is
 
 A Cloudflare Worker (`src/worker.mjs`) that composes
-`@red-cup-engineering/digital-goods-storefront-services-section`, which
+`@red-cup-engineering/digital-goods-storefront-engineering-services-section`, which
 owns everything below. This site owns its catalog, its branding, its
 bindings and the `ShopFulfillment` Durable Object registration.
 
@@ -370,7 +370,7 @@ An externally hosted payment link is **not** a Shop book checkout. The live emse
 
 The existing `parameters/catalog.json` carries four private, typed `externalStripePaymentLinkReceivers[]` source records: the monthly support link pinned to the original emsenn channel `config.json` Git commit/blob, and the direct, GitHub and Fediverse one-time tip links pinned to the original Shop `data/records/marketing/open-work-campaign.json` Git commit/blob. Each record retains its exact original Payment Link ID, source-observed merchant and support program. **These are source-selected outside-catalog webhook receivers, NOT additional offerings.** The original `scripts/compile-catalog.mjs` carries the records unmodified into `src/compiled-catalog.mjs`; `src/external-stripe-payment-link-receiving.mjs` admits its exact field schema and returns only the verified IDs to the existing `src/worker.mjs` → Red Cup signed Stripe webhook. Industry JSON Schema Draft 2020-12 lives at `data/records/schema/external-stripe-payment-link-receiver.schema.json`. The Shop's public `/catalog.json`, buyer storefront and MCP product search continue exposing only original merchant/offering projections, **not** its internal webhook receiver inventory. The original 13 goods are unchanged.
 
-The source selects `@red-cup-engineering/digital-goods-storefront-services-section@0.5.0` and `@red-cup-engineering/stripe-services-section@0.2.1`. The original storefront supplies `SUPPORTS_EXTERNAL_STRIPE_PAYMENT_LINK_AUDIT`, requires an explicit committed audit acknowledgement, and consumes the Stripe owner's complete native-event validator. Shop still enables the external ID list only when the installed original provider declares that capability. The `wrangler.jsonc` build guard checks the native original source/test and Worker routes. Source selection and native fixture receiving do not establish that the production Worker has been promoted or that a customer payment has been delivered.
+The source selects `@red-cup-engineering/digital-goods-storefront-engineering-services-section@0.5.0` and `@red-cup-engineering/stripe-engineering-services-section@0.2.1`. The original storefront supplies `SUPPORTS_EXTERNAL_STRIPE_PAYMENT_LINK_AUDIT`, requires an explicit committed audit acknowledgement, and consumes the Stripe owner's complete native-event validator. Shop still enables the external ID list only when the installed original provider declares that capability. The `wrangler.jsonc` build guard checks the native original source/test and Worker routes. Source selection and native fixture receiving do not establish that the production Worker has been promoted or that a customer payment has been delivered.
 
 The destination currently configured in the live Stripe account is `https://shop.561.group/webhooks/stripe` and subscribes to `checkout.session.completed` only. Its signed event can establish an observed Checkout completion and the actual provider payment status, but not the long-lived subscription history, invoice settlement, Stripe fees, payout, tax classification, legal ownership transfer or cleared Group treasury cash. Those require separately entitled Stripe subscription/invoice/balance and Group treasury receiving. Nothing in this source change purchases anything, registers a new webhook, edits customer accounts, spends on Notebook video generation or modifies public YouTube descriptions.
 
@@ -404,7 +404,7 @@ The real Shop compiler is now also the **only selected source** for the original
 Red Cup retailer form projection. Running `pnpm compile` or `pnpm deploy`
 first compiles the original book manuscripts, `EbookEditionAcceptance` and
 `PrintEditionAcceptance` into `src/compiled-catalog.mjs`, then calls the
-original `@red-cup-engineering/digital-goods-storefront-services-section/retail-submission-drafts`
+original `@red-cup-engineering/digital-goods-storefront-engineering-services-section/retail-submission-drafts`
 producer. This replaces the stale unselected Group-generated copy at
 `561-group/561-group-services-section/data/records/listings/book-retail-listings.json`.
 Do not treat that historical source as the current book authority.
@@ -619,10 +619,10 @@ sold elsewhere.
 A Cloudflare Worker (`src/worker.mjs`) composing two published packages
 rather than re-implementing either:
 
-- `@red-cup-engineering/digital-goods-storefront-services-section` --
+- `@red-cup-engineering/digital-goods-storefront-engineering-services-section` --
   catalog validation, buyer-facing view-model shaping, static HTML
   rendering, and signed/expiring download tokens (Web Crypto only).
-- `@red-cup-engineering/stripe-services-section` -- the card rail:
+- `@red-cup-engineering/stripe-engineering-services-section` -- the card rail:
   Checkout Session creation and verified-webhook ingestion over an
   ActivityStreams `Offer`/`Accept` envelope.
 
@@ -674,7 +674,7 @@ npx wrangler deploy
 
 ## A stripe-services-section fix this site's deploy required
 
-`@red-cup-engineering/stripe-services-section@0.1.7`'s `src/service.mjs`
+`@red-cup-engineering/stripe-engineering-services-section@0.1.7`'s `src/service.mjs`
 computed `createRequire(import.meta.url)` and
 `fileURLToPath(import.meta.url)` at module top level. That crashed this
 Worker's deploy (`workerd` validation: "must be a file URL object... Received
@@ -682,7 +682,7 @@ Worker's deploy (`workerd` validation: "must be a file URL object... Received
 `loadCatalog`'s on-disk fallback -- is never reached when a caller (this
 Worker, always) supplies `options.catalog` and `options.store`, exactly
 as the module's own doc comment already promised. Fixed upstream, in
-place, as `@red-cup-engineering/stripe-services-section@0.1.8` (deferred
+place, as `@red-cup-engineering/stripe-engineering-services-section@0.1.8` (deferred
 both into a lazy `packageRoot()` helper and a call-time `createRequire()`
 inside `loadCatalog`; no exported symbol changed) -- this site pins that
 version. Publish receipt:

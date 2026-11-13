@@ -2,13 +2,13 @@ import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { pathToFileURL } from "node:url";
 import test from "node:test";
-import { createDigitalGoodsStorefrontWorker } from "@red-cup-engineering/digital-goods-storefront-services-section/worker-runtime";
+import { createDigitalGoodsStorefrontWorker } from "@red-cup-engineering/digital-goods-storefront-engineering-services-section/worker-runtime";
 import catalog from "../src/compiled-catalog.mjs";
 import { ShopFulfillment, createShopFulfillment, createShopStripeAudit, createShopFulfillmentBindings } from "../src/fulfillment.mjs";
 
 // The cookie fixture uses the exact authentication provider selected by the
 // original storefront, rather than a second session implementation or key.
-const originalRuntime = createRequire(import.meta.resolve("@red-cup-engineering/digital-goods-storefront-services-section/worker-runtime"));
+const originalRuntime = createRequire(import.meta.resolve("@red-cup-engineering/digital-goods-storefront-engineering-services-section/worker-runtime"));
 const { createSessionCookie } = await import(pathToFileURL(originalRuntime.resolve("@red-cup-engineering/computer-web-server/admission/session")));
 
 test("the original Shop binding supplies one custody client to the native read-only order join", async () => {

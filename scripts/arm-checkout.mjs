@@ -9,7 +9,7 @@ import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { armCheckout } from "@red-cup-engineering/stripe-services-section/provisioning";
+import { armCheckout } from "@red-cup-engineering/stripe-engineering-services-section/provisioning";
 
 const SITE = dirname(dirname(fileURLToPath(import.meta.url)));
 const SURFACE = "shop.561.group";

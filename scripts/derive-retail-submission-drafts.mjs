@@ -11,7 +11,7 @@
 import { mkdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { deriveRetailListings } from "@red-cup-engineering/digital-goods-storefront-services-section/retail-submission-drafts";
+import { deriveRetailListings } from "@red-cup-engineering/digital-goods-storefront-engineering-services-section/retail-submission-drafts";
 
 const project = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const SHOP_COMPILED_CATALOG = join(project, "src", "compiled-catalog.mjs");

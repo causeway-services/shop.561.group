@@ -7,7 +7,7 @@ import test from "node:test";
 import {
   SHOP_SOURCE, SHOP_COMPILED_CATALOG, produceShopRetailerSubmissionDrafts,
 } from "../scripts/derive-retail-submission-drafts.mjs";
-import { RETAIL_CHANNELS } from "@red-cup-engineering/digital-goods-storefront-services-section/retail-listings";
+import { RETAIL_CHANNELS } from "@red-cup-engineering/digital-goods-storefront-engineering-services-section/retail-listings";
 import catalog from "../src/compiled-catalog.mjs";
 
 test("actual Shop compiled author is the sole source for retailer candidate rows", async () => {

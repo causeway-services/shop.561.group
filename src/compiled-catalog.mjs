@@ -801,7 +801,7 @@ export default {
     {
       "id": "health-education-newsletter",
       "title": "The Second Day",
-      "line": "@561-group/health-education-newsletter-services-section",
+      "line": "@561-group/public-health-education-newsletter-services-section",
       "status": "coming-soon",
       "blurb": "A health-synthesis newsletter about infection-associated chronic illness. No subscription is open yet."
     },

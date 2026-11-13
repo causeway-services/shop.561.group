@@ -17,7 +17,7 @@ import { basename, dirname, join, normalize, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { coverFileName, listChapters, sha256File } from "@red-cup-engineering/ebook-engineering-services-section";
-import { validateCatalog } from "@red-cup-engineering/digital-goods-storefront-services-section";
+import { validateCatalog } from "@red-cup-engineering/digital-goods-storefront-engineering-services-section";
 import { compileShopMerchant, GROUP_BRAND_SOURCE } from "../src/merchant-source.mjs";
 import { generatedIllustrationsFrom } from "./edition-illustration-provenance.mjs";
 export { generatedIllustrationsFrom } from "./edition-illustration-provenance.mjs";

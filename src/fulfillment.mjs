@@ -1,4 +1,4 @@
-import { DigitalGoodsFulfillment, createDurableFulfillment } from "@red-cup-engineering/digital-goods-storefront-services-section/durable-fulfillment";
+import { DigitalGoodsFulfillment, createDurableFulfillment } from "@red-cup-engineering/digital-goods-storefront-engineering-services-section/durable-fulfillment";
 
 /** Cloudflare's receiver-specific Durable Object class registration. */
 export class ShopFulfillment extends DigitalGoodsFulfillment {}

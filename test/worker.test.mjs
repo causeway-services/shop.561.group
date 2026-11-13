@@ -93,7 +93,7 @@ test("the Shop's public catalog uses the shared Bazaar-readable seller projectio
 
 test("the shop lists human publications and merch without presenting unaccepted books as live", () => {
   assert.equal(CATALOG_VALIDATION.valid, true);
-  for (const offering of CATALOG.offerings) assert.ok(offering.book || offering.line === "merch" || offering.line === "@561-group/health-education-newsletter-services-section", offering.id);
+  for (const offering of CATALOG.offerings) assert.ok(offering.book || offering.line === "merch" || offering.line === "@561-group/public-health-education-newsletter-services-section", offering.id);
   for (const offering of CATALOG.offerings.filter((item) => item.book)) {
     if (offering.status === "live") assert.ok(offering.book.edition.acceptedAt, offering.id);
     else assert.equal(offering.status, "coming-soon", offering.id);
