@@ -9,7 +9,7 @@ const MAX_BODY = 65536;
 const MAX_PAYMENT_HEADER = 16384;
 const SKU = /^ni:\/\/\/sha-256;[A-Za-z0-9_-]{43}$/u;
 
-function refusal(status, message, extra = {}) {
+function rejection(status, message, extra = {}) {
   return Response.json({error:message}, {status, headers:{
     "cache-control":"no-store", "x-content-type-options":"nosniff", ...extra,
   }});
@@ -77,21 +77,21 @@ function paidHeaders(request) {
 export async function serviceMarketX402RelayResponse(request,{fetchSource=fetch}={}){
   const url=new URL(request.url);
   if(url.pathname!=="/services/execute") return null;
-  if(url.origin!==SHOP) return refusal(400,"Use the canonical Shop origin");
+  if(url.origin!==SHOP) return rejection(400,"Use the canonical Shop origin");
   if(!["GET","POST"].includes(request.method))
-    return refusal(405,"Only GET and POST original offer methods are supported",{"allow":"GET, POST"});
+    return rejection(405,"Only GET and POST original offer methods are supported",{"allow":"GET, POST"});
   const entries=[...url.searchParams.keys()];
   const sku=url.searchParams.get("sku");
   if(entries.length!==1 || entries[0]!=="sku" ||
       url.searchParams.getAll("sku").length!==1 || !SKU.test(sku??""))
-    return refusal(400,"Supply exactly one canonical original seller SKU");
+    return rejection(400,"Supply exactly one canonical original seller SKU");
 
   let headers,body;
   try{
     headers=paidHeaders(request);
     if(request.method==="POST") body=await boundedBody(request);
   }catch(error){
-    return refusal(error instanceof RangeError?413:400,"Invalid or oversized buyer input");
+    return rejection(error instanceof RangeError?413:400,"Invalid or oversized buyer input");
   }
 
   let offer;
@@ -101,10 +101,10 @@ export async function serviceMarketX402RelayResponse(request,{fetchSource=fetch}
       {fetchSource},
     );
     if(lookup.status!==200)
-      return refusal(lookup.status===404?404:503,"Original seller offer not currently qualified");
+      return rejection(lookup.status===404?404:503,"Original seller offer not currently qualified");
     offer=(await lookup.json()).offer;
   }catch{
-    return refusal(503,"Original seller catalog unavailable");
+    return rejection(503,"Original seller catalog unavailable");
   }
   let endpoint;
   try{
@@ -114,10 +114,10 @@ export async function serviceMarketX402RelayResponse(request,{fetchSource=fetch}
         !["GET","POST"].includes(offer.method))
       throw new TypeError("Unqualified original seller endpoint");
   }catch{
-    return refusal(503,"Original seller endpoint not qualified");
+    return rejection(503,"Original seller endpoint not qualified");
   }
   if(request.method!==offer.method)
-    return refusal(405,"Use the original seller method",{"allow":offer.method});
+    return rejection(405,"Use the original seller method",{"allow":offer.method});
 
   const signed=headers.has("payment-signature") || headers.has("x-payment");
   let received;
@@ -127,13 +127,13 @@ export async function serviceMarketX402RelayResponse(request,{fetchSource=fetch}
       ...(signed?{}:{signal:AbortSignal.timeout(15000)}),
     });
   }catch{
-    return refusal(502,signed
+    return rejection(502,signed
       ?"Original seller response unavailable; payment status UNKNOWN. Do not replay a signed payment without its original recovery procedure."
       :"Original seller response unavailable; no purchase received by Shop");
   }
   if(received.status>=300 && received.status<400){
     await received.body?.cancel().catch(()=>{});
-    return refusal(502,"Original seller redirect refused");
+    return rejection(502,"Original seller redirect refused");
   }
   // Preserve the seller's x402 challenge and settlement receipt unmodified.
   // Headers which could disclose a buyer/session or affect resource routing are

@@ -32,7 +32,7 @@ function selectBudget(query) {
     complete:skus.length>0 && counts.length===skus.length && maxima.length===1};
 }
 
-export function admitOriginalMarketBasket(raw,requested) {
+export function validateOriginalMarketBasket(raw,requested) {
   if (!record(raw) || !Array.isArray(raw.lines) ||
       raw.lines.length!==requested.skus.length ||
       raw.paymentAuthorized!==false || raw.purchaseExecuted!==false ||
@@ -168,7 +168,7 @@ export async function serviceBudgetResponse(request,{fetchSource=fetch}={}) {
         !response.headers.get("content-type")?.includes("application/json") ||
         Number(response.headers.get("content-length")??0)>MAX_ORIGINAL_MARKET_BYTES)
       throw new TypeError("Original seller budget is unavailable");
-    budget=admitOriginalMarketBasket(await readBoundedOriginalMarketJson(response),selection);
+    budget=validateOriginalMarketBasket(await readBoundedOriginalMarketJson(response),selection);
   } catch {
     return Response.json({error:"Source-qualified seller budget temporarily unavailable"},
       {status:503,headers:{"cache-control":"no-store"}});
