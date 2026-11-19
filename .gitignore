@@ -1,0 +1,4 @@
+.wrangler/
+public/
+generated/
+data/logs/
