@@ -191,7 +191,7 @@ async function loadOriginalMarketPage(selection, fetchSource) {
 }
 
 export function renderServiceOfferPage(reading) {
-  const {offer, source, qualifications: validations} = reading;
+  const {offer, source, qualifications} = reading;
   const h = escapeHtml;
   const name = h(offer.name), sku = h(offer.sku);
   const schema = offer.input?.bodySchema;
@@ -220,7 +220,7 @@ export function renderServiceOfferPage(reading) {
   const provider = offer.seller?.enterprise ?? "Not identified in the catalog";
   const machine = `/services/offer.json?${new URLSearchParams({sku:offer.sku})}`;
   const relay = `/services/execute?${new URLSearchParams({sku:offer.sku})}`;
-  const sourceStatus = `${validations.listing}. ${validations.checkout}.`;
+  const sourceStatus = `${qualifications.listing}. ${qualifications.checkout}.`;
   const sectionLink = offer.section === undefined ? "" :
     `<p>Service section: <a href="/services?${h(new URLSearchParams({section:offer.section}))}">${h(offer.section)}</a></p>`;
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${name} · 561 Group Shop</title><meta name="description" content="Inspect the original service input, output, price preview and x402 purchase boundary."><style>

@@ -14,7 +14,7 @@ const escapeHtml = value => String(value).replace(/[&<>"']/gu, ch =>
   ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[ch]);
 const urlForOffer = sku => "/services/offer?" + new URLSearchParams({sku}).toString();
 
-export function validateServiceComparison(source, requestedSkus) {
+export function admitServiceComparison(source, requestedSkus) {
   if (!record(source) || source.kind !== "x402.market.offer-comparison.v1" ||
       !Array.isArray(requestedSkus) || requestedSkus.length < 2 || requestedSkus.length > 8 ||
       !Array.isArray(source.requestedSkus) ||
@@ -213,7 +213,7 @@ export async function serviceCompareResponse(request,{fetchSource=fetch}={}) {
         !response.headers.get("content-type")?.includes("application/json") ||
         Number(response.headers.get("content-length")??0)>MAX_ORIGINAL_MARKET_BYTES)
       throw new TypeError("Original seller comparison unavailable");
-    reading=validateServiceComparison(await readBoundedOriginalMarketJson(response),skus);
+    reading=admitServiceComparison(await readBoundedOriginalMarketJson(response),skus);
   } catch {
     return Response.json({error:"Source-qualified seller comparison temporarily unavailable"},
       {status:503,headers:{"cache-control":"no-store"}});
