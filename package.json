@@ -25,7 +25,8 @@
     "@red-cup-engineering/digital-goods-storefront-engineering-services-section": "^0.5.3",
     "@red-cup-engineering/stripe-engineering-services-section": "^0.2.2",
     "wrangler": "4.127.1",
-    "@red-cup-engineering/schema-org-services-section": "^0.1.0"
+    "@red-cup-engineering/schema-org-services-section": "^0.1.0",
+    "@red-cup-engineering/signcell": "^0.18.0 || 0.18.1-dev.0"
   },
   "devDependencies": {
     "@red-cup-engineering/ebook-engineering-services-section": "^0.4.2"

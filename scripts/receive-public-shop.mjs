@@ -1,3 +1,4 @@
+import { assert } from "@red-cup-engineering/signcell/values";
 /**
  * Independent, unsigned public buyer-route receiving for the original Shop.
  * Checks installed HTTP against authored seller/support/catalog sources.
@@ -10,7 +11,7 @@ import { resolve } from 'node:path';
 const SHOP_ORIGIN = 'https://shop.561.group';
 const MAX_BODY_BYTES = 262144;
 const MAX_TIMEOUT_MS = 8000;
-const must = (condition, reason) => { if (!condition) throw new TypeError(reason); };
+
 
 async function boundedBody(response) {
   const length = response.headers.get('content-length');
@@ -115,15 +116,15 @@ function cases(campaign, catalog) {
 }
 
 export async function receivePublicShop({ fetcher = fetch, campaign, catalog, origin = SHOP_ORIGIN, timeoutMs = 5000 } = {}) {
-  must(origin === SHOP_ORIGIN, 'Only original Shop origin is admitted');
-  must(Number.isInteger(timeoutMs) && timeoutMs >= 100 && timeoutMs <= MAX_TIMEOUT_MS, 'Finite read timeout required');
-  must(campaign?.canonicalUrl === SHOP_ORIGIN + '/support' && campaign?.merchantDisplayName === 'emsenn' &&
+  assert(origin === SHOP_ORIGIN, 'Only original Shop origin is admitted');
+  assert(Number.isInteger(timeoutMs) && timeoutMs >= 100 && timeoutMs <= MAX_TIMEOUT_MS, 'Finite read timeout required');
+  assert(campaign?.canonicalUrl === SHOP_ORIGIN + '/support' && campaign?.merchantDisplayName === 'emsenn' &&
     typeof campaign?.campaignId === 'string' && Array.isArray(campaign?.channels) &&
     typeof campaign?.oneTime?.links?.direct?.url === 'string' &&
     typeof campaign?.oneTime?.links?.github?.url === 'string' &&
     typeof campaign?.oneTime?.links?.fediverse?.url === 'string' &&
     typeof campaign?.monthly?.url === 'string', 'Original campaign identity required');
-  must(catalog?.merchant?.legalBody === 'emsenn' && typeof catalog?.merchant?.name === 'string' &&
+  assert(catalog?.merchant?.legalBody === 'emsenn' && typeof catalog?.merchant?.name === 'string' &&
     Array.isArray(catalog?.offerings) && catalog.offerings.length > 0 &&
     catalog.offerings.every(o => typeof o.id === 'string'), 'Original legal seller and compiled catalog required');
   // Source-side null/empty/malformed checkout URLs must never silently skip
@@ -135,7 +136,7 @@ export async function receivePublicShop({ fetcher = fetch, campaign, catalog, or
     campaign.oneTime.links.fediverse.url,
     campaign.monthly.url,
   ];
-  must(hostedDestinations.every(url =>
+  assert(hostedDestinations.every(url =>
     typeof url === 'string' && /^https:\/\/buy\.stripe\.com\/[A-Za-z0-9]+$/u.test(url)) &&
     new Set(hostedDestinations).size === hostedDestinations.length,
   'Unique original HTTPS Stripe-hosted destinations required');

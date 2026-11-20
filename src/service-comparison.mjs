@@ -1,3 +1,4 @@
+import { isRecord } from "@red-cup-engineering/signcell/values";
 /**
  * Shop reader of the ORIGINAL Market exact-SKU comparison service.
  * Original Market owns seller identity, price declaration, input/output
@@ -9,13 +10,13 @@ import {SHOP_SERVICE_STYLES} from "./shop-service-styles.mjs";
 
 export const ORIGINAL_MARKET_COMPARISON_URL = "https://market.561.group/v1/market/compare";
 const EXACT_SKU = /^ni:\/\/\/sha-256;[A-Za-z0-9_-]{43}$/u;
-const record = value => value !== null && typeof value === "object" && !Array.isArray(value);
+
 const escapeHtml = value => String(value).replace(/[&<>"']/gu, ch =>
   ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[ch]);
 const urlForOffer = sku => "/services/offer?" + new URLSearchParams({sku}).toString();
 
 export function admitServiceComparison(source, requestedSkus) {
-  if (!record(source) || source.kind !== "x402.market.offer-comparison.v1" ||
+  if (!isRecord(source) || source.kind !== "x402.market.offer-comparison.v1" ||
       !Array.isArray(requestedSkus) || requestedSkus.length < 2 || requestedSkus.length > 8 ||
       !Array.isArray(source.requestedSkus) ||
       source.requestedSkus.length !== requestedSkus.length ||
@@ -24,7 +25,7 @@ export function admitServiceComparison(source, requestedSkus) {
     throw new TypeError("Market comparison must match the exact requested SKU window");
   const expected = new Set(requestedSkus), included = new Map();
   for (const row of source.offers) {
-    if (!record(row) || !expected.has(row.sku) || included.has(row.sku) ||
+    if (!isRecord(row) || !expected.has(row.sku) || included.has(row.sku) ||
         typeof row.name !== "string" || !row.name.trim() ||
         typeof row.operation !== "string" || !row.operation ||
         typeof row.method !== "string" ||
@@ -40,8 +41,8 @@ export function admitServiceComparison(source, requestedSkus) {
       pricePreview:row.pricePreview ?? null,
       sourceRightsVerification:typeof row.sourceRightsVerification === "string"
         ? row.sourceRightsVerification : "not-declared",
-      request:record(row.request) ? row.request : null,
-      output:record(row.output) ? row.output : null,
+      request:isRecord(row.request) ? row.request : null,
+      output:isRecord(row.output) ? row.output : null,
       settled:row.settlementVerified === true,
       delivered:row.paidDeliveryVerified === true,
       originalDetail:urlForOffer(row.sku),
@@ -58,13 +59,13 @@ export function admitServiceComparison(source, requestedSkus) {
   const originalSample=source.sampleComposition;
   let sample=null;
   if (originalSample != null) {
-    if (!record(originalSample) ||
+    if (!isRecord(originalSample) ||
         originalSample.kind !== "x402.market.sample-composition-reading.v1" ||
         !Array.isArray(originalSample.sampleAdmittedLinks) ||
         originalSample.sampleAdmittedLinks.length > 56)
       throw new TypeError("Market source-example comparison is malformed");
     const links=originalSample.sampleAdmittedLinks.map(link => {
-      if (!record(link) || !included.has(link.from) || !included.has(link.to) ||
+      if (!isRecord(link) || !included.has(link.from) || !included.has(link.to) ||
           link.executionAuthorized !== false || link.contractualCompositionProven !== false)
         throw new TypeError("Market source-example edge cannot be represented as nonoperative");
       return Object.freeze({from:link.from,to:link.to,executionAuthorized:false,

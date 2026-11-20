@@ -1,3 +1,4 @@
+import { isRecord } from "@red-cup-engineering/signcell/values";
 /** Source-qualified, privacy-minimized observation of imported Stripe Checkout
  * Sessions. This never fetches Stripe, accepts payment authority, contacts a
  * supporter, issues entitlements, or asserts Stripe/bank settlement.
@@ -6,13 +7,13 @@
  * Original sources: Shop's live-support campaign + private Payment Link receiver
  * inventory. Stripe's standard Checkout Session list is the external input.
  */
-const isObject = value => value !== null && typeof value === "object" && !Array.isArray(value);
+
 const validId = (value, prefix) => typeof value === "string" && value.startsWith(prefix) && /^[A-Za-z0-9_]+$/u.test(value);
 const knownInstant = value => typeof value === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/u.test(value) && Number.isFinite(Date.parse(value));
 
 function qualifiedLinks(campaign, receivers) {
- if (!isObject(campaign) || !isObject(campaign.oneTime) || !isObject(campaign.oneTime.links) ||
-     !isObject(campaign.monthly) || !Array.isArray(receivers) ||
+ if (!isRecord(campaign) || !isRecord(campaign.oneTime) || !isRecord(campaign.oneTime.links) ||
+     !isRecord(campaign.monthly) || !Array.isArray(receivers) ||
      typeof campaign.merchantDisplayName !== "string" || typeof campaign.campaignId !== "string")
   throw new TypeError("Original Shop campaign and private receiver source required");
  const result = [];
@@ -26,7 +27,7 @@ function qualifiedLinks(campaign, receivers) {
   const id = entry.link?.id;
   if (!validId(id, "plink_") || seen.has(id))
    throw new TypeError("Original campaign Payment Link identity missing or repeated");
-  const qualified = receivers.filter(row => isObject(row) && row.type === "ExternalStripePaymentLinkReceiver" &&
+  const qualified = receivers.filter(row => isRecord(row) && row.type === "ExternalStripePaymentLinkReceiver" &&
    row.schemaVersion === 1 && row.stripePaymentLinkId === id &&
    row.merchantDisplayName === campaign.merchantDisplayName && validId(row.stripeMerchantAccountId, "acct_"));
   if (qualified.length !== 1 || (accountId !== null && qualified[0].stripeMerchantAccountId !== accountId))
@@ -40,7 +41,7 @@ function qualifiedLinks(campaign, receivers) {
 
 export function reconcileSupportCheckouts({campaign, receivers, observation}) {
  const source = qualifiedLinks(campaign, receivers);
- if (!isObject(observation) || observation.stripeContext !== source.accountId ||
+ if (!isRecord(observation) || observation.stripeContext !== source.accountId ||
      observation.livemode !== true || !knownInstant(observation.observedAt))
   throw new TypeError("Dated live-merchant Stripe observation with exact account identity required");
  const oneList = Object.hasOwn(observation, "checkoutSessions");
@@ -56,7 +57,7 @@ export function reconcileSupportCheckouts({campaign, receivers, observation}) {
   const expected = new Set(source.links.map(link => link.paymentLinkId));
   const supplied = new Set();
   for (const entry of entries) {
-   if (!isObject(entry) || !expected.has(entry.paymentLinkId) || supplied.has(entry.paymentLinkId))
+   if (!isRecord(entry) || !expected.has(entry.paymentLinkId) || supplied.has(entry.paymentLinkId))
     throw new TypeError("Filtered Stripe response has unknown, duplicated or missing Payment Link");
    supplied.add(entry.paymentLinkId);
    batches.push({expectedLinkId: entry.paymentLinkId, pages: entry.checkoutSessions});
@@ -71,13 +72,13 @@ export function reconcileSupportCheckouts({campaign, receivers, observation}) {
  let inputRowsObserved = 0;
  let anyUnreadPages = false;
  for (const {expectedLinkId, pages} of batches) {
-  if (!isObject(pages) || pages.object !== "list" || !Array.isArray(pages.data) ||
+  if (!isRecord(pages) || pages.object !== "list" || !Array.isArray(pages.data) ||
       typeof pages.has_more !== "boolean" || pages.data.length > 100)
    throw new TypeError("Bounded original Stripe Checkout Session list response required");
   anyUnreadPages ||= pages.has_more;
   inputRowsObserved += pages.data.length;
   for (const session of pages.data) {
-   if (!isObject(session) || !validId(session.id, "cs_live_") ||
+   if (!isRecord(session) || !validId(session.id, "cs_live_") ||
        session.object !== "checkout.session" || session.livemode !== true ||
        !["open","complete","expired"].includes(session.status) ||
        !["paid","unpaid","no_payment_required"].includes(session.payment_status) ||

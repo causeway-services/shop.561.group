@@ -1,8 +1,9 @@
+import { isRecord } from "@red-cup-engineering/signcell/values";
 /** Read-only installed-public-route receiving for the original Shop support campaign.
  * GET never follows Stripe redirects, sends no cookies, never starts Checkout,
  * and does not establish a deployed revision, paid sale or cleared proceeds.
  */
-const isObject=value=>value!==null&&typeof value==="object"&&!Array.isArray(value);
+
 const knownURL=value=>typeof value==="string"&&/^https:\/\/buy\.stripe\.com\/[A-Za-z0-9]+$/.test(value);
 // Attribution must carry actual distinct Stripe Payment Link identities, not
 // absent or duplicate opaque keys that can falsely match a share-pack echo.
@@ -51,11 +52,11 @@ async function workerHandlerSignature(fetcher,origin,timeoutMs){
 }
 
 function checkCampaign(campaign){
- if(!isObject(campaign)||campaign.canonicalUrl!=="https://shop.561.group/support"||
+ if(!isRecord(campaign)||campaign.canonicalUrl!=="https://shop.561.group/support"||
     typeof campaign.campaignId!=="string"||typeof campaign.title!=="string"||
     typeof campaign.merchantNotice!=="string"||campaign.merchantNotice.length<15||
-    !isObject(campaign.oneTime)||!isObject(campaign.oneTime.links)||
-    !isObject(campaign.monthly)||!knownURL(campaign.monthly.url)||!knownLinkId(campaign.monthly.id)||
+    !isRecord(campaign.oneTime)||!isRecord(campaign.oneTime.links)||
+    !isRecord(campaign.monthly)||!knownURL(campaign.monthly.url)||!knownLinkId(campaign.monthly.id)||
     !Array.isArray(campaign.channels)||!campaign.channels.length)
   throw new TypeError("Source-qualified public Shop support campaign required");
  const links=Object.entries(campaign.oneTime.links);
@@ -68,7 +69,7 @@ function checkCampaign(campaign){
  const linkIds=[...links.map(([,link])=>link.id),campaign.monthly.id];
  if(new Set(linkIds).size!==linkIds.length)
   throw new TypeError("Distinct original Stripe Payment Link identifiers required");
- if(campaign.channels.some(channel=>!isObject(channel)||
+ if(campaign.channels.some(channel=>!isRecord(channel)||
     !/^[a-z0-9-]{1,64}$/u.test(channel.id??"")||
     !/^[a-z0-9-]{1,64}$/u.test(channel.medium??""))||
     new Set(campaign.channels.map(channel=>channel.id)).size!==campaign.channels.length)
@@ -128,7 +129,7 @@ export async function probePublicSupport({campaign,fetcher=globalThis.fetch,time
     let payload=null;
     if(raw!==null)try{payload=JSON.parse(raw);}catch{/* Valid HTTP, invalid JSON: mismatch, not unknown network. */}
     const expected=expectedShareRows(campaign);
-    matches=isObject(payload)&&payload.campaignId===campaign.campaignId&&
+    matches=isRecord(payload)&&payload.campaignId===campaign.campaignId&&
       payload.landingUrl===campaign.canonicalUrl&&Array.isArray(payload.items)&&
       payload.items.length===expected.length&&expected.every(item=>payload.items.some(actual=>
        actual?.channel===item.channel&&actual?.medium===item.medium&&

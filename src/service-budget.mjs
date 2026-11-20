@@ -1,3 +1,4 @@
+import { isRecord } from "@red-cup-engineering/signcell/values";
 /**
  * Source-only Shop budget view over the ORIGINAL Market basket preview.
  * All amounts are exact source-owned atomic-unit strings, not converted
@@ -8,7 +9,7 @@ import {SHOP_SERVICE_STYLES} from "./shop-service-styles.mjs";
 export const ORIGINAL_MARKET_BASKET_URL = "https://market.561.group/v1/market/basket";
 const NI=/^ni:\/\/\/sha-256;[A-Za-z0-9_-]{43}$/u;
 const ATOMIC=/^(0|[1-9][0-9]{0,77})$/u;
-const record=x=>x!==null&&typeof x==="object"&&!Array.isArray(x);
+
 const escapeHtml=x=>String(x).replace(/[&<>"']/gu,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
 
 function selectBudget(query) {
@@ -33,7 +34,7 @@ function selectBudget(query) {
 }
 
 export function admitOriginalMarketBasket(raw,requested) {
-  if (!record(raw) || !Array.isArray(raw.lines) ||
+  if (!isRecord(raw) || !Array.isArray(raw.lines) ||
       raw.lines.length!==requested.skus.length ||
       raw.paymentAuthorized!==false || raw.purchaseExecuted!==false ||
       raw.deliveryReceived!==false ||
@@ -44,7 +45,7 @@ export function admitOriginalMarketBasket(raw,requested) {
       (raw.advertisedTotalAtomic!==null && !ATOMIC.test(raw.advertisedTotalAtomic)))
     throw new TypeError("Original seller supplied no admitted read-only basket");
   const lines=raw.lines.map((line,i)=>{
-    if (!record(line) || line.sku!==requested.skus[i] ||
+    if (!isRecord(line) || line.sku!==requested.skus[i] ||
         (line.calls!==undefined && line.calls!==requested.counts[i]) ||
         typeof line.state!=="string" ||
         (line.extendedAmountAtomic!==null && line.extendedAmountAtomic!==undefined &&
