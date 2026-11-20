@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { readGitmodules } from "@red-cup-engineering/git-engine/gitmodules";
+import { execGitSync } from "@red-cup-engineering/git-engine/git-process";
 // Source-only publication preflight. This does NOT establish a deployed release,
 // retailer submission, active checkout, or that the accepted binary files exist.
 import { existsSync, readFileSync, readdirSync, realpathSync, statSync } from "node:fs";
@@ -33,15 +35,14 @@ const nonempty = value => typeof value === "string" && value.trim().length > 0;
 // ordinary directory is an error, never an excuse to skip book custody.
 export function sourceGitlinks(servicesRoot) {
   const root = realpathSync(servicesRoot);
-  const repo = execFileSync("git", ["-C", root, "rev-parse", "--show-toplevel"], { encoding:"utf8" }).trim();
+  const repo = execGitSync(["-C", root, "rev-parse", "--show-toplevel"], { encoding:"utf8" }).trim();
   const prefix = relative(repo, root).split(sep).join("/");
   // .gitmodules is a name inventory, not source authority. Authenticate
   // each candidate against its exact mode-160000 entry in the Git tree;
   // never enumerate the enormous superrepository tree into execFileSync.
-  const declarations = readFileSync(resolve(repo, ".gitmodules"), "utf8");
-  const mounts = [...declarations.matchAll(/^\s*path\s*=\s*(.+)$/gmu)].map(x => x[1].trim());
+  const mounts = readGitmodules(repo).map(({ path }) => path);
   return mounts.filter(x => x.startsWith(prefix + "/")).flatMap(mount => {
-    const listing = execFileSync("git", ["-C", repo, "ls-tree", "HEAD", "--", mount], {
+    const listing = execGitSync(["-C", repo, "ls-tree", "HEAD", "--", mount], {
       encoding:"utf8", maxBuffer:65536
     }).trim();
     const match = /^160000 commit ([0-9a-f]{40})\t(.+)$/u.exec(listing);

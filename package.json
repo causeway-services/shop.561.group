@@ -21,6 +21,7 @@
     "node": ">=22.18"
   },
   "dependencies": {
+    "@red-cup-engineering/git-engine": "^0.1.11-dev.0",
     "@red-cup-engineering/digital-goods-storefront-engineering-services-section": "^0.5.3",
     "@red-cup-engineering/stripe-engineering-services-section": "^0.2.2",
     "wrangler": "4.127.1",
