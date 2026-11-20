@@ -104,7 +104,7 @@ export function projectOriginalMarketServices(source, options = {}) {
   return Object.freeze({
     recordType: "561-group.shop.source-service-discovery.v1",
     source: Object.freeze({ catalog: MARKET_CATALOG_URL, market: source.market,
-      readoutType: source.recordType, settlementProtocol: source.settlement.protocol }),
+      reportType: source.recordType, settlementProtocol: source.settlement.protocol }),
     qualifications: Object.freeze({
       listing: "original-seller-declared, not independently proven payable or delivered",
       checkout: "Shop read-only; current x402 quote and payment remain with original Market",

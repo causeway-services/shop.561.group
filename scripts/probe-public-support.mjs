@@ -8,9 +8,9 @@ if(process.argv.length>2){
  process.exitCode=2;
 }else{
  try{
-  const receipt=await probePublicSupport({campaign});
-  process.stdout.write(JSON.stringify(receipt,null,2)+"\n");
-  if(receipt.publicRouteReceiving!=="passed")process.exitCode=1;
+  const record=await probePublicSupport({campaign});
+  process.stdout.write(JSON.stringify(record,null,2)+"\n");
+  if(record.publicRouteReceiving!=="passed")process.exitCode=1;
  }catch{
   console.error("Public Shop probe refused malformed source campaign; no buyer action attempted.");
   process.exitCode=2;

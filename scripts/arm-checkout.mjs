@@ -29,7 +29,7 @@ if (args.some((arg) => !["--test", "--replace"].includes(arg))) {
 try {
   const present = JSON.parse(wrangler(["secret", "list", "--format", "json"])).map(({ name }) => name);
   const { merchant } = JSON.parse(readFileSync(join(SITE, "parameters", "catalog.json"), "utf8"));
-  const receipt = await armCheckout({
+  const record = await armCheckout({
     surface: SURFACE,
     webhookUrl: `https://${SURFACE}/webhooks/stripe`,
     merchant: merchant.legalBody,
@@ -38,8 +38,8 @@ try {
     replace: args.includes("--replace"),
     store: async (name, value) => { wrangler(["secret", "put", name], value); },
   });
-  console.log(JSON.stringify(receipt, null, 2));
-  if (receipt.stoppedEarly) process.exitCode = 1;
+  console.log(JSON.stringify(record, null, 2));
+  if (record.stoppedEarly) process.exitCode = 1;
 } catch (error) {
   console.error(error.message ?? error);
   process.exitCode = 1;
