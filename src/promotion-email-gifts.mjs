@@ -1,6 +1,6 @@
+import { sha256Hex } from "@red-cup-engineering/semiotic-content-address-system";
 // Correlate an independently verified provider send acceptance to the shop's
 // existing idempotent gift entitlement. No query-string/browser-triggered grants.
-import { createHash } from "node:crypto";
 
 function email(value) {
   if (typeof value !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/u.test(value.trim())) throw new Error("invalid recipient email");
@@ -12,7 +12,7 @@ function required(value, name) {
 }
 export function grantReference({ provider, messageId, offering, recipient }) {
   const parts = [required(provider, "provider"), required(messageId, "message id"), required(offering, "offering"), email(recipient)];
-  return "press-email:" + createHash("sha256").update(JSON.stringify(parts)).digest("hex");
+  return "press-email:" + sha256Hex(JSON.stringify(parts));
 }
 
 /**
